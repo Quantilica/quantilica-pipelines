@@ -1,0 +1,26 @@
+# Índice de Preços ao Produtor - IPP
+# https://sidra.ibge.gov.br/pesquisa/ipp/tabelas
+
+# Tabela 6904 - IPP, por tipo de índice e grandes categorias econômicas
+# (dezembro de 2018 = 100)
+[[tabelas]]
+tabela_sidra = "6904"
+variables = ["all"]
+territories = {1 = []}
+classifications = {543 = []}
+
+# Tabela 6903 - IPP, por tipo de índice, indústria geral, indústrias extrativas
+# e indústrias de transformação e atividades (dezembro de 2018 = 100)
+[[tabelas]]
+tabela_sidra = "6903"
+variables = ["all"]
+territories = {1 = []}
+classifications = {842 = []}
+
+# Tabela 6723 - IPP, por tipo de índice e grupos industriais selecionados
+# (dezembro de 2018 = 100)
+[[tabelas]]
+tabela_sidra = "6723"
+variables = ["all"]
+territories = {1 = []}
+classifications = {844 = []}

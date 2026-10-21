@@ -1,0 +1,7 @@
+[[table]]
+name        = "juros"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "juros.sql"
+description = "Séries de taxas de juros do mercado financeiro filtradas por tema"
+primary_key = ["date", "date_end", "taxa"]

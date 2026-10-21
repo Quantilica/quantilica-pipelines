@@ -1,0 +1,48 @@
+[[table]]
+name        = "inpc"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "inpc.sql"
+description = "INPC - variação e peso mensal por categoria e localidade"
+
+[[table]]
+name        = "ipca"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "ipca.sql"
+description = "IPCA - variação e peso mensal por categoria e localidade"
+
+[[table]]
+name        = "ipca15"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "ipca15.sql"
+description = "IPCA-15 - variação e peso mensal por categoria e localidade"
+
+[[table]]
+name        = "inflacao"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "inflacao.sql"
+description = "União de INPC, IPCA e IPCA-15"
+
+[[table]]
+name        = "inflacao_numero_indice"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "inflacao_numero_indice.sql"
+description = "Número-índice geral (base dez/1993=100) e variações acumuladas, por índice (INPC/IPCA/IPCA-15) - Brasil"
+
+[[table]]
+name        = "inflacao_difusao"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "inflacao_difusao.sql"
+description = "Índice de difusão da inflação - proporção de subitens com variação positiva, por índice e localidade"
+
+[[table]]
+name        = "inflacao_hierarquia_subitem"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "inflacao_hierarquia_subitem.sql"
+description = "Hierarquia de classificação da inflação: subitem -> item -> subgrupo -> grupo (códigos e nomes)"

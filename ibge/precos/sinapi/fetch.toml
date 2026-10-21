@@ -1,0 +1,29 @@
+# Sistema Nacional de Pesquisa de Custos e Índices da Construção Civil - SINAPI
+# https://sidra.ibge.gov.br/pesquisa/sinapi/tabelas
+
+# --- Custo Médio m² ---
+
+# Tabela 2296 - Custo médio m² em moeda corrente e variações percentuais
+# no mês, no ano e em doze meses
+# Notas: ver série histórica de moedas (Cz$/NCz$/CR$/R$); base junho/94 = 100;
+# nova ponderação a partir de 2011 (PNAD 2009); efeitos de desoneração da folha
+# em maio/junho/julho de 2013.
+[[tabelas]]
+tabela_sidra = "2296"
+variables = ["all"]
+territories = {1 = [], 2 = [], 3 = []}
+
+# Tabela 6586 - Custo médio m² em moeda corrente e variações percentuais
+# no mês, no ano e em doze meses, sem desoneração da folha de pagamento
+[[tabelas]]
+tabela_sidra = "6586"
+variables = ["all"]
+territories = {1 = [], 2 = [], 3 = []}
+
+# --- Custo de Projeto ---
+
+# Tabela 647 - Custo de projeto m², por tipo de projeto e padrão de acabamento
+[[tabelas]]
+tabela_sidra = "647"
+variables = ["all"]
+territories = {3 = []}

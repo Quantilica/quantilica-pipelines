@@ -1,0 +1,41 @@
+[[table]]
+name        = "estoques_estoque"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "estoques_estoque.sql"
+description = "Pesquisa de Estoques - quantidade estocada e estoque declarado, por produto (e opcionalmente tipo de propriedade e atividade do estabelecimento)"
+
+[[table]]
+name        = "estoques_capacidade_tipo_unidade"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "estoques_capacidade_tipo_unidade.sql"
+description = "Pesquisa de Estoques - número de estabelecimentos e capacidade útil por tipo de unidade armazenadora (e opcionalmente tipo de propriedade e atividade)"
+
+[[table]]
+name        = "estoques_capacidade_armazens_granel"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "estoques_capacidade_armazens_granel.sql"
+description = "Pesquisa de Estoques - número de informantes e capacidade útil de armazéns e silos para produtos a granel, por tipo de armazém"
+
+[[table]]
+name        = "estoques_capacidade_por_grupo"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "estoques_capacidade_por_grupo.sql"
+description = "Pesquisa de Estoques - número de estabelecimentos e capacidade útil por tipo de unidade armazenadora e grupo de capacidade útil"
+
+[[table]]
+name        = "estoques_armazens_convencionais"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "estoques_armazens_convencionais.sql"
+description = "Pesquisa de Estoques - número e capacidade útil de estabelecimentos com armazéns convencionais, estruturais e infláveis, por grupo de capacidade útil"
+
+[[table]]
+name        = "estoques_inativos"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "estoques_inativos.sql"
+description = "Pesquisa de Estoques - total de estabelecimentos inativos com e sem informações de capacidade útil"

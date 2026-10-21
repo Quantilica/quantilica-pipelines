@@ -1,0 +1,20 @@
+[[table]]
+name        = "ppm_rebanhos"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "rebanhos.sql"
+description = "PPM - efetivo dos rebanhos por tipo e município"
+
+[[table]]
+name        = "ppm_producao"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "producao.sql"
+description = "PPM - produção de origem animal por tipo de produto e município"
+
+[[table]]
+name        = "ppm_exploracao"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "exploracao.sql"
+description = "PPM - vacas ordenhadas e ovinos tosquiados por município"

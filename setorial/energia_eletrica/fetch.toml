@@ -1,0 +1,12 @@
+# Pipeline: energia_eletrica
+# Consumo de energia elétrica do BCB SGS
+#
+# Séries selecionadas:
+#   1402 - Consumo de energia elétrica - Comercial
+#   1403 - Consumo de energia elétrica - Brasil - Residencial
+#   1404 - Consumo de energia elétrica - Brasil - Industrial
+#   1405 - Consumo de energia elétrica - Brasil - Outros
+#   1406 - Consumo de energia elétrica - Brasil - Total
+
+[[series]]
+ids = [1402, 1403, 1404, 1405, 1406]

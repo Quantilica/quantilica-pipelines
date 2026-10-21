@@ -1,0 +1,6 @@
+[[table]]
+name        = "lspa"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "transform.sql"
+description = "LSPA - estimativa anual de área plantada, área colhida, produção e rendimento médio, por produto das lavouras e UF"

@@ -1,0 +1,65 @@
+# https://sidra.ibge.gov.br/pesquisa/estoques/tabelas
+
+
+# Tabela 254 - Número de informantes e Quantidade estocada no último dia do
+#              semestre, por produtos, tipo de propriedade da empresa e tipo de
+#              atividade do estabelecimento
+[[tabelas]]
+tabela_sidra = "254"
+variables = ["all"]
+territories = {6 = []}
+unnest_classifications = ["162", "163"]
+
+
+# Tabela 255 - Número de municípios, Número de informantes e Estoque declarado no
+#              último dia do semestre por produtos
+[[tabelas]]
+tabela_sidra = "255"
+variables = ["all"]
+territories = {6 = []}
+unnest_classifications = true
+
+
+
+# Tabela 259 - Número de informantes e Capacidade útil dos armazéns e silos para produtos a granel
+[[tabelas]]
+tabela_sidra = "259"
+variables = ["all"]
+territories = {6 = []}
+
+
+# Tabela 278 - Número de estabelecimentos e Capacidade útil das unidades armazenadoras por tipo de unidade armazenadora, tipo de propriedade da empresa e tipo de atividade do estabelecimento
+[[tabelas]]
+tabela_sidra = "278"
+variables = ["all"]
+territories = {6 = []}
+unnest_classifications = ["161", "166"]
+
+
+# Tabela 911 - Capacidade útil dos estabelecimentos inativos por tipo de unidade armazenadora
+[[tabelas]]
+tabela_sidra = "911"
+variables = ["all"]
+territories = {6 = []}
+
+
+# Tabela 912 - Total de estabelecimentos inativos, Total de estabelecimentos inativos com informações de capacidade útil e Total de estabelecimentos inativos sem informações de capacidade útil
+[[tabelas]]
+tabela_sidra = "912"
+variables = ["all"]
+territories = {6 = []}
+
+
+# Tabela 5459 - Número de estabelecimentos e Capacidade útil das unidades armazenadoras, por tipo de unidade armazenadora e grupos de capacidade útil
+[[tabelas]]
+tabela_sidra = "5459"
+variables = ["all"]
+territories = {6 = []}
+unnest_classifications = ["166"]
+
+
+# Tabela 5470 - Número e Capacidade útil dos estabelecimentos com armazéns convencionais, estruturais e infláveis por grupos de capacidade útil
+[[tabelas]]
+tabela_sidra = "5470"
+territories = {6 = []}
+variables = ["allxp"]

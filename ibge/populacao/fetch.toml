@@ -1,0 +1,41 @@
+# População - Censo, Contagem e Estimativas
+# https://sidra.ibge.gov.br/
+
+# --- Censo Demográfico ---
+
+# Tabela 200 - População residente, por sexo, situação e grupos de idade -
+#              Amostra - Características Gerais da População
+[[tabelas]]
+tabela_sidra = "200"
+variables = ["allxp"]
+territories = {6 = ["all"]}
+classifications = {2 = ["0"], 1 = ["0"], 58 = ["0"]}
+
+# Tabela 4709 - População residente, Variação absoluta de população residente
+# e Taxa de crescimento geométrico
+[[tabelas]]
+tabela_sidra = "4709"
+variables = ["93"]
+territories = {6 = ["all"]}
+
+# --- Contagem da População ---
+
+# Tabela 305 - População residente em domicílios particulares permanentes por
+#              sexo do chefe do domicílio e situação
+[[tabelas]]
+tabela_sidra = "305"
+variables = ["allxp"]
+territories = {6 = ["all"]}
+classifications = {293 = ["0"], 1 = ["0"]}
+
+# Tabela 793 - População residente
+[[tabelas]]
+tabela_sidra = "793"
+territories = {6 = ["all"]}
+
+# --- Estimativas de População ---
+
+# Tabela 6579 - População residente estimada
+[[tabelas]]
+tabela_sidra = "6579"
+territories = {6 = []}

@@ -1,0 +1,17 @@
+# Pipeline: derivados_petroleo
+# Produção/Consumo de derivados de petróleo do BCB SGS
+#
+# Séries selecionadas:
+#   1389 - Produção de derivados de petróleo - Óleo bruto
+#   1390 - Produção de derivados de petróleo - LGN
+#   1391 - Produção de derivados de petróleo - Total
+#   1392 - Produção de derivados de petróleo - Gás natural
+#   1393 - Consumo de derivados de petróleo - Gasolina
+#   1394 - Consumo de derivados de petróleo - GLP
+#   1395 - Consumo de derivados de petróleo - Óleo combustível
+#   1396 - Consumo de derivados de petróleo - Óleo diesel
+#   1397 - Consumo de derivados de petróleo - Demais derivados
+#   1398 - Consumo de derivados de petróleo - Total
+
+[[series]]
+ids = [1389, 1390, 1391, 1392, 1393, 1394, 1395, 1396, 1397, 1398]

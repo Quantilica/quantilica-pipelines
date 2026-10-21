@@ -1,0 +1,17 @@
+# Pipeline: precos
+# Índices de preços ao consumidor e ao produtor do BCB SGS
+#
+# Séries selecionadas:
+#   433   - IPCA - Variação mensal (%)
+#   13522 - IPCA - Variação acumulada em 12 meses (%)
+#   188   - INPC - Variação mensal (%)
+#   189   - IGP-M - Variação mensal (%)
+#   7478  - IPCA-15 - Variação mensal (%)
+
+[[series]]
+ids = [433, 13522, 188, 189, 7478]
+
+[[series]]
+themes = ["Preços"]
+frequency = "M"
+

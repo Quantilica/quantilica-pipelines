@@ -1,0 +1,6 @@
+[[table]]
+name        = "cna"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "transform.sql"
+description = "Contas Nacionais Anuais - PIB (valores correntes, preços do ano anterior, variação em volume e deflator), população residente e PIB per capita"

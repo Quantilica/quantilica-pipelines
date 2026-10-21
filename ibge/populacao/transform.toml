@@ -1,0 +1,27 @@
+[[table]]
+name        = "censo_populacao"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "censo_populacao.sql"
+description = "Censo Demográfico - população residente por sexo, situação e grupo de idade"
+
+[[table]]
+name        = "contagem_populacao"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "contagem_populacao.sql"
+description = "Contagem da População - população residente por município"
+
+[[table]]
+name        = "estimativa_populacao"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "estimativa_populacao.sql"
+description = "Estimativas de população residente por município"
+
+[[table]]
+name        = "populacao"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "populacao.sql"
+description = "União de censo, contagem e estimativas de população municipal"

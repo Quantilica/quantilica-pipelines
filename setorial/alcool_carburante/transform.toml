@@ -1,0 +1,7 @@
+[[table]]
+name        = "alcool_carburante"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "alcool_carburante.sql"
+description = "Consumo mensal de álcool carburante (hidratado, anidro, total) em barris/dia"
+primary_key = ["date", "produto", "variavel"]

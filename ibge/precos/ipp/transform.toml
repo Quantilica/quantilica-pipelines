@@ -1,0 +1,20 @@
+[[table]]
+name        = "ipp_categoria_economica"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "categoria_economica.sql"
+description = "IPP por Grandes Categorias Econômicas"
+
+[[table]]
+name        = "ipp_cnae"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "cnae.sql"
+description = "IPP da indústria geral, indústrias extrativas e indústrias de transformação e atividades"
+
+[[table]]
+name        = "ipp_grupo_industrial"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "grupo_industrial.sql"
+description = "IPP por Grupos Industriais selecionados"

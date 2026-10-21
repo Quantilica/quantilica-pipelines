@@ -1,0 +1,6 @@
+[[table]]
+name        = "pog"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "transform.sql"
+description = "POG - galinhas poedeiras e ovos produzidos, por UF, finalidade da produção e referência temporal (mês / total do trimestre)"

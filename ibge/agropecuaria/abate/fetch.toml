@@ -1,0 +1,22 @@
+# https://sidra.ibge.gov.br/pesquisa/abate/tabelas
+
+
+# Tabela 1092 - Número de informantes, Quantidade e Peso total das carcaças dos bovinos abatidos, no mês e no trimestre, por tipo de rebanho e tipo de inspeção
+[[tabelas]]
+tabela_sidra = "1092"
+variables = ["all"]
+territories = {3 = []}
+
+
+# Tabela 1093 - Número de informantes, Quantidade e Peso total das carcaças dos suínos abatidos, no mês e no trimestre, por tipo de inspeção
+[[tabelas]]
+tabela_sidra = "1093"
+variables = ["all"]
+territories = {3 = []}
+
+
+# Tabela 1094 - Número de informantes, Quantidade e Peso total das carcaças dos frangos abatidos, no mês e no trimestre, por tipo de inspeção
+[[tabelas]]
+tabela_sidra = "1094"
+variables = ["all"]
+territories = {3 = []}

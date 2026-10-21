@@ -1,0 +1,5 @@
+[transform]
+name = "macro_trabalho_indicadores"
+domain = "cross"
+description = "Indicadores macroeconômicos integrados: inflação, juros e emprego"
+type = "view"

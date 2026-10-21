@@ -1,0 +1,13 @@
+[[table]]
+name        = "sinapi_custo_medio"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "custo_medio.sql"
+description = "SINAPI - Custo médio m²"
+
+[[table]]
+name        = "sinapi_custo_projeto"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "custo_projeto.sql"
+description = "SINAPI - Custo de projeto"

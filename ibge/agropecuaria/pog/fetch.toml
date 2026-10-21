@@ -1,0 +1,8 @@
+# https://sidra.ibge.gov.br/pesquisa/pog/tabelas
+
+
+# Tabela 7524 - Número de informantes, Número de galinhas poedeiras e Quantidade de ovos produzidos, no mês e no trimestre
+[[tabelas]]
+tabela_sidra = "7524"
+variables = ["all"]
+territories = {3 = []}

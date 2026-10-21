@@ -1,0 +1,13 @@
+[[table]]
+name        = "pmc_agregado"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "pmc_agregado.sql"
+description = "PMC - índice e variações de receita nominal e volume de vendas no comércio (varejista, varejista ampliado, materiais de construção, veículos e atacado alimentos), por tipo de índice"
+
+[[table]]
+name        = "pmc_por_atividade"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "pmc_por_atividade.sql"
+description = "PMC - índice e variações de receita nominal e volume de vendas no comércio varejista e varejista ampliado, por atividade e tipo de índice"

@@ -1,0 +1,9 @@
+# Pipeline: pib_mensal
+# PIB mensal acumulado em 12 meses do BCB SGS
+#
+# Séries selecionadas:
+#   4380 - PIB mensal - Valores correntes (R$ milhões)
+#   4385 - PIB mensal - Em US$ milhões
+
+[[series]]
+ids = [4380, 4385]

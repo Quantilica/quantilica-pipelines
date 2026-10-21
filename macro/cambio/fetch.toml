@@ -1,0 +1,10 @@
+# Pipeline: cambio
+# Taxas de câmbio do BCB SGS (Dólar, Euro, Iene, Libra, Franco Suíço, Coroas, Dólares Australiano e Canadense)
+# Compra e venda de 10 moedas principais.
+
+[[series]]
+ids = [
+    1, 10813, 21619, 21620, 21621, 21622, 21623, 21624, 21625, 21626,
+    21627, 21628, 21629, 21630, 21631, 21632, 21633, 21634, 21635, 21636
+]
+

@@ -1,0 +1,61 @@
+# Manifest consolidado de pipelines do quantilica-pipelines
+
+[catalog]
+name = "quantilica-pipelines"
+version = "1.0.0"
+description = "Catálogo declarativo unificado de pipelines ETL e modelos analíticos para o ecossistema Quantilica"
+
+[pipelines.macro_atividade]
+theme = "macro"
+path = "macro/atividade"
+description = "IBC-Br nacional e regional"
+
+[pipelines.macro_cambio]
+theme = "macro"
+path = "macro/cambio"
+description = "Taxas de câmbio diárias (USD, EUR, etc.)"
+
+[pipelines.macro_juros]
+theme = "macro"
+path = "macro/juros"
+description = "Taxas de juros (SELIC, CDI)"
+
+[pipelines.macro_precos]
+theme = "macro"
+path = "macro/bcb_precos"
+description = "Índices de preços BCB"
+
+[pipelines.macro_credito]
+theme = "macro"
+path = "macro/credito"
+description = "Operações e crédito"
+
+[pipelines.setorial_energia]
+theme = "setorial"
+path = "setorial/energia_eletrica"
+description = "Consumo e geração de energia elétrica"
+
+[pipelines.setorial_petroleo]
+theme = "setorial"
+path = "setorial/derivados_petroleo"
+description = "Produção e consumo de derivados de petróleo"
+
+[pipelines.ibge_contas_nacionais]
+theme = "ibge"
+path = "ibge/contas_nacionais"
+description = "PIB trimestral e contas nacionais do IBGE"
+
+[pipelines.ibge_precos]
+theme = "ibge"
+path = "ibge/precos"
+description = "IPCA, INPC e inflação oficial do IBGE"
+
+[pipelines.ibge_trabalho]
+theme = "ibge"
+path = "ibge/trabalho"
+description = "PNAD Contínua e mercado de trabalho"
+
+[pipelines.cross_macro_trabalho]
+theme = "cross"
+path = "cross/macro_trabalho"
+description = "Modelo cruzado entre política monetária e mercado de trabalho"

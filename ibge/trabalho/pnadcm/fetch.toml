@@ -1,0 +1,384 @@
+# Pesquisa Nacional por Amostra de Domicílios Contínua - Divulgação Mensal
+
+# https://sidra.ibge.gov.br/pesquisa/pnadcm/tabelas
+
+# OBJETIVO
+
+# A PNAD Contínua visa a produzir indicadores para acompanhar as flutuações trimestrais e a evolução, a médio e longo prazos, da força de trabalho e outras informações necessárias para o estudo e desenvolvimento socioeconômico do País.
+
+# RECOMENDAÇÕES INTERNACIONAIS
+
+# A PNAD Contínua incorpora em sua metodologia atualizações conceituais referentes ao tema trabalho, com base nas recomendações internacionais vigentes no momento da concepção da pesquisa, nas discussões preparatórias para a 19ª Conferência Internacional de Estatísticos do Trabalho - CIET, da OIT, e finalmente nas recomendações adotadas por esta Conferência, em outubro de 2013, sobre trabalho, ocupação e subutilização da força de trabalho. Cabe destacar que, durante o desenvolvimento da pesquisa, o IBGE contou com a assistência técnica da OIT.
+
+# PARTE DO SISTEMA INTEGRADO DE PESQUISAS DOMICILIARES DO IBGE
+
+# A PNAD Contínua é parte do Sistema Integrado de Pesquisas Domiciliares - SIPD, que se constitui em um modelo de produção de pesquisas amostrais domiciliares no qual o planejamento, a execução, a análise e a disseminação dos resultados das diversas pesquisas são conduzidos de forma coordenada, facilitando o atendimento de novas demandas, bem como otimizando os recursos a serem utilizados. Destaca-se, entre outros aspectos, que a amostra de cada uma das pesquisas desse sistema corresponderá a uma parte ou à integralidade de uma amostra mestra, e os conceitos e os processos serão harmonizados entre elas.
+
+# Com a implantação desse sistema o IBGE iniciou uma importante etapa de aprimoramento no seu sistema de pesquisas domiciliares, que propicia maior eficácia diante de frequentes demandas por informações sobre as condições socioeconômicas e demográficas da população do País.
+
+# ABRANGÊNCIA GEOGRÁFICA
+
+# A PNAD Contínua abrange todo o território nacional, com exceção das áreas classificadas como setores censitários de características especiais da Base Operacional Geográfica atualizada anualmente.
+
+# Até o segundo trimestre de 2025, eram excluídos os setores de: aldeias indígenas, quartéis, bases militares, alojamentos, acampamentos, embarcações, barcos, navios, penitenciárias, colônias penais, presídios, cadeias, asilos, orfanatos, conventos, hospitais, agrovilas de projetos de assentamentos rurais e setores localizados em terras indígenas.
+
+# A partir do terceiro trimestre 2025, com a utilização dos dados do Censo Demográfico 2022 e redefinição da Amostra Mestra, foram excluídos os setores classificados como: aldeias indígenas, agrupamentos quilombolas, quartéis, bases militares, alojamentos, acampamentos, embarcações, barcos, navios, penitenciárias, colônias penais, presídios, cadeias, Instituições de Longa Permanência para Idosos (ILPIs), Instituições de Acolhimento de Crianças e Adolescentes (IACAs), conventos, hospitais, além dos setores situados em terras indígenas e territórios quilombolas.
+
+# POPULAÇÃO ALVO
+
+# É a população constituída por todas as pessoas moradoras em domicílios particulares permanentes da área de abrangência da pesquisa.
+
+# ESQUEMA DE ROTAÇÃO DA AMOSTRA DE DOMICÍLIOS
+
+# A PNAD Contínua é realizada através de um painel rotacional, de forma que os domicílios selecionados para a amostra são pesquisados uma vez por trimestre, durante 5 trimestres consecutivos.
+
+# PERIODICIDADE DE DIVULGAÇÃO DOS RESULTADOS
+
+# A PNAD Contínua produz informações Conjunturais, Estruturais e Especiais.
+
+# As informações Conjunturais estão separadas em dois grupos: Mensal e Trimestral.
+
+# A divulgação Mensal fornece informações sobre a evolução da força de trabalho apenas para o Brasil, atualizados mensalmente por meio de trimestres móveis. Assim, a cada mês são divulgadas informações referentes ao último trimestre móvel. Nesta divulgação são disponibilizadas informações básicas sobre a força de trabalho no País.
+
+# A divulgação Trimestral fornece informações completas e detalhadas sobre a força de trabalho para os níveis geográficos para os quais a pesquisa foi planejada: Brasil, Grandes Regiões, Unidades da Federação, Regiões Metropolitanas que contêm os municípios das capitais, Região Integrada de Desenvolvimento da Grande Teresina e municípios das capitais dos estados.
+
+# O quadro a seguir mostra como são divulgadas as informações conjunturais da pesquisa ao longo dos 12 meses do ano, totalizando 12 divulgações mensais (referente aos trimestres móveis) e 4 divulgações trimestrais (referentes aos trimestres convencionais).
+
+
+# População total
+
+# Tabela 6022 - População - Total, coeficiente de variação, variações percentuais e absolutas em relação aos três trimestres móveis anteriores e ao mesmo trimestre móvel do ano anterior
+# Notas:
+# Para as variáveis "Situação da Variação em relação (...)": 'Z' indica significância estatística considerando 95% de confiança; 'A' indica ausência de significância estatística considerando 95% de confiança.
+# A partir de 31 de julho de 2025, as estimativas deste tema passaram a ser divulgadas com base na nova ponderação da pesquisa, conforme a Nota Técnica 02/2025. Consequentemente, a série histórica dos indicadores foi atualizada.
+[[tabelas]]
+tabela_sidra = "6022"
+variables = ["all"]
+territories = {1 = []}
+
+
+# População em idade de trabalhar
+
+# Tabela 6318 - Pessoas de 14 anos ou mais de idade - Total, coeficiente de variação, variações percentuais e absolutas em relação aos três trimestres móveis anteriores e ao mesmo trimestre móvel do ano anterior, por condição em relação à força de trabalho e condição de ocupação
+# Notas:
+# Para as variáveis "Situação da Variação em relação (...)": 'Z' indica significância estatística considerando 95% de confiança; 'A' indica ausência de significância estatística considerando 95% de confiança.
+# A partir do 4º trimestre de 2015, em acordo com as recomendações da 19ª Conferência Internacional de Estatísticos do Trabalho - CIET, da OIT, pessoas em licença remunerada, independentemente do tempo de afastamento, passaram a ser classificadas como "ocupadas" e seus rendimentos do trabalho foram coletados normalmente. Anteriormente, as pessoas em licença remunerada na semana de referência da pesquisa e que estavam afastadas por período inferior a 4 meses eram classificadas como "ocupadas". Caso esse afastamento fosse igual ou superior a 4 meses, essas pessoas eram definidas como "fora da força de trabalho" e, portanto, não se investigava o rendimento do trabalho.
+# Além disso, a partir do 4º trimestre de 2015, também passaram a ser classificadas como "ocupadas" as pessoas que ajudaram, sem receber remuneração, no trabalho remunerado de parente, adicionalmente àquelas que ajudaram no trabalho remunerado de outro morador do mesmo domicílio. Anteriormente, eram consideradas "ocupadas" apenas as pessoas que ajudaram, sem receber remuneração, no trabalho remunerado de outro morador do mesmo domicílio.
+# A partir de abril de 2016, um aspecto do conceito de desocupação foi alterado de forma a se adequar inteiramente à 19ª Conferência Internacional de Estatísticos do Trabalho - CIET, realizada em outubro de 2013, sendo o questionário ajustado. Com a alteração desse aspecto, passam a ser considerados desocupados aqueles que conseguiram proposta de trabalho para começar após a semana de referência e que iriam começar a trabalhar em até 3 meses; os demais, isto é, aqueles que conseguiram proposta para começar a trabalhar após 3 meses da semana de referência, passam a ser contabilizados na população fora da força de trabalho. Anteriormente, eram considerados desocupados todos aqueles que conseguiram proposta de trabalho para começar após a semana de referência, independentemente do tempo em que iniciariam o trabalho que conseguiram.
+# A partir de 31 de julho de 2025, as estimativas deste tema passaram a ser divulgadas com base na nova ponderação da pesquisa, conforme a Nota Técnica 02/2025. Consequentemente, a série histórica dos indicadores foi atualizada.
+[[tabelas]]
+tabela_sidra = "6318"
+variables = ["all"]
+territories = {1 = []}
+
+
+# Tabela 5944 - Taxa de participação na força de trabalho, na semana de referência, das pessoas de 14 anos ou mais de idade - Total, coeficiente de variação, variações em relação aos três trimestres móveis anteriores e ao mesmo trimestre móvel do ano anterior
+# Notas:
+# Para as variáveis "Situação da Variação em relação (...)": 'Z' indica significância estatística considerando 95% de confiança; 'A' indica ausência de significância estatística considerando 95% de confiança.
+# A partir do 4º trimestre de 2015, em acordo com as recomendações da 19ª Conferência Internacional de Estatísticos do Trabalho - CIET, da OIT, pessoas em licença remunerada, independentemente do tempo de afastamento, passaram a ser classificadas como "ocupadas" e seus rendimentos do trabalho foram coletados normalmente. Anteriormente, as pessoas em licença remunerada na semana de referência da pesquisa e que estavam afastadas por período inferior a 4 meses eram classificadas como "ocupadas". Caso esse afastamento fosse igual ou superior a 4 meses, essas pessoas eram definidas como "fora da força de trabalho" e, portanto, não se investigava o rendimento do trabalho.
+# Além disso, a partir do 4º trimestre de 2015, também passaram a ser classificadas como "ocupadas" as pessoas que ajudaram, sem receber remuneração, no trabalho remunerado de parente, adicionalmente àquelas que ajudaram no trabalho remunerado de outro morador do mesmo domicílio. Anteriormente, eram consideradas "ocupadas" apenas as pessoas que ajudaram, sem receber remuneração, no trabalho remunerado de outro morador do mesmo domicílio.
+# A partir de abril de 2016, um aspecto do conceito de desocupação foi alterado de forma a se adequar inteiramente à 19ª Conferência Internacional de Estatísticos do Trabalho - CIET, realizada em outubro de 2013, sendo o questionário ajustado. Com a alteração desse aspecto, passam a ser considerados desocupados aqueles que conseguiram proposta de trabalho para começar após a semana de referência e que iriam começar a trabalhar em até 3 meses; os demais, isto é, aqueles que conseguiram proposta para começar a trabalhar após 3 meses da semana de referência, passam a ser contabilizados na população fora da força de trabalho. Anteriormente, eram considerados desocupados todos aqueles que conseguiram proposta de trabalho para começar após a semana de referência, independentemente do tempo em que iniciariam o trabalho que conseguiram.
+# A partir de 31 de julho de 2025, as estimativas deste tema passaram a ser divulgadas com base na nova ponderação da pesquisa, conforme a Nota Técnica 02/2025. Consequentemente, a série histórica dos indicadores foi atualizada.
+[[tabelas]]
+tabela_sidra = "5944"
+variables = ["all"]
+territories = {1 = []}
+
+
+# Tabela 6379 - Nível da ocupação, na semana de referência, das pessoas de 14 anos ou mais de idade - Total, coeficiente de variação, variações em relação aos três trimestres móveis anteriores e ao mesmo trimestre móvel do ano anterior
+# Notas:
+# Para as variáveis "Situação da Variação em relação (...)": 'Z' indica significância estatística considerando 95% de confiança; 'A' indica ausência de significância estatística considerando 95% de confiança.
+# A partir do 4º trimestre de 2015, em acordo com as recomendações da 19ª Conferência Internacional de Estatísticos do Trabalho - CIET, da OIT, pessoas em licença remunerada, independentemente do tempo de afastamento, passaram a ser classificadas como "ocupadas" e seus rendimentos do trabalho foram coletados normalmente. Anteriormente, as pessoas em licença remunerada na semana de referência da pesquisa e que estavam afastadas por período inferior a 4 meses eram classificadas como "ocupadas". Caso esse afastamento fosse igual ou superior a 4 meses, essas pessoas eram definidas como "fora da força de trabalho" e, portanto, não se investigava o rendimento do trabalho.
+# Além disso, a partir do 4º trimestre de 2015, também passaram a ser classificadas como "ocupadas" as pessoas que ajudaram, sem receber remuneração, no trabalho remunerado de parente, adicionalmente àquelas que ajudaram no trabalho remunerado de outro morador do mesmo domicílio. Anteriormente, eram consideradas "ocupadas" apenas as pessoas que ajudaram, sem receber remuneração, no trabalho remunerado de outro morador do mesmo domicílio.
+# A partir de 31 de julho de 2025, as estimativas deste tema passaram a ser divulgadas com base na nova ponderação da pesquisa, conforme a Nota Técnica 02/2025. Consequentemente, a série histórica dos indicadores foi atualizada.
+[[tabelas]]
+tabela_sidra = "6379"
+variables = ["all"]
+territories = {1 = []}
+
+
+# Tabela 6380 - Nível da desocupação, na semana de referência, das pessoas de 14 anos ou mais de idade - Total, coeficiente de variação, variações em relação aos três trimestres móveis anteriores e ao mesmo trimestre móvel do ano anterior
+# Notas:
+# Para as variáveis "Situação da Variação em relação (...)": 'Z' indica significância estatística considerando 95% de confiança; 'A' indica ausência de significância estatística considerando 95% de confiança.
+# A partir de abril de 2016, um aspecto do conceito de desocupação foi alterado de forma a se adequar inteiramente à 19ª Conferência Internacional de Estatísticos do Trabalho - CIET, realizada em outubro de 2013, sendo o questionário ajustado. Com a alteração desse aspecto, passam a ser considerados desocupados aqueles que conseguiram proposta de trabalho para começar após a semana de referência e que iriam começar a trabalhar em até 3 meses; os demais, isto é, aqueles que conseguiram proposta para começar a trabalhar após 3 meses da semana de referência, passam a ser contabilizados na população fora da força de trabalho. Anteriormente, eram considerados desocupados todos aqueles que conseguiram proposta de trabalho para começar após a semana de referência, independentemente do tempo em que iniciariam o trabalho que conseguiram.
+# A partir de 31 de julho de 2025, as estimativas deste tema passaram a ser divulgadas com base na nova ponderação da pesquisa, conforme a Nota Técnica 02/2025. Consequentemente, a série histórica dos indicadores foi atualizada.
+[[tabelas]]
+tabela_sidra = "6380"
+variables = ["all"]
+territories = {1 = []}
+
+
+# Tabela 6381 - Taxa de desocupação, na semana de referência, das pessoas de 14 anos ou mais de idade - Total, coeficiente de variação, variações em relação aos três trimestres móveis anteriores e ao mesmo trimestre móvel do ano anterior
+# Notas:
+# Para as variáveis "Situação da Variação em relação (...)": 'Z' indica significância estatística considerando 95% de confiança; 'A' indica ausência de significância estatística considerando 95% de confiança.
+# A partir do 4º trimestre de 2015, em acordo com as recomendações da 19ª Conferência Internacional de Estatísticos do Trabalho - CIET, da OIT, pessoas em licença remunerada, independentemente do tempo de afastamento, passaram a ser classificadas como "ocupadas" e seus rendimentos do trabalho foram coletados normalmente. Anteriormente, as pessoas em licença remunerada na semana de referência da pesquisa e que estavam afastadas por período inferior a 4 meses eram classificadas como "ocupadas". Caso esse afastamento fosse igual ou superior a 4 meses, essas pessoas eram definidas como "fora da força de trabalho" e, portanto, não se investigava o rendimento do trabalho.
+# Além disso, a partir do 4º trimestre de 2015, também passaram a ser classificadas como "ocupadas" as pessoas que ajudaram, sem receber remuneração, no trabalho remunerado de parente, adicionalmente àquelas que ajudaram no trabalho remunerado de outro morador do mesmo domicílio. Anteriormente, eram consideradas "ocupadas" apenas as pessoas que ajudaram, sem receber remuneração, no trabalho remunerado de outro morador do mesmo domicílio.
+# A partir de abril de 2016, um aspecto do conceito de desocupação foi alterado de forma a se adequar inteiramente à 19ª Conferência Internacional de Estatísticos do Trabalho - CIET, realizada em outubro de 2013, sendo o questionário ajustado. Com a alteração desse aspecto, passam a ser considerados desocupados aqueles que conseguiram proposta de trabalho para começar após a semana de referência e que iriam começar a trabalhar em até 3 meses; os demais, isto é, aqueles que conseguiram proposta para começar a trabalhar após 3 meses da semana de referência, passam a ser contabilizados na população fora da força de trabalho. Anteriormente, eram considerados desocupados todos aqueles que conseguiram proposta de trabalho para começar após a semana de referência, independentemente do tempo em que iniciariam o trabalho que conseguiram.
+# A partir de 31 de julho de 2025, as estimativas deste tema passaram a ser divulgadas com base na nova ponderação da pesquisa, conforme a Nota Técnica 02/2025. Consequentemente, a série histórica dos indicadores foi atualizada.
+[[tabelas]]
+tabela_sidra = "6381"
+variables = ["all"]
+territories = {1 = []}
+
+
+# Tabela 6438 - Pessoas de 14 anos ou mais de idade - Total, coeficiente de variação, variações percentuais e absolutas em relação aos três trimestres móveis anteriores e ao mesmo trimestre móvel do ano anterior - por tipo de medida de subutilização da força de trabalho na semana de referência
+# Notas:
+# Para as variáveis "Situação da Variação em relação (...)": 'Z' indica significância estatística considerando 95% de confiança; 'A' indica ausência de significância estatística considerando 95% de confiança.
+# A partir do 4º trimestre de 2015, em acordo com as recomendações da 19ª Conferência Internacional de Estatísticos do Trabalho - CIET, da OIT, pessoas em licença remunerada, independentemente do tempo de afastamento, passaram a ser classificadas como "ocupadas" e seus rendimentos do trabalho foram coletados normalmente. Anteriormente, as pessoas em licença remunerada na semana de referência da pesquisa e que estavam afastadas por período inferior a 4 meses eram classificadas como "ocupadas". Caso esse afastamento fosse igual ou superior a 4 meses, essas pessoas eram definidas como "fora da força de trabalho" e, portanto, não se investigava o rendimento do trabalho.
+# Além disso, a partir do 4º trimestre de 2015, também passaram a ser classificadas como "ocupadas" as pessoas que ajudaram, sem receber remuneração, no trabalho remunerado de parente, adicionalmente àquelas que ajudaram no trabalho remunerado de outro morador do mesmo domicílio. Anteriormente, eram consideradas "ocupadas" apenas as pessoas que ajudaram, sem receber remuneração, no trabalho remunerado de outro morador do mesmo domicílio.
+# A partir do 4º trimestre de 2015 houve mudança da forma de captação do quesito de horas efetivamente trabalhadas. Anteriormente, investigavam-se as horas trabalhadas diariamente, que eram somadas para obter o total semanal. A partir do referido trimestre, passou-se a perguntar diretamente a quantidade de horas semanais efetivamente trabalhadas.
+# A partir do 4º trimestre de 2015 houve mudança de conceito na subutilização da força de trabalho por insuficiência de horas trabalhadas. Anteriormente, considerava-se no cálculo do indicador as horas efetivamente trabalhadas e, a partir do referido trimestre, as habitualmente trabalhadas. Por conta disto, não são realizadas comparações (trimestrais e/ou anuais) entre trimestres que não compartilham o mesmo conceito.
+# A partir de abril de 2016, um aspecto do conceito de desocupação foi alterado de forma a se adequar inteiramente à 19ª Conferência Internacional de Estatísticos do Trabalho - CIET, realizada em outubro de 2013, sendo o questionário ajustado. Com a alteração desse aspecto, passam a ser considerados desocupados aqueles que conseguiram proposta de trabalho para começar após a semana de referência e que iriam começar a trabalhar em até 3 meses; os demais, isto é, aqueles que conseguiram proposta para começar a trabalhar após 3 meses da semana de referência, passam a ser contabilizados na população fora da força de trabalho. Anteriormente, eram considerados desocupados todos aqueles que conseguiram proposta de trabalho para começar após a semana de referência, independentemente do tempo em que iniciariam o trabalho que conseguiram.
+# A partir de 31 de julho de 2025, as estimativas deste tema passaram a ser divulgadas com base na nova ponderação da pesquisa, conforme a Nota Técnica 02/2025. Consequentemente, a série histórica dos indicadores foi atualizada.
+[[tabelas]]
+tabela_sidra = "6438"
+variables = ["all"]
+territories = {1 = []}
+
+
+# Tabela 6439 - Taxa combinada de desocupação e de subocupação por insuficiência de horas trabalhadas - Total, coeficiente de variação, variações em relação aos três trimestres móveis anteriores e ao mesmo trimestre móvel do ano anterior
+# Notas:
+# Para as variáveis "Situação da Variação em relação (...)": 'Z' indica significância estatística considerando 95% de confiança; 'A' indica ausência de significância estatística considerando 95% de confiança.
+# A partir do 4º trimestre de 2015, em acordo com as recomendações da 19ª Conferência Internacional de Estatísticos do Trabalho - CIET, da OIT, pessoas em licença remunerada, independentemente do tempo de afastamento, passaram a ser classificadas como "ocupadas" e seus rendimentos do trabalho foram coletados normalmente. Anteriormente, as pessoas em licença remunerada na semana de referência da pesquisa e que estavam afastadas por período inferior a 4 meses eram classificadas como "ocupadas". Caso esse afastamento fosse igual ou superior a 4 meses, essas pessoas eram definidas como "fora da força de trabalho" e, portanto, não se investigava o rendimento do trabalho.
+# Além disso, a partir do 4º trimestre de 2015, também passaram a ser classificadas como "ocupadas" as pessoas que ajudaram, sem receber remuneração, no trabalho remunerado de parente, adicionalmente àquelas que ajudaram no trabalho remunerado de outro morador do mesmo domicílio. Anteriormente, eram consideradas "ocupadas" apenas as pessoas que ajudaram, sem receber remuneração, no trabalho remunerado de outro morador do mesmo domicílio.
+# A partir do 4º trimestre de 2015 houve mudança da forma de captação do quesito de horas efetivamente trabalhadas. Anteriormente, investigavam-se as horas trabalhadas diariamente, que eram somadas para obter o total semanal. A partir do referido trimestre, passou-se a perguntar diretamente a quantidade de horas semanais efetivamente trabalhadas.
+# A partir do 4º trimestre de 2015 houve mudança de conceito na subutilização da força de trabalho por insuficiência de horas trabalhadas. Anteriormente, considerava-se no cálculo do indicador as horas efetivamente trabalhadas e, a partir do referido trimestre, as habitualmente trabalhadas. Por conta disto, não são realizadas comparações (trimestrais e/ou anuais) entre trimestres que não compartilham o mesmo conceito.
+# A partir de abril de 2016, um aspecto do conceito de desocupação foi alterado de forma a se adequar inteiramente à 19ª Conferência Internacional de Estatísticos do Trabalho - CIET, realizada em outubro de 2013, sendo o questionário ajustado. Com a alteração desse aspecto, passam a ser considerados desocupados aqueles que conseguiram proposta de trabalho para começar após a semana de referência e que iriam começar a trabalhar em até 3 meses; os demais, isto é, aqueles que conseguiram proposta para começar a trabalhar após 3 meses da semana de referência, passam a ser contabilizados na população fora da força de trabalho. Anteriormente, eram considerados desocupados todos aqueles que conseguiram proposta de trabalho para começar após a semana de referência, independentemente do tempo em que iniciariam o trabalho que conseguiram.
+# A partir de 31 de julho de 2025, as estimativas deste tema passaram a ser divulgadas com base na nova ponderação da pesquisa, conforme a Nota Técnica 02/2025. Consequentemente, a série histórica dos indicadores foi atualizada.
+[[tabelas]]
+tabela_sidra = "6439"
+variables = ["all"]
+territories = {1 = []}
+
+
+# Tabela 6440 - Taxa combinada da desocupação e da força de trabalho potencial - Total, coeficiente de variação, variações em relação aos três trimestres móveis anteriores e ao mesmo trimestre móvel do ano anterior
+# Notas:
+# Para as variáveis "Situação da Variação em relação (...)": 'Z' indica significância estatística considerando 95% de confiança; 'A' indica ausência de significância estatística considerando 95% de confiança.
+# A partir do 4º trimestre de 2015, em acordo com as recomendações da 19ª Conferência Internacional de Estatísticos do Trabalho - CIET, da OIT, pessoas em licença remunerada, independentemente do tempo de afastamento, passaram a ser classificadas como "ocupadas" e seus rendimentos do trabalho foram coletados normalmente. Anteriormente, as pessoas em licença remunerada na semana de referência da pesquisa e que estavam afastadas por período inferior a 4 meses eram classificadas como "ocupadas". Caso esse afastamento fosse igual ou superior a 4 meses, essas pessoas eram definidas como "fora da força de trabalho" e, portanto, não se investigava o rendimento do trabalho.
+# Além disso, a partir do 4º trimestre de 2015, também passaram a ser classificadas como "ocupadas" as pessoas que ajudaram, sem receber remuneração, no trabalho remunerado de parente, adicionalmente àquelas que ajudaram no trabalho remunerado de outro morador do mesmo domicílio. Anteriormente, eram consideradas "ocupadas" apenas as pessoas que ajudaram, sem receber remuneração, no trabalho remunerado de outro morador do mesmo domicílio.
+# A partir de abril de 2016, um aspecto do conceito de desocupação foi alterado de forma a se adequar inteiramente à 19ª Conferência Internacional de Estatísticos do Trabalho - CIET, realizada em outubro de 2013, sendo o questionário ajustado. Com a alteração desse aspecto, passam a ser considerados desocupados aqueles que conseguiram proposta de trabalho para começar após a semana de referência e que iriam começar a trabalhar em até 3 meses; os demais, isto é, aqueles que conseguiram proposta para começar a trabalhar após 3 meses da semana de referência, passam a ser contabilizados na população fora da força de trabalho. Anteriormente, eram considerados desocupados todos aqueles que conseguiram proposta de trabalho para começar após a semana de referência, independentemente do tempo em que iniciariam o trabalho que conseguiram.
+# A partir de 31 de julho de 2025, as estimativas deste tema passaram a ser divulgadas com base na nova ponderação da pesquisa, conforme a Nota Técnica 02/2025. Consequentemente, a série histórica dos indicadores foi atualizada.
+[[tabelas]]
+tabela_sidra = "6440"
+variables = ["all"]
+territories = {1 = []}
+
+
+# Tabela 6441 - Taxa composta da subutilização da força de trabalho - Total, coeficiente de variação, variações em relação aos três trimestres móveis anteriores e ao mesmo trimestre móvel do ano anterior
+# Notas:
+# Para as variáveis "Situação da Variação em relação (...)": 'Z' indica significância estatística considerando 95% de confiança; 'A' indica ausência de significância estatística considerando 95% de confiança.
+# A partir do 4º trimestre de 2015, em acordo com as recomendações da 19ª Conferência Internacional de Estatísticos do Trabalho - CIET, da OIT, pessoas em licença remunerada, independentemente do tempo de afastamento, passaram a ser classificadas como "ocupadas" e seus rendimentos do trabalho foram coletados normalmente. Anteriormente, as pessoas em licença remunerada na semana de referência da pesquisa e que estavam afastadas por período inferior a 4 meses eram classificadas como "ocupadas". Caso esse afastamento fosse igual ou superior a 4 meses, essas pessoas eram definidas como "fora da força de trabalho" e, portanto, não se investigava o rendimento do trabalho.
+# Além disso, a partir do 4º trimestre de 2015, também passaram a ser classificadas como "ocupadas" as pessoas que ajudaram, sem receber remuneração, no trabalho remunerado de parente, adicionalmente àquelas que ajudaram no trabalho remunerado de outro morador do mesmo domicílio. Anteriormente, eram consideradas "ocupadas" apenas as pessoas que ajudaram, sem receber remuneração, no trabalho remunerado de outro morador do mesmo domicílio.
+# A partir do 4º trimestre de 2015 houve mudança da forma de captação do quesito de horas efetivamente trabalhadas. Anteriormente, investigavam-se as horas trabalhadas diariamente, que eram somadas para obter o total semanal. A partir do referido trimestre, passou-se a perguntar diretamente a quantidade de horas semanais efetivamente trabalhadas.
+# A partir do 4º trimestre de 2015 houve mudança de conceito na subutilização da força de trabalho por insuficiência de horas trabalhadas. Anteriormente, considerava-se no cálculo do indicador as horas efetivamente trabalhadas e, a partir do referido trimestre, as habitualmente trabalhadas. Por conta disto, não são realizadas comparações (trimestrais e/ou anuais) entre trimestres que não compartilham o mesmo conceito.
+# A partir de abril de 2016, um aspecto do conceito de desocupação foi alterado de forma a se adequar inteiramente à 19ª Conferência Internacional de Estatísticos do Trabalho - CIET, realizada em outubro de 2013, sendo o questionário ajustado. Com a alteração desse aspecto, passam a ser considerados desocupados aqueles que conseguiram proposta de trabalho para começar após a semana de referência e que iriam começar a trabalhar em até 3 meses; os demais, isto é, aqueles que conseguiram proposta para começar a trabalhar após 3 meses da semana de referência, passam a ser contabilizados na população fora da força de trabalho. Anteriormente, eram considerados desocupados todos aqueles que conseguiram proposta de trabalho para começar após a semana de referência, independentemente do tempo em que iniciariam o trabalho que conseguiram.
+# A partir de 31 de julho de 2025, as estimativas deste tema passaram a ser divulgadas com base na nova ponderação da pesquisa, conforme a Nota Técnica 02/2025. Consequentemente, a série histórica dos indicadores foi atualizada.
+[[tabelas]]
+tabela_sidra = "6441"
+variables = ["all"]
+territories = {1 = []}
+
+
+# Tabela 6807 - Percentual de pessoas desalentadas na população na força de trabalho ou desalentada - Total, coeficiente de variação, variações em relação aos três trimestres móveis anteriores e ao mesmo trimestre móvel do ano anterior
+# Notas:
+# Para as variáveis "Situação da Variação em relação (...)": 'Z' indica significância estatística considerando 95% de confiança; 'A' indica ausência de significância estatística considerando 95% de confiança.
+# A partir do 4º trimestre de 2015, em acordo com as recomendações da 19ª Conferência Internacional de Estatísticos do Trabalho - CIET, da OIT, pessoas em licença remunerada, independentemente do tempo de afastamento, passaram a ser classificadas como "ocupadas" e seus rendimentos do trabalho foram coletados normalmente. Anteriormente, as pessoas em licença remunerada na semana de referência da pesquisa e que estavam afastadas por período inferior a 4 meses eram classificadas como "ocupadas". Caso esse afastamento fosse igual ou superior a 4 meses, essas pessoas eram definidas como "fora da força de trabalho" e, portanto, não se investigava o rendimento do trabalho.
+# Além disso, a partir do 4º trimestre de 2015, também passaram a ser classificadas como "ocupadas" as pessoas que ajudaram, sem receber remuneração, no trabalho remunerado de parente, adicionalmente àquelas que ajudaram no trabalho remunerado de outro morador do mesmo domicílio. Anteriormente, eram consideradas "ocupadas" apenas as pessoas que ajudaram, sem receber remuneração, no trabalho remunerado de outro morador do mesmo domicílio.
+# A partir de abril de 2016, um aspecto do conceito de desocupação foi alterado de forma a se adequar inteiramente à 19ª Conferência Internacional de Estatísticos do Trabalho - CIET, realizada em outubro de 2013, sendo o questionário ajustado. Com a alteração desse aspecto, passam a ser considerados desocupados aqueles que conseguiram proposta de trabalho para começar após a semana de referência e que iriam começar a trabalhar em até 3 meses; os demais, isto é, aqueles que conseguiram proposta para começar a trabalhar após 3 meses da semana de referência, passam a ser contabilizados na população fora da força de trabalho. Anteriormente, eram considerados desocupados todos aqueles que conseguiram proposta de trabalho para começar após a semana de referência, independentemente do tempo em que iniciariam o trabalho que conseguiram.
+# A partir de 31 de julho de 2025, as estimativas deste tema passaram a ser divulgadas com base na nova ponderação da pesquisa, conforme a Nota Técnica 02/2025. Consequentemente, a série histórica dos indicadores foi atualizada.
+[[tabelas]]
+tabela_sidra = "6807"
+variables = ["all"]
+territories = {1 = []}
+
+
+# População ocupada
+
+# Tabela 6320 - Pessoas de 14 anos ou mais de idade, ocupadas na semana de referência - Total, coeficiente de variação, variações percentuais e absolutas em relação aos três trimestres móveis anteriores e ao mesmo trimestre móvel do ano anterior - por posição na ocupação e categoria do emprego no trabalho principal
+# Notas:
+# Para as variáveis "Situação da Variação em relação (...)": 'Z' indica significância estatística considerando 95% de confiança; 'A' indica ausência de significância estatística considerando 95% de confiança.
+# A partir do 4º trimestre de 2015, em acordo com as recomendações da 19ª Conferência Internacional de Estatísticos do Trabalho - CIET, da OIT, pessoas em licença remunerada, independentemente do tempo de afastamento, passaram a ser classificadas como "ocupadas" e seus rendimentos do trabalho foram coletados normalmente. Anteriormente, as pessoas em licença remunerada na semana de referência da pesquisa e que estavam afastadas por período inferior a 4 meses eram classificadas como "ocupadas". Caso esse afastamento fosse igual ou superior a 4 meses, essas pessoas eram definidas como "fora da força de trabalho" e, portanto, não se investigava o rendimento do trabalho.
+# Além disso, a partir do 4º trimestre de 2015, também passaram a ser classificadas como "ocupadas" as pessoas que ajudaram, sem receber remuneração, no trabalho remunerado de parente, adicionalmente àquelas que ajudaram no trabalho remunerado de outro morador do mesmo domicílio. Anteriormente, eram consideradas "ocupadas" apenas as pessoas que ajudaram, sem receber remuneração, no trabalho remunerado de outro morador do mesmo domicílio.
+# A partir de 31 de julho de 2025, as estimativas deste tema passaram a ser divulgadas com base na nova ponderação da pesquisa, conforme a Nota Técnica 02/2025. Consequentemente, a série histórica dos indicadores foi atualizada.
+[[tabelas]]
+tabela_sidra = "6320"
+variables = ["all"]
+territories = {1 = []}
+
+
+# Tabela 6323 - Pessoas de 14 anos ou mais de idade, ocupadas na semana de referência - Total, coeficiente de variação, variações percentuais e absolutas em relação aos três trimestres móveis anteriores e ao mesmo trimestre móvel do ano anterior - por grupamento de atividade no trabalho principal
+# Notas:
+# Para as variáveis "Situação da Variação em relação (...)": 'Z' indica significância estatística considerando 95% de confiança; 'A' indica ausência de significância estatística considerando 95% de confiança.
+# A partir do 4º trimestre de 2015, em acordo com as recomendações da 19ª Conferência Internacional de Estatísticos do Trabalho - CIET, da OIT, pessoas em licença remunerada, independentemente do tempo de afastamento, passaram a ser classificadas como "ocupadas" e seus rendimentos do trabalho foram coletados normalmente. Anteriormente, as pessoas em licença remunerada na semana de referência da pesquisa e que estavam afastadas por período inferior a 4 meses eram classificadas como "ocupadas". Caso esse afastamento fosse igual ou superior a 4 meses, essas pessoas eram definidas como "fora da força de trabalho" e, portanto, não se investigava o rendimento do trabalho.
+# Além disso, a partir do 4º trimestre de 2015, também passaram a ser classificadas como "ocupadas" as pessoas que ajudaram, sem receber remuneração, no trabalho remunerado de parente, adicionalmente àquelas que ajudaram no trabalho remunerado de outro morador do mesmo domicílio. Anteriormente, eram consideradas "ocupadas" apenas as pessoas que ajudaram, sem receber remuneração, no trabalho remunerado de outro morador do mesmo domicílio.
+# Os grupamentos de atividade "Administração pública, defesa e seguridade" e "Educação, saúde humana e serviços sociais" foram agrupados para melhorar a precisão da estimativa.
+# A partir de 31 de julho de 2025, as estimativas deste tema passaram a ser divulgadas com base na nova ponderação da pesquisa, conforme a Nota Técnica 02/2025. Consequentemente, a série histórica dos indicadores foi atualizada.
+# A categoria Total para “Grupamento de atividade no trabalho principal” inclui atividades mal definidas.
+[[tabelas]]
+tabela_sidra = "6323"
+variables = ["all"]
+territories = {1 = []}
+
+
+# Tabela 3918 - Pessoas de 14 anos ou mais de idade, ocupadas na semana de referência - Total, coeficiente de variação, variações percentuais e absolutas em relação aos três trimestres móveis anteriores e ao mesmo trimestre móvel do ano anterior - por contribuição para instituto de previdência em qualquer trabalho
+# Notas:
+# Para as variáveis "Situação da Variação em relação (...)": 'Z' indica significância estatística considerando 95% de confiança; 'A' indica ausência de significância estatística considerando 95% de confiança.
+# A partir do 4º trimestre de 2015, em acordo com as recomendações da 19ª Conferência Internacional de Estatísticos do Trabalho - CIET, da OIT, pessoas em licença remunerada, independentemente do tempo de afastamento, passaram a ser classificadas como "ocupadas" e seus rendimentos do trabalho foram coletados normalmente. Anteriormente, as pessoas em licença remunerada na semana de referência da pesquisa e que estavam afastadas por período inferior a 4 meses eram classificadas como "ocupadas". Caso esse afastamento fosse igual ou superior a 4 meses, essas pessoas eram definidas como "fora da força de trabalho" e, portanto, não se investigava o rendimento do trabalho.
+# Além disso, a partir do 4º trimestre de 2015, também passaram a ser classificadas como "ocupadas" as pessoas que ajudaram, sem receber remuneração, no trabalho remunerado de parente, adicionalmente àquelas que ajudaram no trabalho remunerado de outro morador do mesmo domicílio. Anteriormente, eram consideradas "ocupadas" apenas as pessoas que ajudaram, sem receber remuneração, no trabalho remunerado de outro morador do mesmo domicílio.
+# A partir de 31 de julho de 2025, as estimativas deste tema passaram a ser divulgadas com base na nova ponderação da pesquisa, conforme a Nota Técnica 02/2025. Consequentemente, a série histórica dos indicadores foi atualizada.
+[[tabelas]]
+tabela_sidra = "3918"
+variables = ["all"]
+territories = {1 = []}
+
+
+# Tabela 3919 - Percentual de pessoas contribuintes de instituto de previdência em qualquer trabalho, na população de 14 anos ou mais de idade, ocupada na semana de referência - Total, coeficiente de variação, variações em relação aos três trimestres móveis anteriores e ao mesmo trimestre móvel do ano anterior
+# Notas:
+# Para as variáveis "Situação da Variação em relação (...)": 'Z' indica significância estatística considerando 95% de confiança; 'A' indica ausência de significância estatística considerando 95% de confiança.
+# A partir do 4º trimestre de 2015, em acordo com as recomendações da 19ª Conferência Internacional de Estatísticos do Trabalho - CIET, da OIT, pessoas em licença remunerada, independentemente do tempo de afastamento, passaram a ser classificadas como "ocupadas" e seus rendimentos do trabalho foram coletados normalmente. Anteriormente, as pessoas em licença remunerada na semana de referência da pesquisa e que estavam afastadas por período inferior a 4 meses eram classificadas como "ocupadas". Caso esse afastamento fosse igual ou superior a 4 meses, essas pessoas eram definidas como "fora da força de trabalho" e, portanto, não se investigava o rendimento do trabalho.
+# Além disso, a partir do 4º trimestre de 2015, também passaram a ser classificadas como "ocupadas" as pessoas que ajudaram, sem receber remuneração, no trabalho remunerado de parente, adicionalmente àquelas que ajudaram no trabalho remunerado de outro morador do mesmo domicílio. Anteriormente, eram consideradas "ocupadas" apenas as pessoas que ajudaram, sem receber remuneração, no trabalho remunerado de outro morador do mesmo domicílio.
+# A partir de 31 de julho de 2025, as estimativas deste tema passaram a ser divulgadas com base na nova ponderação da pesquisa, conforme a Nota Técnica 02/2025. Consequentemente, a série histórica dos indicadores foi atualizada.
+[[tabelas]]
+tabela_sidra = "3919"
+variables = ["all"]
+territories = {1 = []}
+
+
+# Tabela 6785 - Taxa de subocupação por insuficiência de horas trabalhadas - Total, coeficiente de variação, variações em relação aos três trimestres móveis anteriores e ao mesmo trimestre móvel do ano anterior
+# Notas:
+# Para as variáveis "Situação da Variação em relação (...)": 'Z' indica significância estatística considerando 95% de confiança; 'A' indica ausência de significância estatística considerando 95% de confiança.
+# A partir do 4º trimestre de 2015, em acordo com as recomendações da 19ª Conferência Internacional de Estatísticos do Trabalho - CIET, da OIT, pessoas em licença remunerada, independentemente do tempo de afastamento, passaram a ser classificadas como "ocupadas" e seus rendimentos do trabalho foram coletados normalmente. Anteriormente, as pessoas em licença remunerada na semana de referência da pesquisa e que estavam afastadas por período inferior a 4 meses eram classificadas como "ocupadas". Caso esse afastamento fosse igual ou superior a 4 meses, essas pessoas eram definidas como "fora da força de trabalho" e, portanto, não se investigava o rendimento do trabalho.
+# Além disso, a partir do 4º trimestre de 2015, também passaram a ser classificadas como "ocupadas" as pessoas que ajudaram, sem receber remuneração, no trabalho remunerado de parente, adicionalmente àquelas que ajudaram no trabalho remunerado de outro morador do mesmo domicílio. Anteriormente, eram consideradas "ocupadas" apenas as pessoas que ajudaram, sem receber remuneração, no trabalho remunerado de outro morador do mesmo domicílio.
+# A partir do 4º trimestre de 2015 houve mudança da forma de captação do quesito de horas efetivamente trabalhadas. Anteriormente, investigavam-se as horas trabalhadas diariamente, que eram somadas para obter o total semanal. A partir do referido trimestre, passou-se a perguntar diretamente a quantidade de horas semanais efetivamente trabalhadas.
+# A partir do 4º trimestre de 2015 houve mudança de conceito na subutilização da força de trabalho por insuficiência de horas trabalhadas. Anteriormente, considerava-se no cálculo do indicador as horas efetivamente trabalhadas e, a partir do referido trimestre, as habitualmente trabalhadas. Por conta disto, não são realizadas comparações (trimestrais e/ou anuais) entre trimestres que não compartilham o mesmo conceito.
+# A partir de 31 de julho de 2025, as estimativas deste tema passaram a ser divulgadas com base na nova ponderação da pesquisa, conforme a Nota Técnica 02/2025. Consequentemente, a série histórica dos indicadores foi atualizada.
+[[tabelas]]
+tabela_sidra = "6785"
+variables = ["all"]
+territories = {1 = []}
+
+
+# Tabela 8501 - Pessoas de 14 anos ou mais de idade, ocupadas na semana de referência - Total, coeficiente de variação, variações percentuais e absolutas em relação aos três trimestres móveis anteriores e ao mesmo trimestre móvel do ano anterior - por situação de informalidade no trabalho principal
+# Notas:
+# Para as variáveis "Situação da Variação em relação (...)": 'Z' indica significância estatística considerando 95% de confiança; 'A' indica ausência de significância estatística considerando 95% de confiança.
+# A partir do 4º trimestre de 2015, em acordo com as recomendações da 19ª Conferência Internacional de Estatísticos do Trabalho - CIET, da OIT, pessoas em licença remunerada, independentemente do tempo de afastamento, passaram a ser classificadas como "ocupadas" e seus rendimentos do trabalho foram coletados normalmente. Anteriormente, as pessoas em licença remunerada na semana de referência da pesquisa e que estavam afastadas por período inferior a 4 meses eram classificadas como "ocupadas". Caso esse afastamento fosse igual ou superior a 4 meses, essas pessoas eram definidas como "fora da força de trabalho" e, portanto, não se investigava o rendimento do trabalho.
+# Além disso, a partir do 4º trimestre de 2015, também passaram a ser classificadas como "ocupadas" as pessoas que ajudaram, sem receber remuneração, no trabalho remunerado de parente, adicionalmente àquelas que ajudaram no trabalho remunerado de outro morador do mesmo domicílio. Anteriormente, eram consideradas "ocupadas" apenas as pessoas que ajudaram, sem receber remuneração, no trabalho remunerado de outro morador do mesmo domicílio.
+# A situação de informalidade se refere às pessoas ocupadas como “Empregado no setor privado, exclusive trabalhador doméstico - sem carteira de trabalho assinada”, “Trabalhador doméstico - sem carteira de trabalho assinada”, “Empregador sem CNPJ”, “Conta própria sem CNPJ” e “Trabalhador familiar auxiliar” no trabalho principal.
+# A partir de 31 de julho de 2025, as estimativas deste tema passaram a ser divulgadas com base na nova ponderação da pesquisa, conforme a Nota Técnica 02/2025. Consequentemente, a série histórica dos indicadores foi atualizada.
+[[tabelas]]
+tabela_sidra = "8501"
+variables = ["all"]
+territories = {1 = []}
+
+
+# Tabela 8513 - Taxa de informalidade das pessoas de 14 anos ou mais de idade, ocupadas na semana de referência - Total, coeficiente de variação, variações em relação aos três trimestres móveis anteriores e ao mesmo trimestre móvel do ano anterior
+# Notas:
+# Para as variáveis "Situação da Variação em relação (...)": 'Z' indica significância estatística considerando 95% de confiança; 'A' indica ausência de significância estatística considerando 95% de confiança.
+# A partir do 4º trimestre de 2015, em acordo com as recomendações da 19ª Conferência Internacional de Estatísticos do Trabalho - CIET, da OIT, pessoas em licença remunerada, independentemente do tempo de afastamento, passaram a ser classificadas como "ocupadas" e seus rendimentos do trabalho foram coletados normalmente. Anteriormente, as pessoas em licença remunerada na semana de referência da pesquisa e que estavam afastadas por período inferior a 4 meses eram classificadas como "ocupadas". Caso esse afastamento fosse igual ou superior a 4 meses, essas pessoas eram definidas como "fora da força de trabalho" e, portanto, não se investigava o rendimento do trabalho.
+# Além disso, a partir do 4º trimestre de 2015, também passaram a ser classificadas como "ocupadas" as pessoas que ajudaram, sem receber remuneração, no trabalho remunerado de parente, adicionalmente àquelas que ajudaram no trabalho remunerado de outro morador do mesmo domicílio. Anteriormente, eram consideradas "ocupadas" apenas as pessoas que ajudaram, sem receber remuneração, no trabalho remunerado de outro morador do mesmo domicílio.
+# A situação de informalidade se refere às pessoas ocupadas como “Empregado no setor privado, exclusive trabalhador doméstico - sem carteira de trabalho assinada”, “Trabalhador doméstico - sem carteira de trabalho assinada”, “Empregador sem CNPJ”, “Conta própria sem CNPJ” e “Trabalhador familiar auxiliar” no trabalho principal.
+# A partir de 31 de julho de 2025, as estimativas deste tema passaram a ser divulgadas com base na nova ponderação da pesquisa, conforme a Nota Técnica 02/2025. Consequentemente, a série histórica dos indicadores foi atualizada.
+[[tabelas]]
+tabela_sidra = "8513"
+variables = ["all"]
+territories = {1 = []}
+
+
+# Rendimento médio da população ocupada, com rendimento de trabalho
+
+# Tabela 6390 - Rendimento médio mensal real e nominal das pessoas de 14 anos ou mais de idade ocupadas na semana de referência com rendimento de trabalho, habitualmente recebido em todos os trabalhos - Total, coeficiente de variação, variações em relação aos três trimestres móveis anteriores e ao mesmo trimestre móvel do ano anterior
+# Notas:
+# Para as variáveis "Situação da Variação em relação (...)": 'Z' indica significância estatística considerando 95% de confiança; 'A' indica ausência de significância estatística considerando 95% de confiança.
+# A partir do 4º trimestre de 2015, em acordo com as recomendações da 19ª Conferência Internacional de Estatísticos do Trabalho - CIET, da OIT, pessoas em licença remunerada, independentemente do tempo de afastamento, passaram a ser classificadas como "ocupadas" e seus rendimentos do trabalho foram coletados normalmente. Anteriormente, as pessoas em licença remunerada na semana de referência da pesquisa e que estavam afastadas por período inferior a 4 meses eram classificadas como "ocupadas". Caso esse afastamento fosse igual ou superior a 4 meses, essas pessoas eram definidas como "fora da força de trabalho" e, portanto, não se investigava o rendimento do trabalho.
+# Além disso, a partir do 4º trimestre de 2015, também passaram a ser classificadas como "ocupadas" as pessoas que ajudaram, sem receber remuneração, no trabalho remunerado de parente, adicionalmente àquelas que ajudaram no trabalho remunerado de outro morador do mesmo domicílio. Anteriormente, eram consideradas "ocupadas" apenas as pessoas que ajudaram, sem receber remuneração, no trabalho remunerado de outro morador do mesmo domicílio.
+# Para cálculo do valor real é utilizado o deflator da média do último trimestre de coleta divulgado, conforme a Nota Técnica (maio/2015 - atualizada em 16/10/2018).
+# A partir de 31 de julho de 2025, as estimativas deste tema passaram a ser divulgadas com base na nova ponderação da pesquisa, conforme a Nota Técnica 02/2025. Consequentemente, a série histórica dos indicadores foi atualizada.
+[[tabelas]]
+tabela_sidra = "6390"
+variables = ["all"]
+territories = {1 = []}
+
+
+# Tabela 6387 - Rendimento médio mensal real e nominal das pessoas de 14 anos ou mais de idade ocupadas na semana de referência com rendimento de trabalho, efetivamente recebido em todos os trabalhos - Total, coeficiente de variação, variações em relação aos três trimestres móveis anteriores e ao mesmo trimestre móvel do ano anterior
+# Notas:
+# Para as variáveis "Situação da Variação em relação (...)": 'Z' indica significância estatística considerando 95% de confiança; 'A' indica ausência de significância estatística considerando 95% de confiança.
+# A partir do 4º trimestre de 2015, em acordo com as recomendações da 19ª Conferência Internacional de Estatísticos do Trabalho - CIET, da OIT, pessoas em licença remunerada, independentemente do tempo de afastamento, passaram a ser classificadas como "ocupadas" e seus rendimentos do trabalho foram coletados normalmente. Anteriormente, as pessoas em licença remunerada na semana de referência da pesquisa e que estavam afastadas por período inferior a 4 meses eram classificadas como "ocupadas". Caso esse afastamento fosse igual ou superior a 4 meses, essas pessoas eram definidas como "fora da força de trabalho" e, portanto, não se investigava o rendimento do trabalho.
+# Além disso, a partir do 4º trimestre de 2015, também passaram a ser classificadas como "ocupadas" as pessoas que ajudaram, sem receber remuneração, no trabalho remunerado de parente, adicionalmente àquelas que ajudaram no trabalho remunerado de outro morador do mesmo domicílio. Anteriormente, eram consideradas "ocupadas" apenas as pessoas que ajudaram, sem receber remuneração, no trabalho remunerado de outro morador do mesmo domicílio.
+# O valor efetivo se refere ao valor recebido no mês anterior ao da coleta.
+# Para cálculo do valor real é utilizado o deflator da média do último trimestre de coleta divulgado, conforme a Nota Técnica (maio/2015 - atualizada em 16/10/2018).
+# A partir de 31 de julho de 2025, as estimativas deste tema passaram a ser divulgadas com base na nova ponderação da pesquisa, conforme a Nota Técnica 02/2025. Consequentemente, a série histórica dos indicadores foi atualizada.
+[[tabelas]]
+tabela_sidra = "6387"
+variables = ["all"]
+territories = {1 = []}
+
+
+# Tabela 6389 - Rendimento médio mensal real das pessoas de 14 anos ou mais de idade ocupadas na semana de referência com rendimento de trabalho, habitualmente recebido no trabalho principal - Total, coeficiente de variação, variações em relação aos três trimestres móveis anteriores e ao mesmo trimestre móvel do ano anterior - por posição na ocupação e categoria do emprego no trabalho principal
+# Notas:
+# Para as variáveis "Situação da Variação em relação (...)": 'Z' indica significância estatística considerando 95% de confiança; 'A' indica ausência de significância estatística considerando 95% de confiança.
+# A partir do 4º trimestre de 2015, em acordo com as recomendações da 19ª Conferência Internacional de Estatísticos do Trabalho - CIET, da OIT, pessoas em licença remunerada, independentemente do tempo de afastamento, passaram a ser classificadas como "ocupadas" e seus rendimentos do trabalho foram coletados normalmente. Anteriormente, as pessoas em licença remunerada na semana de referência da pesquisa e que estavam afastadas por período inferior a 4 meses eram classificadas como "ocupadas". Caso esse afastamento fosse igual ou superior a 4 meses, essas pessoas eram definidas como "fora da força de trabalho" e, portanto, não se investigava o rendimento do trabalho.
+# Além disso, a partir do 4º trimestre de 2015, também passaram a ser classificadas como "ocupadas" as pessoas que ajudaram, sem receber remuneração, no trabalho remunerado de parente, adicionalmente àquelas que ajudaram no trabalho remunerado de outro morador do mesmo domicílio. Anteriormente, eram consideradas "ocupadas" apenas as pessoas que ajudaram, sem receber remuneração, no trabalho remunerado de outro morador do mesmo domicílio.
+# Para cálculo do valor real é utilizado o deflator da média do último trimestre de coleta divulgado, conforme a Nota Técnica (maio/2015 - atualizada em 16/10/2018).
+# A partir de 31 de julho de 2025, as estimativas deste tema passaram a ser divulgadas com base na nova ponderação da pesquisa, conforme a Nota Técnica 02/2025. Consequentemente, a série histórica dos indicadores foi atualizada.
+[[tabelas]]
+tabela_sidra = "6389"
+variables = ["all"]
+territories = {1 = []}
+
+
+# Tabela 6388 - Rendimento médio mensal real das pessoas de 14 anos ou mais de idade ocupadas na semana de referência com rendimento de trabalho, efetivamente recebido no trabalho principal - Total, coeficiente de variação, variações em relação aos três trimestres móveis anteriores e ao mesmo trimestre móvel do ano anterior
+# Notas:
+# Para as variáveis "Situação da Variação em relação (...)": 'Z' indica significância estatística considerando 95% de confiança; 'A' indica ausência de significância estatística considerando 95% de confiança.
+# A partir do 4º trimestre de 2015, em acordo com as recomendações da 19ª Conferência Internacional de Estatísticos do Trabalho - CIET, da OIT, pessoas em licença remunerada, independentemente do tempo de afastamento, passaram a ser classificadas como "ocupadas" e seus rendimentos do trabalho foram coletados normalmente. Anteriormente, as pessoas em licença remunerada na semana de referência da pesquisa e que estavam afastadas por período inferior a 4 meses eram classificadas como "ocupadas". Caso esse afastamento fosse igual ou superior a 4 meses, essas pessoas eram definidas como "fora da força de trabalho" e, portanto, não se investigava o rendimento do trabalho.
+# Além disso, a partir do 4º trimestre de 2015, também passaram a ser classificadas como "ocupadas" as pessoas que ajudaram, sem receber remuneração, no trabalho remunerado de parente, adicionalmente àquelas que ajudaram no trabalho remunerado de outro morador do mesmo domicílio. Anteriormente, eram consideradas "ocupadas" apenas as pessoas que ajudaram, sem receber remuneração, no trabalho remunerado de outro morador do mesmo domicílio.
+# O valor efetivo se refere ao valor recebido no mês anterior ao da coleta.
+# Para cálculo do valor real é utilizado o deflator da média do último trimestre de coleta divulgado, conforme a Nota Técnica (maio/2015 - atualizada em 16/10/2018).
+# A partir de 31 de julho de 2025, as estimativas deste tema passaram a ser divulgadas com base na nova ponderação da pesquisa, conforme a Nota Técnica 02/2025. Consequentemente, a série histórica dos indicadores foi atualizada.
+[[tabelas]]
+tabela_sidra = "6388"
+variables = ["all"]
+territories = {1 = []}
+
+
+# Tabela 6391 - Rendimento médio mensal real das pessoas de 14 anos ou mais de idade ocupadas na semana de referência com rendimento de trabalho, habitualmente recebido no trabalho principal - Total, coeficiente de variação, variações em relação aos três trimestres móveis anteriores e ao mesmo trimestre móvel do ano anterior - por grupamento de atividade no trabalho principal
+# Notas:
+# Para as variáveis "Situação da Variação em relação (...)": 'Z' indica significância estatística considerando 95% de confiança; 'A' indica ausência de significância estatística considerando 95% de confiança.
+# A partir do 4º trimestre de 2015, em acordo com as recomendações da 19ª Conferência Internacional de Estatísticos do Trabalho - CIET, da OIT, pessoas em licença remunerada, independentemente do tempo de afastamento, passaram a ser classificadas como "ocupadas" e seus rendimentos do trabalho foram coletados normalmente. Anteriormente, as pessoas em licença remunerada na semana de referência da pesquisa e que estavam afastadas por período inferior a 4 meses eram classificadas como "ocupadas". Caso esse afastamento fosse igual ou superior a 4 meses, essas pessoas eram definidas como "fora da força de trabalho" e, portanto, não se investigava o rendimento do trabalho.
+# Além disso, a partir do 4º trimestre de 2015, também passaram a ser classificadas como "ocupadas" as pessoas que ajudaram, sem receber remuneração, no trabalho remunerado de parente, adicionalmente àquelas que ajudaram no trabalho remunerado de outro morador do mesmo domicílio. Anteriormente, eram consideradas "ocupadas" apenas as pessoas que ajudaram, sem receber remuneração, no trabalho remunerado de outro morador do mesmo domicílio.
+# Os grupamentos de atividade "Administração pública, defesa e seguridade" e "Educação, saúde humana e serviços sociais" foram agrupados para melhorar a precisão da estimativa.
+# Para cálculo do valor real é utilizado o deflator da média do último trimestre de coleta divulgado, conforme a Nota Técnica (maio/2015 - atualizada em 16/10/2018).
+# A partir de 31 de julho de 2025, as estimativas deste tema passaram a ser divulgadas com base na nova ponderação da pesquisa, conforme a Nota Técnica 02/2025. Consequentemente, a série histórica dos indicadores foi atualizada.
+# A categoria Total para “Grupamento de atividade no trabalho principal” inclui atividades mal definidas.
+[[tabelas]]
+tabela_sidra = "6391"
+variables = ["all"]
+territories = {1 = []}
+
+
+# Massa de rendimento da população ocupada, com rendimento de trabalho
+
+# Tabela 6392 - Massa de rendimento mensal real e nominal das pessoas de 14 anos ou mais de idade ocupadas na semana de referência com rendimento de trabalho, habitualmente recebido em todos os trabalhos - Total, coeficiente de variação, variações percentuais e absolutas em relação aos três trimestres móveis anteriores e ao mesmo trimestre móvel do ano anterior
+# Notas:
+# Para as variáveis "Situação da Variação em relação (...)": 'Z' indica significância estatística considerando 95% de confiança; 'A' indica ausência de significância estatística considerando 95% de confiança.
+# A partir do 4º trimestre de 2015, em acordo com as recomendações da 19ª Conferência Internacional de Estatísticos do Trabalho - CIET, da OIT, pessoas em licença remunerada, independentemente do tempo de afastamento, passaram a ser classificadas como "ocupadas" e seus rendimentos do trabalho foram coletados normalmente. Anteriormente, as pessoas em licença remunerada na semana de referência da pesquisa e que estavam afastadas por período inferior a 4 meses eram classificadas como "ocupadas". Caso esse afastamento fosse igual ou superior a 4 meses, essas pessoas eram definidas como "fora da força de trabalho" e, portanto, não se investigava o rendimento do trabalho.
+# Além disso, a partir do 4º trimestre de 2015, também passaram a ser classificadas como "ocupadas" as pessoas que ajudaram, sem receber remuneração, no trabalho remunerado de parente, adicionalmente àquelas que ajudaram no trabalho remunerado de outro morador do mesmo domicílio. Anteriormente, eram consideradas "ocupadas" apenas as pessoas que ajudaram, sem receber remuneração, no trabalho remunerado de outro morador do mesmo domicílio.
+# Para cálculo do valor real é utilizado o deflator da média do último trimestre de coleta divulgado, conforme a Nota Técnica (maio/2015 - atualizada em 16/10/2018).
+# A partir de 31 de julho de 2025, as estimativas deste tema passaram a ser divulgadas com base na nova ponderação da pesquisa, conforme a Nota Técnica 02/2025. Consequentemente, a série histórica dos indicadores foi atualizada.
+[[tabelas]]
+tabela_sidra = "6392"
+variables = ["all"]
+territories = {1 = []}
+
+
+# Tabela 6393 - Massa de rendimento mensal real e nominal das pessoas de 14 anos ou mais de idade ocupadas na semana de referência com rendimento de trabalho, efetivamente recebido em todos os trabalhos - Total, coeficiente de variação, variações percentuais e absolutas em relação aos três trimestres móveis anteriores e ao mesmo trimestre móvel do ano anterior
+# Notas:
+# Para as variáveis "Situação da Variação em relação (...)": 'Z' indica significância estatística considerando 95% de confiança; 'A' indica ausência de significância estatística considerando 95% de confiança.
+# A partir do 4º trimestre de 2015, em acordo com as recomendações da 19ª Conferência Internacional de Estatísticos do Trabalho - CIET, da OIT, pessoas em licença remunerada, independentemente do tempo de afastamento, passaram a ser classificadas como "ocupadas" e seus rendimentos do trabalho foram coletados normalmente. Anteriormente, as pessoas em licença remunerada na semana de referência da pesquisa e que estavam afastadas por período inferior a 4 meses eram classificadas como "ocupadas". Caso esse afastamento fosse igual ou superior a 4 meses, essas pessoas eram definidas como "fora da força de trabalho" e, portanto, não se investigava o rendimento do trabalho.
+# Além disso, a partir do 4º trimestre de 2015, também passaram a ser classificadas como "ocupadas" as pessoas que ajudaram, sem receber remuneração, no trabalho remunerado de parente, adicionalmente àquelas que ajudaram no trabalho remunerado de outro morador do mesmo domicílio. Anteriormente, eram consideradas "ocupadas" apenas as pessoas que ajudaram, sem receber remuneração, no trabalho remunerado de outro morador do mesmo domicílio.
+# O valor efetivo se refere ao valor recebido no mês anterior ao da coleta.
+# Para cálculo do valor real é utilizado o deflator da média do último trimestre de coleta divulgado, conforme a Nota Técnica (maio/2015 - atualizada em 16/10/2018).
+# A partir de 31 de julho de 2025, as estimativas deste tema passaram a ser divulgadas com base na nova ponderação da pesquisa, conforme a Nota Técnica 02/2025. Consequentemente, a série histórica dos indicadores foi atualizada.
+[[tabelas]]
+tabela_sidra = "6393"
+variables = ["all"]
+territories = {1 = []}

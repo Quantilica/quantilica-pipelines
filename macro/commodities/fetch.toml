@@ -1,0 +1,11 @@
+# Pipeline: commodities
+# Índices de Commodities do BCB SGS
+#
+# Séries selecionadas:
+#   27574 - IC-Br Agropecuária
+#   27575 - IC-Br Energia
+#   27577 - IC-Br Metal
+#   27576 - IC-Br Total
+
+[[series]]
+ids = [27574, 27575, 27577, 27576]

@@ -1,0 +1,7 @@
+[[table]]
+name        = "cambio"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "cambio.sql"
+description = "Painel diário detalhado de taxas de câmbio — compra e venda de 10 moedas estrangeiras"
+primary_key = ["date", "moeda"]

@@ -1,0 +1,10 @@
+# Pipeline: alcool_carburante
+# Consumo de álcool carburante do BCB SGS
+#
+# Séries selecionadas:
+#   1399 - Consumo de álcool carburante - Álcool hidratado
+#   1400 - Consumo de álcool carburante - Álcool anidro
+#   1401 - Consumo de álcool carburante - Total
+
+[[series]]
+ids = [1399, 1400, 1401]

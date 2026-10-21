@@ -1,0 +1,7 @@
+# https://sidra.ibge.gov.br/pesquisa/cna/tabelas
+
+
+# Tabela 6784 - Produto Interno Bruto, Produto Interno Bruto per capita, População residente e Deflator
+[[tabelas]]
+tabela_sidra = "6784"
+territories = {1 = []}

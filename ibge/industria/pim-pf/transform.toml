@@ -1,0 +1,13 @@
+[[table]]
+name        = "pim_pf_brasil"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "pim_pf_brasil.sql"
+description = "PIM-PF Brasil - índice e variações da produção física industrial nacional, por classificação industrial (grupos/classes, grandes categorias, seções/atividades CNAE e indicadores especiais)"
+
+[[table]]
+name        = "pim_pf_regional"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "pim_pf_regional.sql"
+description = "PIM-PF Regional"

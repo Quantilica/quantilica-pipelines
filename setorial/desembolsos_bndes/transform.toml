@@ -1,0 +1,7 @@
+[[table]]
+name        = "desembolsos_bndes"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "desembolsos_bndes.sql"
+description = "Desembolsos mensais do sistema BNDES por setor (em R$, corrigido de acumulado no ano)"
+primary_key = ["date", "setor"]

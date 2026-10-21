@@ -1,0 +1,30 @@
+# Produção da Extração Vegetal e da Silvicultura - PEVS
+# https://sidra.ibge.gov.br/pesquisa/pevs/tabelas
+
+# --- Produção ---
+
+# Tabela 289 - Quantidade produzida e valor da produção na extração vegetal,
+#              por tipo de produto extrativo
+[[tabelas]]
+tabela_sidra = "289"
+variables = ["allxp"]
+territories = {6 = []}
+unnest_classifications = true
+
+# Tabela 291 - Quantidade produzida e valor da produção na silvicultura,
+#              por tipo de produto da silvicultura
+[[tabelas]]
+tabela_sidra = "291"
+variables = ["allxp"]
+territories = {6 = []}
+unnest_classifications = true
+
+# --- Área Florestal ---
+
+# Tabela 5930 - Área total dos estabelecimentos agropecuários (ha) com
+#               florestas plantadas, por tipo de floresta
+[[tabelas]]
+tabela_sidra = "5930"
+variables = ["allxp"]
+territories = {6 = []}
+classifications = {734 = ["allxt"]}

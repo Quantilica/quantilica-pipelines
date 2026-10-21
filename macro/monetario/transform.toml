@@ -1,0 +1,7 @@
+[[table]]
+name        = "monetario"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "monetario.sql"
+description = "Painel mensal de agregados monetários — M1, M2, M3 e M4"
+primary_key = ["date"]

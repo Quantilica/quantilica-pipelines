@@ -1,0 +1,7 @@
+[[table]]
+name        = "pib_mensal"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "pib_mensal.sql"
+description = "PIB mensal acumulado em 12 meses (valores nominais em R$ e US$)"
+primary_key = ["date"]

@@ -1,0 +1,12 @@
+# Pipeline: desembolsos_bndes
+# Desembolsos do sistema BNDES do BCB SGS
+#
+# Séries selecionadas:
+#   7415 - Desembolsos do sistema BNDES - Total
+#   7416 - Desembolsos do sistema BNDES - Indústria de transformação
+#   7417 - Desembolsos do sistema BNDES - Comércio e serviços
+#   7418 - Desembolsos do sistema BNDES - Agropecuária
+#   7419 - Desembolsos do sistema BNDES - Indústria extrativa
+
+[[series]]
+ids = [7415, 7416, 7417, 7418, 7419]

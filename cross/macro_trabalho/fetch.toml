@@ -1,0 +1,4 @@
+[pipeline]
+name = "macro_trabalho"
+domains = ["bcb_sgs", "ibge_sidra", "pdet"]
+description = "Modelo cruzado entre política monetária, inflação e mercado de trabalho"

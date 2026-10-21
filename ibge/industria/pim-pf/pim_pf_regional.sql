@@ -1,0 +1,106 @@
+WITH
+	DADOS_PIM_PF_REGIONAL AS (
+		SELECT
+			P.DATA_INICIO AS PERIODO,
+			L.NC AS NIVEL_TERRITORIAL_ID,
+			L.NN AS NIVEL_TERRITORIAL,
+			L.D1C AS LOCALIDADE_ID,
+			L.D1N AS LOCALIDADE,
+			DIM.D4N AS CNAE_2,
+			DIM.D2N AS VARIAVEL,
+			DIM.MN AS UNIDADE,
+			CASE
+				WHEN D.V ~ '^-?[0-9]' THEN D.V::NUMERIC
+			END AS VALOR
+		FROM
+			DADOS D
+			JOIN PERIODO P ON D.PERIODO_ID = P.ID
+			JOIN DIMENSAO DIM ON D.DIMENSAO_ID = DIM.ID
+			JOIN LOCALIDADE L ON D.LOCALIDADE_ID = L.ID
+		WHERE
+			D.TABELA_SIDRA_ID = '8888'
+			AND L.NN IN ('Grande Região', 'Unidade da Federação')
+			AND D.ATIVO = TRUE
+	)
+SELECT
+	PERIODO,
+	NIVEL_TERRITORIAL_ID,
+	NIVEL_TERRITORIAL,
+	LOCALIDADE_ID,
+	LOCALIDADE,
+	CNAE_2,
+	SUM(
+		CASE
+			WHEN VARIAVEL = 'PIMPF - Número-índice (2022=100)' THEN VALOR
+			ELSE 0
+		END
+	) AS NUMERO_INDICE,
+	MAX(
+		CASE
+			WHEN VARIAVEL = 'PIMPF - Número-índice (2022=100)' THEN UNIDADE
+		END
+	) AS NUMERO_INDICE_UNIDADE,
+	SUM(
+		CASE
+			WHEN VARIAVEL = 'PIMPF - Número-índice com ajuste sazonal (2022=100)' THEN VALOR
+			ELSE 0
+		END
+	) AS NUMERO_INDICE_AJUSTE_SAZONAL,
+	MAX(
+		CASE
+			WHEN VARIAVEL = 'PIMPF - Número-índice com ajuste sazonal (2022=100)' THEN UNIDADE
+		END
+	) AS NUMERO_INDICE_AJUSTE_SAZONAL_UNIDADE,
+	SUM(
+		CASE
+			WHEN VARIAVEL = 'PIMPF - Variação acumulada em 12 meses (em relação ao período anterior de 12 meses)' THEN VALOR
+			ELSE 0
+		END
+	) AS VARIACAO_ACUMULADA_12_MESES,
+	MAX(
+		CASE
+			WHEN VARIAVEL = 'PIMPF - Variação acumulada em 12 meses (em relação ao período anterior de 12 meses)' THEN UNIDADE
+		END
+	) AS VARIACAO_ACUMULADA_12_MESES_UNIDADE,
+	SUM(
+		CASE
+			WHEN VARIAVEL = 'PIMPF - Variação acumulada no ano (em relação ao mesmo período do ano anterior)' THEN VALOR
+			ELSE 0
+		END
+	) AS VARIACAO_ACUMULADA_ANO,
+	MAX(
+		CASE
+			WHEN VARIAVEL = 'PIMPF - Variação acumulada no ano (em relação ao mesmo período do ano anterior)' THEN UNIDADE
+		END
+	) AS VARIACAO_ACUMULADA_ANO_UNIDADE,
+	SUM(
+		CASE
+			WHEN VARIAVEL = 'PIMPF - Variação mês/mesmo mês do ano anterior (M/M-12)' THEN VALOR
+			ELSE 0
+		END
+	) AS VARIACAO_MES_ANO_ANTERIOR,
+	MAX(
+		CASE
+			WHEN VARIAVEL = 'PIMPF - Variação mês/mesmo mês do ano anterior (M/M-12)' THEN UNIDADE
+		END
+	) AS VARIACAO_MES_ANO_ANTERIOR_UNIDADE,
+	SUM(
+		CASE
+			WHEN VARIAVEL = 'PIMPF - Variação mês/mês imediatamente anterior, com ajuste sazonal (M/M-1)' THEN VALOR
+			ELSE 0
+		END
+	) AS VARIACAO_MES_MES_ANTERIOR_AJUSTE_SAZONAL,
+	MAX(
+		CASE
+			WHEN VARIAVEL = 'PIMPF - Variação mês/mês imediatamente anterior, com ajuste sazonal (M/M-1)' THEN UNIDADE
+		END
+	) AS VARIACAO_MES_MES_ANTERIOR_AJUSTE_SAZONAL_UNIDADE
+FROM
+	DADOS_PIM_PF_REGIONAL
+GROUP BY
+	PERIODO,
+	NIVEL_TERRITORIAL_ID,
+	NIVEL_TERRITORIAL,
+	LOCALIDADE_ID,
+	LOCALIDADE,
+	CNAE_2;

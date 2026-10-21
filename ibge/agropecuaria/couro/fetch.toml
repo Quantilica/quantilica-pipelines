@@ -1,0 +1,22 @@
+# https://sidra.ibge.gov.br/pesquisa/couro/tabelas
+
+
+# Tabela 1088 - Número de informantes e Quantidade de couro cru inteiro de bovino adquirido para curtimento, no mês e no trimestre, por procedência
+[[tabelas]]
+tabela_sidra = "1088"
+variables = ["all"]
+territories = {3 = []}
+
+
+# Tabela 1089 - Número de informantes e Quantidade de couro cru inteiro de bovino para curtimento (recebido de terceiros e total), no mês e no trimestre
+[[tabelas]]
+tabela_sidra = "1089"
+variables = ["all"]
+territories = {3 = []}
+
+
+# Tabela 1090 - Número de informantes e Quantidade de couro inteiro curtido de bovino, no mês e no trimestre, por método de curtimento
+[[tabelas]]
+tabela_sidra = "1090"
+variables = ["all"]
+territories = {3 = []}

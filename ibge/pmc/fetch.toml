@@ -1,0 +1,43 @@
+# https://sidra.ibge.gov.br/pesquisa/pmc/tabelas
+
+
+# Tabela 8190 - Índices de volume e de receita nominal de atacado especializado em produtos alimentícios, bebidas e fumo (2022 = 100)
+[[tabelas]]
+tabela_sidra = "8190"
+territories = {1 = [], 3 = []}
+
+
+# Tabela 8757 - Índice e variação da receita nominal e do volume de vendas de materiais de construção (2022 = 100)
+[[tabelas]]
+tabela_sidra = "8757"
+territories = {1 = [], 3 = []}
+
+
+# Tabela 8880 - Índice e variação da receita nominal e do volume de vendas no comércio varejista (2022 = 100)
+[[tabelas]]
+tabela_sidra = "8880"
+territories = {1 = [], 3 = []}
+
+
+# Tabela 8881 - Índice e variação da receita nominal e do volume de vendas no comércio varejista ampliado (2022 = 100)
+[[tabelas]]
+tabela_sidra = "8881"
+territories = {1 = [], 3 = []}
+
+
+# Tabela 8882 - Índice e variação da receita nominal e do volume de vendas no comércio varejista, por atividades (2022 = 100)
+[[tabelas]]
+tabela_sidra = "8882"
+territories = {1 = [], 3 = []}
+
+
+# Tabela 8883 - Índice e variação da receita nominal e do volume de vendas no comércio varejista ampliado, por atividades (2022 = 100)
+[[tabelas]]
+tabela_sidra = "8883"
+territories = {1 = [], 3 = []}
+
+
+# Tabela 8884 - Índice e variação da receita nominal e do volume de vendas de veículos, motocicletas, partes e peças (2022 = 100)
+[[tabelas]]
+tabela_sidra = "8884"
+territories = {1 = [], 3 = []}

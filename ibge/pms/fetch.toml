@@ -1,0 +1,40 @@
+# Tabela 5906 - Índice e variação da receita nominal e do volume de serviços (2022 = 100)
+[[tabelas]]
+tabela_sidra = "5906"
+variables = ["all"]
+territories = {1 = [], 3 = []}
+
+
+# Tabela 8163 - Índice e variação da receita nominal e do volume de serviços, por segmentos de serviços (2022 = 100)
+[[tabelas]]
+tabela_sidra = "8163"
+variables = ["all"]
+territories = {1 = []}
+
+
+# Tabela 8688 - Índice e variação da receita nominal e do volume de serviços, por atividades de serviços e suas subdivisões (2022 = 100)
+[[tabelas]]
+tabela_sidra = "8688"
+variables = ["all"]
+territories = {1 = []}
+
+
+# Tabela 8693 - Índice e variação da receita nominal e do volume de serviços, por atividades de serviços (2022 = 100)
+[[tabelas]]
+tabela_sidra = "8693"
+variables = ["all"]
+territories = {3 = []}
+
+
+# Tabela 8694 - Índice e variação da receita nominal e do volume das atividades turísticas (2022 = 100)
+[[tabelas]]
+tabela_sidra = "8694"
+variables = ["all"]
+territories = {1 = [], 3 = []}
+
+
+# Tabela 8695 - Índice e variação da receita nominal e do volume do transporte de passageiros e de cargas (2022 = 100)
+[[tabelas]]
+tabela_sidra = "8695"
+variables = ["all"]
+territories = {1 = []}

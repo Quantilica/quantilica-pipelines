@@ -1,0 +1,7 @@
+# Pipeline: movimento_cambio_contratado
+# Movimento de câmbio contratado do BCB SGS
+#
+# Filtra dinamicamente as séries por tema.
+
+[[series]]
+themes = ["Movimento de câmbio contratado"]

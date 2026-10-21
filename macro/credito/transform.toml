@@ -1,0 +1,7 @@
+[[table]]
+name        = "credito"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "credito.sql"
+description = "Painel mensal de operações de crédito — saldo total, inadimplência e spread"
+primary_key = ["date"]

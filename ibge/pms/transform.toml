@@ -1,0 +1,20 @@
+[[table]]
+name        = "pms_agregado"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "pms_agregado.sql"
+description = "PMS - índice e variações da receita nominal e volume de serviços (total e atividades turísticas), por tipo de índice"
+
+[[table]]
+name        = "pms_por_segmento"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "pms_por_segmento.sql"
+description = "PMS - índice e variações da receita nominal e volume de serviços, por segmento de serviços e tipo de índice"
+
+[[table]]
+name        = "pms_por_atividade"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "pms_por_atividade.sql"
+description = "PMS - índice e variações da receita nominal e volume de serviços, por atividade de serviços e tipo de índice (inclui subdivisões, transporte e desagregação regional)"

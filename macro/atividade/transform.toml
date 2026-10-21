@@ -1,0 +1,7 @@
+[[table]]
+name        = "atividade"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "atividade.sql"
+description = "Índices mensais de atividade econômica (IBC-Br) Brasil e regionais"
+primary_key = ["date", "localidade", "tipo_indice"]

@@ -1,0 +1,7 @@
+[[table]]
+name        = "derivados_petroleo"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "derivados_petroleo.sql"
+description = "Produção e consumo mensal de derivados de petróleo em barris/dia"
+primary_key = ["date", "produto", "variavel"]

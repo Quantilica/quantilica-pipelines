@@ -1,0 +1,10 @@
+# Pipeline: credito
+# Operações de crédito do sistema financeiro — BCB SGS
+#
+# Séries selecionadas:
+#   20539 - Crédito total - saldo (R$ milhões) — mensal
+#   21082 - Inadimplência total - % da carteira — mensal
+#   20783 - Spread médio total das operações de crédito (p.p.) — mensal
+
+[[series]]
+ids = [20539, 21082, 20783]

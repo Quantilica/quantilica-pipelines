@@ -1,0 +1,6 @@
+[[table]]
+name        = "abate"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "transform.sql"
+description = "Abate - número de informantes, quantidade e peso das carcaças de bovinos, suínos e frangos abatidos, por UF, tipo de inspeção e período (mês e trimestre)"

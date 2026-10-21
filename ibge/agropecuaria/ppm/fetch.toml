@@ -1,0 +1,50 @@
+# Pesquisa da Pecuária Municipal - PPM
+# https://sidra.ibge.gov.br/pesquisa/ppm/tabelas
+
+# --- Rebanhos ---
+
+# Tabela 73 - Efetivo dos rebanhos, por tipo de rebanho
+[[tabelas]]
+tabela_sidra = "73"
+variables = ["allxp"]
+territories = {6 = []}
+unnest_classifications = true
+
+# Tabela 3939 - Efetivo dos rebanhos, por tipo de rebanho (série histórica)
+[[tabelas]]
+tabela_sidra = "3939"
+variables = ["allxp"]
+territories = {6 = []}
+unnest_classifications = true
+
+# --- Produção de Origem Animal ---
+
+# Tabela 74 - Produção de origem animal, por tipo de produto
+[[tabelas]]
+tabela_sidra = "74"
+variables = ["allxp"]
+territories = {6 = []}
+unnest_classifications = true
+
+# Tabela 3940 - Produção de origem animal, por tipo de produto (série histórica)
+[[tabelas]]
+tabela_sidra = "3940"
+variables = ["allxp"]
+territories = {6 = []}
+unnest_classifications = true
+
+# --- Aquicultura e Exploração Animal ---
+
+# Tabela 94 - Vacas ordenhadas e quantidade de leite produzida,
+#             por tipo de estabelecimento
+[[tabelas]]
+tabela_sidra = "94"
+variables = ["allxp"]
+territories = {6 = []}
+
+# Tabela 95 - Ovinos tosquiados nos estabelecimentos agropecuários
+#             e quantidade de lã produzida
+[[tabelas]]
+tabela_sidra = "95"
+variables = ["allxp"]
+territories = {6 = []}

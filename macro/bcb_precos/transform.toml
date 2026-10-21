@@ -1,0 +1,7 @@
+[[table]]
+name        = "precos"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "precos.sql"
+description = "Séries de índices de preços ao consumidor filtradas por tema"
+primary_key = ["date", "indice"]

@@ -1,0 +1,7 @@
+[[table]]
+name        = "energia_eletrica"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "energia_eletrica.sql"
+description = "Consumo mensal de energia elétrica por setor (MWh)"
+primary_key = ["date", "setor"]

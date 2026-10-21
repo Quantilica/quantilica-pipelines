@@ -1,0 +1,67 @@
+WITH
+	EXTRATIVISMO AS (
+		SELECT
+			P.ANO AS ANO,
+			L.D1C AS ID_MUNICIPIO,
+			L.D1N AS NOME_MUNICIPIO,
+			CASE D.TABELA_SIDRA_ID
+				WHEN '289' THEN 'Extração vegetal'
+				WHEN '291' THEN 'Silvicultura'
+			END AS GRUPO_PRODUTO,
+			DIM.D4N AS PRODUTO,
+			CASE DIM.D2N
+				WHEN 'Quantidade produzida na extração vegetal' THEN 'Quantidade produzida'
+				WHEN 'Valor da produção na extração vegetal' THEN 'Valor da produção'
+				WHEN 'Quantidade produzida na silvicultura' THEN 'Quantidade produzida'
+				WHEN 'Valor da produção na silvicultura' THEN 'Valor da produção'
+				ELSE DIM.D2N
+			END AS VARIAVEL,
+			DIM.MN AS UNIDADE,
+			CASE
+				WHEN D.V ~ '^-?[0-9]' THEN D.V::NUMERIC
+			END AS VALOR
+		FROM
+			DADOS D
+			JOIN PERIODO P ON D.PERIODO_ID = P.ID
+			JOIN DIMENSAO DIM ON D.DIMENSAO_ID = DIM.ID
+			JOIN LOCALIDADE L ON D.LOCALIDADE_ID = L.ID
+		WHERE
+			D.TABELA_SIDRA_ID IN ('289', '291')
+			AND D.ATIVO = TRUE
+	)
+SELECT
+	ANO,
+	ID_MUNICIPIO,
+	NOME_MUNICIPIO,
+	GRUPO_PRODUTO,
+	PRODUTO,
+	SUM(
+		CASE
+			WHEN VARIAVEL = 'Quantidade produzida' THEN VALOR
+			ELSE 0
+		END
+	) AS QUANTIDADE_PRODUZIDA,
+	MAX(
+		CASE
+			WHEN VARIAVEL = 'Quantidade produzida' THEN UNIDADE
+		END
+	) AS QUANTIDADE_PRODUZIDA_UNIDADE,
+	SUM(
+		CASE
+			WHEN VARIAVEL = 'Valor da produção' THEN VALOR
+			ELSE 0
+		END
+	) AS VALOR_PRODUCAO,
+	MAX(
+		CASE
+			WHEN VARIAVEL = 'Valor da produção' THEN UNIDADE
+		END
+	) AS VALOR_PRODUCAO_UNIDADE
+FROM
+	EXTRATIVISMO
+GROUP BY
+	ANO,
+	ID_MUNICIPIO,
+	NOME_MUNICIPIO,
+	GRUPO_PRODUTO,
+	PRODUTO;

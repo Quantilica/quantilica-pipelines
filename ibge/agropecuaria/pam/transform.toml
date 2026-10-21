@@ -1,0 +1,13 @@
+[[table]]
+name        = "pam_lavouras_permanentes"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "lavouras_permanentes.sql"
+description = "PAM - área colhida, produção, rendimento e valor das lavouras permanentes"
+
+[[table]]
+name        = "pam_lavouras_temporarias"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "lavouras_temporarias.sql"
+description = "PAM - área, produção, rendimento e valor das lavouras temporárias"

@@ -1,0 +1,34 @@
+[[table]]
+name        = "pnadcm_populacao"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "populacao.sql"
+description = "PNAD Contínua mensal - população total"
+
+[[table]]
+name        = "pnadcm_pia"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "pia.sql"
+description = "PNAD Contínua mensal - pessoas de 14 anos ou mais (força de trabalho, ocupação, desocupação, subutilização, desalento)"
+
+[[table]]
+name        = "pnadcm_ocupada"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "ocupada.sql"
+description = "PNAD Contínua mensal - pessoas ocupadas (posição, atividade, previdência, subocupação, informalidade)"
+
+[[table]]
+name        = "pnadcm_rendimento"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "rendimento.sql"
+description = "PNAD Contínua mensal - rendimento médio mensal das pessoas ocupadas"
+
+[[table]]
+name        = "pnadcm_massa_rendimento"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "massa_rendimento.sql"
+description = "PNAD Contínua mensal - massa de rendimento mensal das pessoas ocupadas"

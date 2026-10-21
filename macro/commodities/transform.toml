@@ -1,0 +1,7 @@
+[[table]]
+name        = "commodities"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "commodities.sql"
+description = "Índices de commodities (IC-Br total, agropecuária, metal, energia)"
+primary_key = ["date", "commodity"]

@@ -1,0 +1,6 @@
+[[table]]
+name        = "leite"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "transform.sql"
+description = "Pesquisa Trimestral do Leite - leite adquirido e industrializado e preço médio, por UF, tipo de inspeção e referência temporal (mês / total do trimestre)"

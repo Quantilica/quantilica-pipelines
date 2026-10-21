@@ -1,0 +1,28 @@
+# Tabela 8885 - Produção Física Industrial, por grupos e classes industriais selecionados
+[[tabelas]]
+tabela_sidra = "8885"
+territories = {1 = []}
+
+
+# Tabela 8886 - Produção Física Industrial dos insumos típicos da construção civil
+[[tabelas]]
+tabela_sidra = "8886"
+territories = {1 = []}
+
+
+# Tabela 8887 - Produção Física Industrial, por grandes categorias econômicas
+[[tabelas]]
+tabela_sidra = "8887"
+territories = {1 = []}
+
+
+# Tabela 8888 - Produção Física Industrial, por seções e atividades industriais
+[[tabelas]]
+tabela_sidra = "8888"
+territories = {1 = [], 2 = [], 3 = []}
+
+
+# Tabela 8889 - Produção Física Industrial, por indicadores especiais
+[[tabelas]]
+tabela_sidra = "8889"
+territories = {1 = []}

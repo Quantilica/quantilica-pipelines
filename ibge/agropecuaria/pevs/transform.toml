@@ -1,0 +1,13 @@
+[[table]]
+name        = "pevs_producao"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "producao.sql"
+description = "PEVS - produção da extração vegetal e silvicultura por tipo de produto"
+
+[[table]]
+name        = "pevs_area_florestal"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "area_florestal.sql"
+description = "PEVS - área de florestas plantadas por tipo de floresta e município"

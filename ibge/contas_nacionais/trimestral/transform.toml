@@ -1,0 +1,34 @@
+[[table]]
+name        = "cnt_taxas"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "cnt_taxas.sql"
+description = "CNT - taxas de variação trimestrais do índice de volume (YoY, acumulado 4 trimestres, acumulado no ano e QoQ), por setor/subsetor"
+
+[[table]]
+name        = "cnt_indices"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "cnt_indices.sql"
+description = "CNT - série encadeada do índice de volume trimestral (com e sem ajuste sazonal, Base: média 1995 = 100), por setor/subsetor"
+
+[[table]]
+name        = "cnt_valores"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "cnt_valores.sql"
+description = "CNT - valores a preços correntes e valores encadeados a preços de 1995 (com e sem ajuste sazonal), por setor/subsetor"
+
+[[table]]
+name        = "cnt_contas_economicas"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "cnt_contas_economicas.sql"
+description = "CNT - contas econômicas trimestrais (PIB, renda nacional, poupança e capacidade/necessidade de financiamento)"
+
+[[table]]
+name        = "cnt_conta_financeira"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "cnt_conta_financeira.sql"
+description = "CNT - conta financeira trimestral consolidada - variações de ativos e de passivo/PL, por instrumento financeiro"

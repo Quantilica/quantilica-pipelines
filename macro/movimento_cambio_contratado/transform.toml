@@ -1,0 +1,7 @@
+[[table]]
+name        = "movimento_cambio_contratado"
+schema      = "analytics"
+strategy    = "replace"
+sql         = "movimento_cambio_contratado.sql"
+description = "Séries diárias de movimento de câmbio contratado"
+primary_key = ["date", "series_id"]
