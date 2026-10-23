@@ -1,5 +1,6 @@
-[transform]
-name = "macro_trabalho_indicadores"
-domain = "cross"
-description = "Indicadores macroeconômicos integrados: inflação, juros e emprego"
-type = "view"
+[[table]]
+name        = "macro_trabalho_indicadores"
+schema      = "analytics"
+strategy    = "view"
+sql         = "transform.sql"
+description = "Indicadores macroeconômicos integrados: inflação (IPCA), juros médios mensais (SELIC) e taxa de desocupação (PNAD Contínua)"

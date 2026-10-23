@@ -1,4 +1,11 @@
+# Pipeline Cross-Domain: macro_trabalho
+# Integra indicadores macroeconômicos e mercado de trabalho (BCB SGS e IBGE SIDRA)
+#
+# Domínios de origem:
+#   bcb_sgs: Séries 433 (IPCA) e 11 (SELIC-OVER)
+#   ibge_sidra: Pesquisa PNAD Contínua Mensal (tabela 6785)
+
 [pipeline]
 name = "macro_trabalho"
-domains = ["bcb_sgs", "ibge_sidra", "pdet"]
-description = "Modelo cruzado entre política monetária, inflação e mercado de trabalho"
+domains = ["bcb_sgs", "ibge_sidra"]
+description = "Modelo cruzado entre política monetária (SELIC), inflação (IPCA) e mercado de trabalho (PNAD Contínua)"
