@@ -4,9 +4,6 @@
 -- - Juros: SELIC-OVER taxa diária agregada mensal de analytics.juros
 -- - Emprego: Taxa de desocupação oficial (PNAD Contínua tabela 6785 Brasil) de analytics.pnadcm_ocupada
 
-DROP VIEW IF EXISTS analytics.macro_trabalho_indicadores;
-
-CREATE OR REPLACE VIEW analytics.macro_trabalho_indicadores AS
 WITH ipca_mensal AS (
     SELECT
         date_trunc('month', date)::date AS data_mes,
