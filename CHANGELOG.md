@@ -8,6 +8,7 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR
 ## [Unreleased]
 
 ### Adicionado
+- Pipeline `tesouro_direto/marts` (`engine = "duckdb"`): agregados dos microdados do Tesouro Direto (investidores e operações) calculados sobre o lake de Parquet e materializados no PostgreSQL (`mv_investor_*`, `mv_investors_*`, `mv_operations_monthly`, `mv_dashboard_stats`), com os mesmos nomes e índices das materialized views que substituem.
 - `manifest.toml` passa a listar todos os pipelines do catálogo (eram 11 de 30; entraram 19 de IBGE, macro e setorial) e declara o `engine` de cada um (`postgres` ou `duckdb`).
 - Validação em CI (`quantilica-sql validate . --strict`): falha se um `transform.toml` ficar fora do manifest ou se o `engine` for inválido.
 

@@ -184,3 +184,9 @@ theme = "setorial"
 path = "setorial/desembolsos_bndes"
 engine = "postgres"
 description = "Desembolsos do sistema BNDES (BCB SGS)"
+
+[pipelines.tesouro_direto_marts]
+theme = "tesouro_direto"
+path = "tesouro_direto/marts"
+engine = "duckdb"
+description = "Agregados dos microdados do Tesouro Direto (investidores e operações), calculados sobre o lake de Parquet"

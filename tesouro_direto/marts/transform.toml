@@ -1,0 +1,183 @@
+# Marts do Tesouro Direto.
+#
+# Os microdados (investidores e operações) ficam no lake de Parquet; aqui só saem os
+# agregados que o portal consulta. As tabelas substituem as antigas materialized views
+# de mesmo nome por troca atômica. Rode com: quantilica sql run tesouro_direto/marts
+
+prelude = "prelude.sql"
+
+[[table]]
+name        = "mart_microdata_totais"
+schema      = "tesouro_direto"
+strategy    = "replace"
+engine      = "duckdb"
+sql         = "mart_microdata_totais.sql"
+description = "Totais dos microdados (investidores, ativos e operações), base do mv_dashboard_stats"
+
+[[table]]
+name        = "mv_investor_demographics"
+schema      = "tesouro_direto"
+strategy    = "replace"
+engine      = "duckdb"
+sql         = "mv_investor_demographics.sql"
+description = "Investidores por gênero e faixa etária"
+indexes = [
+    { name = "uq_mv_investor_demographics", columns = ["gender", "age_range"], unique = true },
+    { name = "idx_mv_investor_demographics_gender", columns = ["gender"] },
+    { name = "idx_mv_investor_demographics_age_range", columns = ["age_range"] },
+]
+
+[[table]]
+name        = "mv_investor_stats_by_state"
+schema      = "tesouro_direto"
+strategy    = "replace"
+engine      = "duckdb"
+sql         = "mv_investor_stats_by_state.sql"
+description = "Investidores por UF"
+indexes = [
+    { name = "uq_mv_investor_stats_by_state_state", columns = ["state"], unique = true },
+]
+
+[[table]]
+name        = "mv_investors_by_marital_status"
+schema      = "tesouro_direto"
+strategy    = "replace"
+engine      = "duckdb"
+sql         = "mv_investors_by_marital_status.sql"
+description = "Investidores por estado civil"
+indexes = [
+    { name = "uq_mv_investors_by_marital_status", columns = ["marital_status"], unique = true },
+]
+
+[[table]]
+name        = "mv_investors_by_profession"
+schema      = "tesouro_direto"
+strategy    = "replace"
+engine      = "duckdb"
+sql         = "mv_investors_by_profession.sql"
+description = "Investidores por profissão"
+indexes = [
+    { name = "uq_mv_investors_by_profession", columns = ["profession"], unique = true },
+]
+
+[[table]]
+name        = "mv_investors_by_region"
+schema      = "tesouro_direto"
+strategy    = "replace"
+engine      = "duckdb"
+sql         = "mv_investors_by_region.sql"
+description = "Investidores por região"
+indexes = [
+    { name = "uq_mv_investors_by_region", columns = ["region"], unique = true },
+]
+
+[[table]]
+name        = "mv_investors_growth"
+schema      = "tesouro_direto"
+strategy    = "replace"
+engine      = "duckdb"
+sql         = "mv_investors_growth.sql"
+description = "Novos investidores por mês de adesão"
+indexes = [
+    { name = "uq_mv_investors_growth_month", columns = ["growth_month"], unique = true },
+]
+
+[[table]]
+name        = "mv_investors_marital_age"
+schema      = "tesouro_direto"
+strategy    = "replace"
+engine      = "duckdb"
+sql         = "mv_investors_marital_age.sql"
+description = "Estado civil por faixa etária"
+indexes = [
+    { name = "idx_mv_ima_marital", columns = ["marital_status"] },
+]
+
+[[table]]
+name        = "mv_investors_marital_gender"
+schema      = "tesouro_direto"
+strategy    = "replace"
+engine      = "duckdb"
+sql         = "mv_investors_marital_gender.sql"
+description = "Estado civil por gênero"
+indexes = [
+    { name = "idx_mv_img_marital", columns = ["marital_status"] },
+]
+
+[[table]]
+name        = "mv_investors_profession_age"
+schema      = "tesouro_direto"
+strategy    = "replace"
+engine      = "duckdb"
+sql         = "mv_investors_profession_age.sql"
+description = "Profissão (100 maiores) por faixa etária"
+indexes = [
+    { name = "idx_mv_ipa_profession", columns = ["profession"] },
+]
+
+[[table]]
+name        = "mv_investors_profession_gender"
+schema      = "tesouro_direto"
+strategy    = "replace"
+engine      = "duckdb"
+sql         = "mv_investors_profession_gender.sql"
+description = "Profissão (100 maiores) por gênero"
+indexes = [
+    { name = "idx_mv_ipg_profession", columns = ["profession"] },
+]
+
+[[table]]
+name        = "mv_investors_state_age"
+schema      = "tesouro_direto"
+strategy    = "replace"
+engine      = "duckdb"
+sql         = "mv_investors_state_age.sql"
+description = "UF por faixa etária"
+indexes = [
+    { name = "idx_mv_isa_state", columns = ["state"] },
+]
+
+[[table]]
+name        = "mv_investors_state_gender"
+schema      = "tesouro_direto"
+strategy    = "replace"
+engine      = "duckdb"
+sql         = "mv_investors_state_gender.sql"
+description = "UF por gênero"
+indexes = [
+    { name = "idx_mv_isg_state", columns = ["state"] },
+]
+
+[[table]]
+name        = "mv_investors_state_marital"
+schema      = "tesouro_direto"
+strategy    = "replace"
+engine      = "duckdb"
+sql         = "mv_investors_state_marital.sql"
+description = "UF por estado civil"
+indexes = [
+    { name = "idx_mv_ism_state", columns = ["state"] },
+]
+
+[[table]]
+name        = "mv_operations_monthly"
+schema      = "tesouro_direto"
+strategy    = "replace"
+engine      = "duckdb"
+sql         = "mv_operations_monthly.sql"
+description = "Operações por mês, tipo de operação e título"
+indexes = [
+    { name = "uq_mv_operations_monthly", columns = ["operation_month", "operation_type", "bond_type"], unique = true },
+    { name = "idx_mv_operations_monthly_bond_type", columns = ["bond_type"] },
+    { name = "idx_mv_operations_monthly_month", columns = ["operation_month"] },
+    { name = "idx_mv_operations_monthly_type", columns = ["operation_type"] },
+]
+
+[[table]]
+name        = "mv_dashboard_stats"
+schema      = "tesouro_direto"
+strategy    = "replace"
+engine      = "postgres"
+sql         = "mv_dashboard_stats.sql"
+description = "Linha única com os totais do painel (microdados via mart_microdata_totais, o resto das tabelas do PostgreSQL)"
+primary_key = ["pkey"]
