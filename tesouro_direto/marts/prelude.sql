@@ -1,6 +1,10 @@
 -- Preparação compartilhada pelos marts do Tesouro Direto (DuckDB sobre o lake).
 -- As views do lake têm colunas de texto com nomes normalizados; a tipagem acontece aqui.
 
+-- Meses truncados em UTC: é a convenção das tabelas servidas (mv_operations_monthly,
+-- mv_investors_growth), independente do fuso da máquina que roda o mart.
+SET TimeZone = 'UTC';
+
 CREATE OR REPLACE MACRO td_date(x) AS
     COALESCE(
         TRY_STRPTIME(TRIM(x), '%d/%m/%Y'),
