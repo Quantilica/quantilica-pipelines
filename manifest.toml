@@ -8,54 +8,179 @@ description = "Catálogo declarativo unificado de pipelines ETL e modelos analí
 [pipelines.macro_atividade]
 theme = "macro"
 path = "macro/atividade"
+engine = "postgres"
 description = "IBC-Br nacional e regional"
 
 [pipelines.macro_cambio]
 theme = "macro"
 path = "macro/cambio"
+engine = "postgres"
 description = "Taxas de câmbio diárias (USD, EUR, etc.)"
 
 [pipelines.macro_juros]
 theme = "macro"
 path = "macro/juros"
+engine = "postgres"
 description = "Taxas de juros (SELIC, CDI)"
 
 [pipelines.macro_precos]
 theme = "macro"
 path = "macro/bcb_precos"
+engine = "postgres"
 description = "Índices de preços BCB"
 
 [pipelines.macro_credito]
 theme = "macro"
 path = "macro/credito"
+engine = "postgres"
 description = "Operações e crédito"
 
 [pipelines.setorial_energia]
 theme = "setorial"
 path = "setorial/energia_eletrica"
+engine = "postgres"
 description = "Consumo e geração de energia elétrica"
 
 [pipelines.setorial_petroleo]
 theme = "setorial"
 path = "setorial/derivados_petroleo"
+engine = "postgres"
 description = "Produção e consumo de derivados de petróleo"
 
 [pipelines.ibge_contas_nacionais]
 theme = "ibge"
 path = "ibge/contas_nacionais"
+engine = "postgres"
 description = "PIB trimestral e contas nacionais do IBGE"
 
 [pipelines.ibge_precos]
 theme = "ibge"
 path = "ibge/precos"
+engine = "postgres"
 description = "IPCA, INPC e inflação oficial do IBGE"
 
 [pipelines.ibge_trabalho]
 theme = "ibge"
 path = "ibge/trabalho"
+engine = "postgres"
 description = "PNAD Contínua e mercado de trabalho"
 
 [pipelines.cross_macro_trabalho]
 theme = "cross"
 path = "cross/macro_trabalho"
+engine = "postgres"
 description = "Modelo cruzado entre política monetária e mercado de trabalho"
+
+[pipelines.ibge_agro_abate]
+theme = "ibge"
+path = "ibge/agropecuaria/abate"
+engine = "postgres"
+description = "Pesquisa Trimestral do Abate de Animais"
+
+[pipelines.ibge_agro_couro]
+theme = "ibge"
+path = "ibge/agropecuaria/couro"
+engine = "postgres"
+description = "Pesquisa Trimestral do Couro"
+
+[pipelines.ibge_agro_estoques]
+theme = "ibge"
+path = "ibge/agropecuaria/estoques"
+engine = "postgres"
+description = "Pesquisa de Estoques e capacidade de armazenagem"
+
+[pipelines.ibge_agro_leite]
+theme = "ibge"
+path = "ibge/agropecuaria/leite"
+engine = "postgres"
+description = "Pesquisa Trimestral do Leite"
+
+[pipelines.ibge_agro_lspa]
+theme = "ibge"
+path = "ibge/agropecuaria/lspa"
+engine = "postgres"
+description = "Levantamento Sistemático da Produção Agrícola (LSPA)"
+
+[pipelines.ibge_agro_pam]
+theme = "ibge"
+path = "ibge/agropecuaria/pam"
+engine = "postgres"
+description = "Produção Agrícola Municipal (PAM)"
+
+[pipelines.ibge_agro_pevs]
+theme = "ibge"
+path = "ibge/agropecuaria/pevs"
+engine = "postgres"
+description = "Produção da Extração Vegetal e da Silvicultura (PEVS)"
+
+[pipelines.ibge_agro_pog]
+theme = "ibge"
+path = "ibge/agropecuaria/pog"
+engine = "postgres"
+description = "Pesquisa Trimestral da Produção de Ovos de Galinha (POG)"
+
+[pipelines.ibge_agro_ppm]
+theme = "ibge"
+path = "ibge/agropecuaria/ppm"
+engine = "postgres"
+description = "Pesquisa da Pecuária Municipal (PPM)"
+
+[pipelines.ibge_industria_pim_pf]
+theme = "ibge"
+path = "ibge/industria/pim-pf"
+engine = "postgres"
+description = "Produção Física Industrial (PIM-PF), Brasil e regional"
+
+[pipelines.ibge_pmc]
+theme = "ibge"
+path = "ibge/pmc"
+engine = "postgres"
+description = "Pesquisa Mensal de Comércio (PMC)"
+
+[pipelines.ibge_pms]
+theme = "ibge"
+path = "ibge/pms"
+engine = "postgres"
+description = "Pesquisa Mensal de Serviços (PMS)"
+
+[pipelines.ibge_populacao]
+theme = "ibge"
+path = "ibge/populacao"
+engine = "postgres"
+description = "População: Censo, Contagem e Estimativas"
+
+[pipelines.macro_commodities]
+theme = "macro"
+path = "macro/commodities"
+engine = "postgres"
+description = "Índices de commodities (BCB SGS)"
+
+[pipelines.macro_monetario]
+theme = "macro"
+path = "macro/monetario"
+engine = "postgres"
+description = "Agregados monetários (BCB SGS)"
+
+[pipelines.macro_movimento_cambio]
+theme = "macro"
+path = "macro/movimento_cambio_contratado"
+engine = "postgres"
+description = "Movimento de câmbio contratado (BCB SGS)"
+
+[pipelines.macro_pib_mensal]
+theme = "macro"
+path = "macro/pib_mensal"
+engine = "postgres"
+description = "PIB mensal acumulado em 12 meses (BCB SGS)"
+
+[pipelines.setorial_alcool_carburante]
+theme = "setorial"
+path = "setorial/alcool_carburante"
+engine = "postgres"
+description = "Consumo de álcool carburante (BCB SGS)"
+
+[pipelines.setorial_desembolsos_bndes]
+theme = "setorial"
+path = "setorial/desembolsos_bndes"
+engine = "postgres"
+description = "Desembolsos do sistema BNDES (BCB SGS)"
