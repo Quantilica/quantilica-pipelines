@@ -1,0 +1,17 @@
+# Mart de empréstimo de ativos (BTC): short interest por ticker e dia.
+# Lê as views do Lake; nada de microdado identificável no PostgreSQL.
+
+prelude = "prelude.sql"
+
+[[table]]
+name        = "mart_short_interest"
+schema      = "cross"
+strategy    = "replace"
+engine      = "duckdb"
+sql         = "transform.sql"
+description = "Short interest diário por ticker: posição alugada, volume, taxa média e razão sobre o volume negociado"
+primary_key = ["data", "simbolo"]
+indexes = [
+    { name = "idx_mart_short_interest_simbolo", columns = ["simbolo"] },
+    { name = "idx_mart_short_interest_data", columns = ["data"] },
+]

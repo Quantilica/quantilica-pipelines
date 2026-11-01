@@ -1,0 +1,15 @@
+# Mart de emissões de renda fixa: ofertas públicas e securitização (CRI/CRA).
+prelude = "prelude.sql"
+
+[[table]]
+name        = "mart_renda_fixa_emissoes"
+schema      = "cross"
+strategy    = "replace"
+engine      = "duckdb"
+sql         = "transform.sql"
+description = "Emissões e estoque de renda fixa estruturada (CRI, CRA, ofertas CVM) cruzadas com índices e instrumentos da B3"
+primary_key = ["competencia", "cnpj_emissor", "codigo_isin"]
+indexes = [
+    { name = "idx_mart_rf_emissoes_cnpj", columns = ["cnpj_emissor"] },
+    { name = "idx_mart_rf_emissoes_isin", columns = ["codigo_isin"] },
+]

@@ -1,0 +1,14 @@
+# Mart de fluxo cambial vs balança comercial (BCB x Comex).
+prelude = "prelude.sql"
+
+[[table]]
+name        = "mart_cambio_comercio"
+schema      = "cross"
+strategy    = "replace"
+engine      = "duckdb"
+sql         = "transform.sql"
+description = "Comparativo mensal entre fluxo cambial contratado e saldo da balança comercial"
+primary_key = ["ano", "mes", "natureza"]
+indexes = [
+    { name = "idx_mart_cambio_comercio_ano_mes", columns = ["ano", "mes"] },
+]

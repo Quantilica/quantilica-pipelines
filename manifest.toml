@@ -197,3 +197,37 @@ path = "marts"
 engine = "duckdb"
 description = "Marts analíticos do portal (Macro, Comex, Emprego, Empresas e Aviação) calculados com DuckDB sobre o lake"
 
+[pipelines.cross_emprestimo_ativos]
+theme = "cross"
+path = "cross/emprestimo_ativos"
+engine = "duckdb"
+description = "Short interest diário: posição alugada (BTC), taxas médias e cotações B3"
+
+[pipelines.cross_renda_fixa_emissoes]
+theme = "cross"
+path = "cross/renda_fixa_emissoes"
+engine = "duckdb"
+description = "Emissões e estoque de renda fixa estruturada (CRI, CRA, ofertas CVM) cruzadas com a B3"
+
+[pipelines.cross_credito_pj_cnae]
+# Dependência upstream: bcb-microdados-fetcher (TC-03, safra Nov/2026)
+theme = "cross"
+path = "cross/credito_pj_cnae"
+engine = "duckdb"
+description = "Carteira de crédito PJ por CNAE e rating (BCB SCR x RFB CNPJ)"
+
+[pipelines.cross_porto_comercio]
+# Dependência upstream: antaq-fetcher (TC-04, safra Nov/2026)
+theme = "cross"
+path = "cross/porto_comercio"
+engine = "duckdb"
+description = "Movimentação de cargas aquaviárias e comércio exterior (ANTAQ x Comex)"
+
+[pipelines.cross_cambio_comercio]
+# Dependência upstream: bcb-microdados-fetcher (TC-03, safra Nov/2026)
+theme = "cross"
+path = "cross/cambio_comercio"
+engine = "duckdb"
+description = "Comparativo mensal entre fluxo cambial contratado e balança comercial (BCB x Comex)"
+
+

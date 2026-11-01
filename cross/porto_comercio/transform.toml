@@ -1,0 +1,15 @@
+# Mart de cargas portuárias e comércio exterior (ANTAQ x Comex).
+prelude = "prelude.sql"
+
+[[table]]
+name        = "mart_porto_comercio"
+schema      = "cross"
+strategy    = "replace"
+engine      = "duckdb"
+sql         = "transform.sql"
+description = "Movimentação de cargas aquaviárias e comércio exterior por instalação portuária, SH4 e mês"
+primary_key = ["ano", "mes", "codigo_instalacao_portuaria", "sh4"]
+indexes = [
+    { name = "idx_mart_porto_comercio_inst", columns = ["codigo_instalacao_portuaria"] },
+    { name = "idx_mart_porto_comercio_sh4", columns = ["sh4"] },
+]

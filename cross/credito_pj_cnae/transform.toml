@@ -1,0 +1,15 @@
+# Mart de crédito bancário de pessoas jurídicas (SCR x CNPJ).
+prelude = "prelude.sql"
+
+[[table]]
+name        = "mart_credito_pj_cnae"
+schema      = "cross"
+strategy    = "replace"
+engine      = "duckdb"
+sql         = "transform.sql"
+description = "Carteira de crédito PJ agregada por divisão CNAE, modalidade e rating de risco"
+primary_key = ["competencia", "cnae_divisao", "modalidade"]
+indexes = [
+    { name = "idx_mart_credito_pj_cnae_div", columns = ["cnae_divisao"] },
+    { name = "idx_mart_credito_pj_comp", columns = ["competencia"] },
+]
