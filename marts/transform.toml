@@ -1,0 +1,57 @@
+# Marts Analíticos do Portal (Subplano 6) calculados sobre o Universal Parquet Lake com DuckDB.
+# Execução atômica no PostgreSQL com tabelas temporárias __new e swap transacional.
+
+[[table]]
+name        = "macro_series"
+schema      = "marts"
+strategy    = "replace"
+engine      = "duckdb"
+sql         = "macro_series.sql"
+description = "Séries macroeconômicas mensais unificadas de taxas de juros (Tesouro Direto Selic, IPCA+ e Prefixado)"
+indexes = [
+    { name = "uq_marts_macro_series_data", columns = ["data"], unique = true },
+]
+
+[[table]]
+name        = "comex_fluxos"
+schema      = "marts"
+strategy    = "replace"
+engine      = "duckdb"
+sql         = "comex_fluxos.sql"
+description = "Fluxos consolidados de comércio exterior por ano, mês, UF e tipo de operação"
+indexes = [
+    { name = "idx_marts_comex_ano_mes_uf", columns = ["ano", "mes", "uf"] },
+]
+
+[[table]]
+name        = "trabalho_saldo"
+schema      = "marts"
+strategy    = "replace"
+engine      = "duckdb"
+sql         = "trabalho_saldo.sql"
+description = "Saldo e movimentação formal de emprego por competência, UF e grande setor econômico"
+indexes = [
+    { name = "idx_marts_trabalho_competencia_uf", columns = ["competencia", "uf"] },
+]
+
+[[table]]
+name        = "empresas_ativas"
+schema      = "marts"
+strategy    = "replace"
+engine      = "duckdb"
+sql         = "empresas_ativas.sql"
+description = "Estatísticas agregadas de empresas ativas no CNPJ por UF e porte empresarial"
+indexes = [
+    { name = "idx_marts_empresas_uf_porte", columns = ["uf", "porte"] },
+]
+
+[[table]]
+name        = "aviacao_pontualidade"
+schema      = "marts"
+strategy    = "replace"
+engine      = "duckdb"
+sql         = "aviacao_pontualidade.sql"
+description = "Pontualidade, cancelamentos e volume de voos por aeródromo e mês"
+indexes = [
+    { name = "idx_marts_aviacao_aerodromo_ano_mes", columns = ["aerodromo", "ano", "mes"] },
+]

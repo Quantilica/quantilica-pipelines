@@ -190,3 +190,10 @@ theme = "tesouro_direto"
 path = "tesouro_direto/marts"
 engine = "duckdb"
 description = "Agregados dos microdados do Tesouro Direto (investidores e operações), calculados sobre o lake de Parquet"
+
+[pipelines.marts]
+theme = "marts"
+path = "marts"
+engine = "duckdb"
+description = "Marts analíticos do portal (Macro, Comex, Emprego, Empresas e Aviação) calculados com DuckDB sobre o lake"
+
