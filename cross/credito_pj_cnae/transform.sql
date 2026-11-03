@@ -1,5 +1,8 @@
 -- cross.mart_credito_pj_cnae
 -- Agrega operações de crédito PJ do SCR por divisão de CNAE e modalidade.
+--
+-- ATENÇÃO: pipeline comentado no manifest.toml. A view bcb_microdados.scr_carteira_cnae_rating
+-- não existe (aliases do conversor: scr, estban_municipio, estban_agencia, cosif).
 
 WITH scr_agregado AS (
     SELECT

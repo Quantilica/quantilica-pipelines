@@ -2,6 +2,12 @@
 -- Junta a posição de aluguel (BTC) às cotações do COTAHIST no mesmo dia. O BTC é o
 -- lado dominante (LEFT JOIN): ticker sem cotação no dia entra com métricas nulas,
 -- para que a cobertura do join seja mensurável. Taxa e volume vêm da fonte.
+--
+-- Origem: b3.cotahist (alias do COTAHIST; colunas quantidade_titulos_negociados e
+-- volume_negociado conforme auxiliary_tables/registro01.csv do b3-fetcher) e
+-- b3.btc_posicoes_abertas. ATENÇÃO: o b3-fetcher ainda não coleta o BTC (sem URL no
+-- catálogo), e as colunas do lado BTC não estão confirmadas contra dados reais; por
+-- isso o pipeline está comentado no manifest.toml (ver "Dependência upstream").
 
 WITH btc AS (
     SELECT
@@ -17,11 +23,11 @@ WITH btc AS (
 ),
 cot AS (
     SELECT
-        CAST(data AS DATE)                                    AS data,
-        UPPER(TRIM(simbolo))                                  AS simbolo,
-        SUM(TRY_CAST(quantidade_negociada AS BIGINT))        AS quantidade_negociada,
-        SUM(TRY_CAST(volume AS DECIMAL(20, 2)))              AS volume
-    FROM b3.cotacaohistorica
+        CAST(data AS DATE)                                          AS data,
+        UPPER(TRIM(simbolo))                                        AS simbolo,
+        SUM(TRY_CAST(quantidade_titulos_negociados AS BIGINT))      AS quantidade_negociada,
+        SUM(TRY_CAST(volume_negociado AS DECIMAL(20, 2)))           AS volume
+    FROM b3.cotahist
     WHERE TRY_CAST(data AS DATE) IS NOT NULL
     GROUP BY 1, 2
 )

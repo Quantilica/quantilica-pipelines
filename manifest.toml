@@ -197,37 +197,65 @@ path = "marts"
 engine = "duckdb"
 description = "Marts analíticos do portal (Macro, Comex, Emprego, Empresas e Aviação) calculados com DuckDB sobre o lake"
 
-[pipelines.cross_emprestimo_ativos]
-theme = "cross"
-path = "cross/emprestimo_ativos"
-engine = "duckdb"
-description = "Short interest diário: posição alugada (BTC), taxas médias e cotações B3"
+# Marts cross M1..M5 (plano 2026-10-30-expansao-datasets-fetchers-existentes, secao 5).
+# Regra 5.4.3: pipeline cuja view de origem nao existe fica COMENTADO ate a dependencia
+# upstream ser entregue. O SQL e o prelude de cada diretorio sao mantidos, e o
+# transform.toml vira `transform.toml.disabled` (o validador exige que todo diretorio com
+# transform.toml esteja coberto pelo manifest). Para reativar: renomear de volta para
+# transform.toml, descomentar o bloco, acrescentar os aliases novos em
+# tests/lake_aliases.toml e rodar `uv run pytest -q` e
+# `uv run quantilica sql validate . --strict`.
 
-[pipelines.cross_renda_fixa_emissoes]
-theme = "cross"
-path = "cross/renda_fixa_emissoes"
-engine = "duckdb"
-description = "Emissões e estoque de renda fixa estruturada (CRI, CRA, ofertas CVM) cruzadas com a B3"
+# [pipelines.cross_emprestimo_ativos]   # M1
+# Dependência upstream: b3-fetcher nao coleta o BTC (btc_posicoes_abertas). O catalogo
+# lista o grupo sem `url` (so ha conversor de arquivos colocados a mao em lake.py) e as
+# colunas do lado BTC (data_referencia, simbolo, codigo_isin, quantidade, valor,
+# taxa_media) existem apenas numa fixture sintetica de tests/test_lake.py do b3-fetcher.
+# Falta: cliente/URL de download do BTC (TC-01, achado E4) e layout real confirmado.
+# O lado COTAHIST ja esta corrigido no SQL (b3.cotahist, quantidade_titulos_negociados,
+# volume_negociado).
+# theme = "cross"
+# path = "cross/emprestimo_ativos"
+# engine = "duckdb"
+# description = "Short interest diário: posição alugada (BTC), taxas médias e cotações B3"
 
-[pipelines.cross_credito_pj_cnae]
-# Dependência upstream: bcb-microdados-fetcher (TC-03, safra Nov/2026)
-theme = "cross"
-path = "cross/credito_pj_cnae"
-engine = "duckdb"
-description = "Carteira de crédito PJ por CNAE e rating (BCB SCR x RFB CNPJ)"
+# [pipelines.cross_renda_fixa_emissoes]   # M2
+# Dependência upstream: (1) b3-fetcher: `b3.indices_carteiras` nao tem coleta (catalogo
+# sem `url`; so conversor manual) e `b3.instrumentos` nao existe em nenhum fetcher;
+# (2) cvm-fetcher: o lake preserva os cabecalhos brutos da CVM e nao ha schema nem
+# fixture no repo que confirme as colunas usadas (cnpj_emissor, codigo_isin,
+# data_abertura_processo, valor_total_oferta, cnpj_securitizadora, nome_securitizadora,
+# valor_emissao, ano). Falta: confirmar as colunas contra amostras reais de
+# ofertas_distribuicao/securitizacao_cri/securitizacao_cra e entregar as views da B3.
+# theme = "cross"
+# path = "cross/renda_fixa_emissoes"
+# engine = "duckdb"
+# description = "Emissões e estoque de renda fixa estruturada (CRI, CRA, ofertas CVM) cruzadas com a B3"
 
-[pipelines.cross_porto_comercio]
-# Dependência upstream: antaq-fetcher (TC-04, safra Nov/2026)
-theme = "cross"
-path = "cross/porto_comercio"
-engine = "duckdb"
-description = "Movimentação de cargas aquaviárias e comércio exterior (ANTAQ x Comex)"
+# [pipelines.cross_credito_pj_cnae]   # M3
+# Dependência upstream: bcb-microdados-fetcher (TC-03, safra Nov/2026). A view
+# bcb_microdados.scr_carteira_cnae_rating nao existe: o conversor so publica os
+# aliases scr, estban_municipio, estban_agencia e cosif (grao diferente do mart).
+# Falta: dataset agregado por CNAE/rating (ou reescrever o mart sobre bcb_microdados.scr).
+# theme = "cross"
+# path = "cross/credito_pj_cnae"
+# engine = "duckdb"
+# description = "Carteira de crédito PJ por CNAE e rating (BCB SCR x RFB CNPJ)"
 
-[pipelines.cross_cambio_comercio]
-# Dependência upstream: bcb-microdados-fetcher (TC-03, safra Nov/2026)
-theme = "cross"
-path = "cross/cambio_comercio"
-engine = "duckdb"
-description = "Comparativo mensal entre fluxo cambial contratado e balança comercial (BCB x Comex)"
+# [pipelines.cross_porto_comercio]   # M4
+# Dependência upstream: antaq-fetcher (TC-04, safra Nov/2026). O fetcher nao existe no
+# workspace, entao antaq.cargas e antaq.atracacoes nao existem. Alem disso o SQL usa
+# comex.trade_exp_ncm, cujo nome so vale com o conversor do comex-fetcher de 01/11.
+# theme = "cross"
+# path = "cross/porto_comercio"
+# engine = "duckdb"
+# description = "Movimentação de cargas aquaviárias e comércio exterior (ANTAQ x Comex)"
 
-
+# [pipelines.cross_cambio_comercio]   # M5
+# Dependência upstream: bcb-microdados-fetcher (TC-03, safra Nov/2026). A view
+# bcb_microdados.fluxo_cambial_diario nao existe (aliases publicados: scr,
+# estban_municipio, estban_agencia, cosif). Falta o dataset de fluxo cambial diario.
+# theme = "cross"
+# path = "cross/cambio_comercio"
+# engine = "duckdb"
+# description = "Comparativo mensal entre fluxo cambial contratado e balança comercial (BCB x Comex)"

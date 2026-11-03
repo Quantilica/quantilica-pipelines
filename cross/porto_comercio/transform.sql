@@ -3,6 +3,9 @@
 -- Nota: A associação instalação portuária <-> URF/município é aproximada
 -- e baseada na correspondência de SH4 e territorialidade; a coluna confianca_join
 -- explicita o nível de agregação correspondido.
+--
+-- ATENÇÃO: pipeline comentado no manifest.toml. antaq-fetcher não existe (antaq.cargas ausente)
+-- e, no comex, o alias vigente é trade_exp_ncm (conversor de 01/11), a conferir ao reativar.
 
 WITH cargas AS (
     SELECT

@@ -1,5 +1,8 @@
 -- cross.mart_cambio_comercio
 -- Confronto mensal entre fluxo cambial contratado (BCB) e saldo comercial (Comex).
+--
+-- ATENÇÃO: pipeline comentado no manifest.toml. A view bcb_microdados.fluxo_cambial_diario
+-- não existe (aliases do conversor: scr, estban_municipio, estban_agencia, cosif).
 
 WITH fluxo AS (
     SELECT

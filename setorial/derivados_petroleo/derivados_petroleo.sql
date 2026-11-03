@@ -44,7 +44,11 @@ normalized_product_and_variable AS (
 ),
 filtered_zeros AS (
     SELECT
-        *
+        date,
+        produto,
+        variavel,
+        unidade,
+        valor
     FROM
         normalized_product_and_variable
     WHERE

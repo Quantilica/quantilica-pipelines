@@ -1,6 +1,14 @@
 -- cross.mart_renda_fixa_emissoes
 -- Consolida ofertas de distribuição e certificados de securitização (CRI e CRA)
 -- cruzando com carteiras de índices da B3 (IFIX, etc.).
+--
+-- ATENÇÃO: pipeline comentado no manifest.toml (ver "Dependência upstream"). As colunas
+-- das views cvm.* (cnpj_emissor, codigo_isin, data_abertura_processo, valor_total_oferta,
+-- cnpj_securitizadora, nome_securitizadora, valor_emissao, ano) NÃO estão confirmadas:
+-- o lake da CVM preserva os cabeçalhos brutos e o cvm-fetcher não traz schema nem
+-- fixture delas. b3.indices_carteiras não tem coleta no b3-fetcher (catálogo sem URL) e
+-- b3.instrumentos (citado no plano) não existe. As views cvm.ofertas_distribuicao,
+-- cvm.securitizacao_cri e cvm.securitizacao_cra são aliases reais (cvm_fetcher/lake.py).
 
 WITH ofertas AS (
     SELECT
@@ -36,11 +44,14 @@ cra AS (
     WHERE codigo_isin IS NOT NULL AND TRIM(codigo_isin) <> ''
 ),
 consolidado AS (
-    SELECT * FROM ofertas
+    SELECT competencia, cnpj_emissor, codigo_isin, origem, nome_emissor, valor_emissao
+    FROM ofertas
     UNION ALL
-    SELECT * FROM cri
+    SELECT competencia, cnpj_emissor, codigo_isin, origem, nome_emissor, valor_emissao
+    FROM cri
     UNION ALL
-    SELECT * FROM cra
+    SELECT competencia, cnpj_emissor, codigo_isin, origem, nome_emissor, valor_emissao
+    FROM cra
 ),
 indices_b3 AS (
     SELECT DISTINCT
