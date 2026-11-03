@@ -45,11 +45,6 @@ literal_aliases = [
     "trade_exp_mun", "trade_imp_mun", "tabelas_auxiliares_ncm_sh", "repetro",
     "totais_validacao",
 ]
-# Nomes de diretório (sem alias) de lakes convertidos ANTES do alias canônico. Os marts
-# `marts/comex_fluxos` ainda leem `comex.exp`/`comex.imp`; se o lake for reconvertido
-# com o conversor atual, a view passa a se chamar `trade_exp_ncm`/`trade_imp_ncm` e
-# esse mart quebra. Pendência registrada: migrar o SQL quando o lake for reconvertido.
-legacy_aliases = ["exp", "imp", "exp_nbm", "imp_nbm", "exp_mun", "imp_mun"]
 
 [sources.bcb_microdados]
 lake_py = "bcb-microdados-fetcher/src/bcb_microdados_fetcher/lake.py"

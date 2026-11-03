@@ -7,7 +7,7 @@ SELECT
     count(*)::BIGINT AS total_registros,
     round(sum(coalesce(vl_fob::DOUBLE, 0.0)), 2) AS valor_fob_usd,
     round(sum(coalesce(kg_liquido::DOUBLE, 0.0)), 2) AS peso_liquido_kg
-FROM comex.exp
+FROM comex.trade_exp_ncm
 GROUP BY 1, 2, 3
 UNION ALL
 SELECT
@@ -18,6 +18,6 @@ SELECT
     count(*)::BIGINT AS total_registros,
     round(sum(coalesce(vl_fob::DOUBLE, 0.0)), 2) AS valor_fob_usd,
     round(sum(coalesce(kg_liquido::DOUBLE, 0.0)), 2) AS peso_liquido_kg
-FROM comex.imp
+FROM comex.trade_imp_ncm
 GROUP BY 1, 2, 3
 ORDER BY ano DESC, mes DESC, uf;
