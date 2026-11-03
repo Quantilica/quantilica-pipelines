@@ -1,0 +1,99 @@
+# Views do lake (`<fonte>.<alias>`) que os pipelines DuckDB podem referenciar.
+#
+# O nome da view vem de quantilica_sql/lake/duck.py: é o `alias` do `_dataset.json`
+# (gravado pelo conversor `lake.py` de cada fetcher) ou, sem descritor, o nome do
+# diretório do dataset. A fonte é normalizada (`rfb-cnpj` -> `rfb_cnpj`).
+#
+# Este arquivo é versionado de propósito: o repositório não depende dos fetchers.
+# Ao criar um mart sobre fonte/dataset novo, confirme o alias no `lake.py` do fetcher
+# (ou no `_dataset.json` do lake) e acrescente aqui. `literal_aliases` são os aliases
+# que aparecem escritos no `lake_py`; tests/test_marts.py confere isso quando o fetcher
+# existe ao lado deste repositório (workspace Quantilica) e ignora a checagem fora dele.
+
+[sources.b3]
+lake_py = "b3-fetcher/src/b3_fetcher/lake.py"
+# DATASET_SPECS: o COTAHIST (dataset cotacaohistorica) é a view `cotahist`.
+aliases = ["cotahist", "btc_posicoes_abertas", "derivativos_agro", "indices_carteiras"]
+literal_aliases = ["cotahist", "btc_posicoes_abertas", "derivativos_agro", "indices_carteiras"]
+
+[sources.cvm]
+lake_py = "cvm-fetcher/src/cvm_fetcher/lake.py"
+# alias = DATASET_ALIASES.get(grupo, grupo com "-" trocado por "_").
+aliases = [
+    "adm_cart_cad", "agente_auton_cad", "agente_fiduc_cad", "auditor_cad", "cia_cad",
+    "cia_cgvn", "cia_dfp", "cia_fca", "cia_fre", "cia_ipe", "cia_itr", "consultor_cad",
+    "fi_balancete", "fi_cad", "fi_cda", "fi_entrega", "fi_extrato", "fi_inf_diario",
+    "fi_lamina", "fi_perfil", "fiagro_inf_mensal", "fii_dfin", "fii_inf_anual",
+    "fii_inf_mensal", "fii_inf_trim", "inf_mensal_fidc", "inf_quadrimestral_fip",
+    "intermed_cad", "ofertas_distribuicao", "securitizacao_cra", "securitizacao_cri",
+]
+literal_aliases = [
+    "inf_mensal_fidc", "inf_quadrimestral_fip", "ofertas_distribuicao",
+    "securitizacao_cra", "securitizacao_cri",
+]
+
+[sources.comex]
+lake_py = "comex-fetcher/src/comex_fetcher/lake.py"
+# DATASET_ALIASES (comex-fetcher, commit 476661d de 2026-11-01).
+aliases = [
+    "trade_exp_ncm", "trade_imp_ncm", "trade_exp_nbm", "trade_imp_nbm",
+    "trade_exp_mun", "trade_imp_mun", "tabelas_auxiliares_ncm_sh", "repetro",
+    "totais_validacao",
+]
+literal_aliases = [
+    "trade_exp_ncm", "trade_imp_ncm", "trade_exp_nbm", "trade_imp_nbm",
+    "trade_exp_mun", "trade_imp_mun", "tabelas_auxiliares_ncm_sh", "repetro",
+    "totais_validacao",
+]
+# Nomes de diretório (sem alias) de lakes convertidos ANTES do alias canônico. Os marts
+# `marts/comex_fluxos` ainda leem `comex.exp`/`comex.imp`; se o lake for reconvertido
+# com o conversor atual, a view passa a se chamar `trade_exp_ncm`/`trade_imp_ncm` e
+# esse mart quebra. Pendência registrada: migrar o SQL quando o lake for reconvertido.
+legacy_aliases = ["exp", "imp", "exp_nbm", "imp_nbm", "exp_mun", "imp_mun"]
+
+[sources.bcb_microdados]
+lake_py = "bcb-microdados-fetcher/src/bcb_microdados_fetcher/lake.py"
+# DATASETS do conversor. NÃO existem `scr_carteira_cnae_rating` nem `fluxo_cambial_diario`.
+aliases = ["scr", "estban_municipio", "estban_agencia", "cosif"]
+literal_aliases = ["scr", "estban_municipio", "estban_agencia", "cosif"]
+
+[sources.rfb_cnpj]
+lake_py = "rfb-cnpj-fetcher/src/rfb_cnpj_fetcher/lake.py"
+# alias = grupo (_GROUP_PATTERNS em rfb_cnpj_fetcher/catalog.py).
+aliases = [
+    "empresas", "estabelecimentos", "socios", "simples", "cnaes", "naturezas",
+    "qualificacoes", "municipios", "paises", "motivos",
+]
+
+[sources.tesouro_direto]
+lake_py = "tesouro-direto-fetcher/src/tesouro_direto_fetcher/lake.py"
+# SPECS: alias de cada DatasetSpec.
+aliases = [
+    "investidores", "operacoes", "estoque", "taxas", "vendas", "cupons", "recompras",
+    "vencimentos",
+]
+literal_aliases = [
+    "investidores", "operacoes", "estoque", "taxas", "vendas", "cupons", "recompras",
+    "vencimentos",
+]
+
+[sources.pdet]
+lake_py = "pdet-fetcher/src/pdet_fetcher/lake.py"
+# DatasetSpec.alias = dataset_id com "-" trocado por "_".
+aliases = [
+    "caged", "caged_2020_exc", "caged_2020_for", "caged_2020_mov", "caged_ajustes",
+    "rais_estabelecimentos", "rais_vinculos",
+]
+
+[sources.anac]
+lake_py = "anac-fetcher/src/anac_fetcher/lake.py"
+# alias = dataset_id = grupo (variantes `-atual`/`-anual` de dataset_for_granularity
+# não estão listadas; acrescente quando um mart precisar delas).
+aliases = [
+    "aero-caracteristicas", "aero-excluidos", "aero-helideck", "aero-heliponto-privado",
+    "aero-helipontos-publicos", "aero-lista-privados", "aero-lista-publicos",
+    "aero-patio", "aero-pistas-pouso", "aero-pistas-taxi", "aero-plano-diretor",
+    "aero-posicoes-estacionamento", "aero-pzr", "aero-seguranca", "atrasos-cancelamentos",
+    "dados-estatisticos", "drones", "empresas-aereas", "movimentacao-aeroportuaria",
+    "ocorrencias", "rab", "recomendacoes-seguranca", "vra",
+]
