@@ -1,0 +1,167 @@
+# Contrato de colunas dos marts (tabelas `marts.*` no PostgreSQL do portal).
+# Fonte única para tests/test_marts_duckdb.py e para docs/marts.md.
+# `status = "active"`: está no manifest.toml e roda em `quantilica sql run marts`.
+# `status = "disabled"`: SQL mantido, fora do manifest até a dependência upstream.
+# Tipos são os do DuckDB na saída da consulta; o mapeamento para PostgreSQL é o de
+# quantilica_sql.lake.duck.pg_type (BIGINT->bigint, INTEGER->integer, DOUBLE->double
+# precision, VARCHAR->text, DATE->date, DECIMAL(p,s)->numeric(p,s), BOOLEAN->boolean).
+
+[[mart]]
+table  = "marts.macro_series"
+status = "active"
+path   = "marts"
+sql    = "macro_series.sql"
+key    = ["data"]
+columns = [
+    { name = "data", type = "DATE" },
+    { name = "taxa_selic_media", type = "DOUBLE" },
+    { name = "taxa_ipca_media", type = "DOUBLE" },
+    { name = "taxa_prefixado_media", type = "DOUBLE" },
+]
+
+[[mart]]
+table  = "marts.comex_fluxos"
+status = "active"
+path   = "marts"
+sql    = "comex_fluxos.sql"
+key    = ["ano", "mes", "uf", "tipo_operacao"]
+columns = [
+    { name = "ano", type = "INTEGER" },
+    { name = "mes", type = "INTEGER" },
+    { name = "uf", type = "VARCHAR" },
+    { name = "tipo_operacao", type = "VARCHAR" },
+    { name = "total_registros", type = "BIGINT" },
+    { name = "valor_fob_usd", type = "DOUBLE" },
+    { name = "peso_liquido_kg", type = "DOUBLE" },
+]
+
+[[mart]]
+table  = "marts.trabalho_saldo"
+status = "active"
+path   = "marts"
+sql    = "trabalho_saldo.sql"
+key    = ["competencia", "uf", "grande_setor"]
+columns = [
+    { name = "competencia", type = "VARCHAR" },
+    { name = "uf", type = "VARCHAR" },
+    { name = "grande_setor", type = "VARCHAR" },
+    { name = "admissoes", type = "BIGINT" },
+    { name = "desligamentos", type = "BIGINT" },
+    { name = "saldo_movimentacao", type = "BIGINT" },
+    { name = "salario_medio", type = "DOUBLE" },
+]
+
+[[mart]]
+table  = "marts.empresas_ativas"
+status = "active"
+path   = "marts"
+sql    = "empresas_ativas.sql"
+key    = ["uf", "porte"]
+columns = [
+    { name = "uf", type = "VARCHAR" },
+    { name = "porte", type = "VARCHAR" },
+    { name = "total_estabelecimentos", type = "BIGINT" },
+    { name = "estabelecimentos_ativos", type = "BIGINT" },
+    { name = "capital_social_total", type = "DOUBLE" },
+]
+
+[[mart]]
+table  = "marts.aviacao_pontualidade"
+status = "active"
+path   = "marts"
+sql    = "aviacao_pontualidade.sql"
+key    = ["aerodromo", "ano", "mes"]
+columns = [
+    { name = "aerodromo", type = "VARCHAR" },
+    { name = "ano", type = "INTEGER" },
+    { name = "mes", type = "INTEGER" },
+    { name = "total_voos_programados", type = "BIGINT" },
+    { name = "voos_realizados", type = "BIGINT" },
+    { name = "voos_cancelados", type = "BIGINT" },
+    { name = "taxa_cancelamento_pct", type = "DOUBLE" },
+]
+
+[[mart]]
+table  = "marts.fato_short_interest_b3"
+status = "disabled"
+path   = "cross/emprestimo_ativos"
+sql    = "transform.sql"
+prelude = "prelude.sql"
+key    = ["data", "simbolo"]
+columns = [
+    { name = "data", type = "DATE" },
+    { name = "simbolo", type = "VARCHAR" },
+    { name = "codigo_isin", type = "VARCHAR" },
+    { name = "quantidade_alugada", type = "BIGINT" },
+    { name = "valor_alugado", type = "DECIMAL(38,2)" },
+    { name = "taxa_media", type = "DOUBLE" },
+    { name = "quantidade_negociada", type = "BIGINT" },
+    { name = "volume", type = "DECIMAL(38,2)" },
+    { name = "razao_short_interest", type = "DOUBLE" },
+]
+
+[[mart]]
+table  = "cross.mart_renda_fixa_emissoes"
+status = "disabled"
+path   = "cross/renda_fixa_emissoes"
+sql    = "transform.sql"
+prelude = "prelude.sql"
+key    = ["competencia", "cnpj_emissor", "codigo_isin"]
+columns = [
+    { name = "competencia", type = "DATE" },
+    { name = "cnpj_emissor", type = "VARCHAR" },
+    { name = "codigo_isin", type = "VARCHAR" },
+    { name = "origem", type = "VARCHAR" },
+    { name = "nome_emissor", type = "VARCHAR" },
+    { name = "valor_emissao", type = "DECIMAL(38,2)" },
+    { name = "match_instrumento", type = "BOOLEAN" },
+]
+
+[[mart]]
+table  = "cross.mart_credito_pj_cnae"
+status = "disabled"
+path   = "cross/credito_pj_cnae"
+sql    = "transform.sql"
+prelude = "prelude.sql"
+key    = ["competencia", "cnae_divisao", "modalidade"]
+columns = [
+    { name = "competencia", type = "DATE" },
+    { name = "cnae_divisao", type = "VARCHAR" },
+    { name = "modalidade", type = "VARCHAR" },
+    { name = "total_operacoes", type = "BIGINT" },
+    { name = "valor_total_carteira", type = "DECIMAL(38,2)" },
+]
+
+[[mart]]
+table  = "marts.fato_balanca_logistica_portuaria"
+status = "disabled"
+path   = "cross/porto_comercio"
+sql    = "transform.sql"
+prelude = "prelude.sql"
+key    = ["ano", "mes", "codigo_instalacao_portuaria", "sh4"]
+columns = [
+    { name = "ano", type = "INTEGER" },
+    { name = "mes", type = "VARCHAR" },
+    { name = "codigo_instalacao_portuaria", type = "VARCHAR" },
+    { name = "sh4", type = "VARCHAR" },
+    { name = "peso_porto_kg", type = "DECIMAL(38,2)" },
+    { name = "peso_comex_kg", type = "DECIMAL(38,2)" },
+    { name = "valor_fob_usd", type = "DECIMAL(38,2)" },
+    { name = "confianca_join", type = "VARCHAR" },
+]
+
+[[mart]]
+table  = "cross.mart_cambio_comercio"
+status = "disabled"
+path   = "cross/cambio_comercio"
+sql    = "transform.sql"
+prelude = "prelude.sql"
+key    = ["ano", "mes", "natureza"]
+columns = [
+    { name = "ano", type = "INTEGER" },
+    { name = "mes", type = "VARCHAR" },
+    { name = "natureza", type = "VARCHAR" },
+    { name = "fluxo_cambial_usd", type = "DECIMAL(38,2)" },
+    { name = "saldo_comercial_usd", type = "DECIMAL(38,2)" },
+    { name = "razao_cambio_por_comercio", type = "DOUBLE" },
+]
