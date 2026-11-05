@@ -2,14 +2,14 @@
 prelude = "prelude.sql"
 
 [[table]]
-name        = "mart_porto_comercio"
-schema      = "cross"
+name        = "fato_balanca_logistica_portuaria"
+schema      = "marts"
 strategy    = "replace"
 engine      = "duckdb"
 sql         = "transform.sql"
 description = "Movimentação de cargas aquaviárias e comércio exterior por instalação portuária, SH4 e mês"
 primary_key = ["ano", "mes", "codigo_instalacao_portuaria", "sh4"]
 indexes = [
-    { name = "idx_mart_porto_comercio_inst", columns = ["codigo_instalacao_portuaria"] },
-    { name = "idx_mart_porto_comercio_sh4", columns = ["sh4"] },
+    { name = "idx_fato_balanca_log_portuaria_inst", columns = ["codigo_instalacao_portuaria"] },
+    { name = "idx_fato_balanca_log_portuaria_sh4", columns = ["sh4"] },
 ]

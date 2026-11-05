@@ -197,6 +197,7 @@ path = "marts"
 engine = "duckdb"
 description = "Marts analíticos do portal (Macro, Comex, Emprego, Empresas e Aviação) calculados com DuckDB sobre o lake"
 
+# Contrato de colunas dos marts: docs/marts.md e docs/marts_contract.toml.
 # Marts cross M1..M5 (plano 2026-10-30-expansao-datasets-fetchers-existentes, secao 5).
 # Regra 5.4.3: pipeline cuja view de origem nao existe fica COMENTADO ate a dependencia
 # upstream ser entregue. O SQL e o prelude de cada diretorio sao mantidos, e o
@@ -206,7 +207,7 @@ description = "Marts analíticos do portal (Macro, Comex, Emprego, Empresas e Av
 # tests/lake_aliases.toml e rodar `uv run pytest -q` e
 # `uv run quantilica sql validate . --strict`.
 
-# [pipelines.cross_emprestimo_ativos]   # M1
+# [pipelines.cross_emprestimo_ativos]   # M1 -> marts.fato_short_interest_b3
 # Dependência upstream: b3-fetcher nao coleta o BTC (btc_posicoes_abertas). O catalogo
 # lista o grupo sem `url` (so ha conversor de arquivos colocados a mao em lake.py) e as
 # colunas do lado BTC (data_referencia, simbolo, codigo_isin, quantidade, valor,
@@ -242,7 +243,7 @@ description = "Marts analíticos do portal (Macro, Comex, Emprego, Empresas e Av
 # engine = "duckdb"
 # description = "Carteira de crédito PJ por CNAE e rating (BCB SCR x RFB CNPJ)"
 
-# [pipelines.cross_porto_comercio]   # M4
+# [pipelines.cross_porto_comercio]   # M4 -> marts.fato_balanca_logistica_portuaria
 # Dependência upstream: antaq-fetcher (TC-04, safra Nov/2026). O fetcher nao existe no
 # workspace, entao antaq.cargas e antaq.atracacoes nao existem. Alem disso o SQL usa
 # comex.trade_exp_ncm, cujo nome so vale com o conversor do comex-fetcher de 01/11.

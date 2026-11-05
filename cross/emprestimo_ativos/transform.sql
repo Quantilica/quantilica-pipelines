@@ -1,4 +1,4 @@
--- cross.mart_short_interest
+-- marts.fato_short_interest_b3
 -- Junta a posição de aluguel (BTC) às cotações do COTAHIST no mesmo dia. O BTC é o
 -- lado dominante (LEFT JOIN): ticker sem cotação no dia entra com métricas nulas,
 -- para que a cobertura do join seja mensurável. Taxa e volume vêm da fonte.
@@ -11,10 +11,10 @@
 
 WITH btc AS (
     SELECT
-        CAST(data_referencia AS DATE)          AS data,
+        b3_date(data_referencia)               AS data,
         UPPER(TRIM(simbolo))                   AS simbolo,
         MAX(NULLIF(TRIM(codigo_isin), ''))     AS codigo_isin,
-        SUM(TRY_CAST(quantidade AS BIGINT))     AS quantidade_alugada,
+        SUM(TRY_CAST(quantidade AS BIGINT))::BIGINT AS quantidade_alugada,
         SUM(TRY_CAST(valor AS DECIMAL(20, 2)))  AS valor_alugado,
         AVG(TRY_CAST(taxa_media AS DECIMAL(10, 4))) AS taxa_media
     FROM b3.btc_posicoes_abertas
@@ -23,12 +23,12 @@ WITH btc AS (
 ),
 cot AS (
     SELECT
-        CAST(data AS DATE)                                          AS data,
+        b3_date(data)                                               AS data,
         UPPER(TRIM(simbolo))                                        AS simbolo,
-        SUM(TRY_CAST(quantidade_titulos_negociados AS BIGINT))      AS quantidade_negociada,
+        SUM(TRY_CAST(quantidade_titulos_negociados AS BIGINT))::BIGINT AS quantidade_negociada,
         SUM(TRY_CAST(volume_negociado AS DECIMAL(20, 2)))           AS volume
     FROM b3.cotahist
-    WHERE TRY_CAST(data AS DATE) IS NOT NULL
+    WHERE b3_date(data) IS NOT NULL
     GROUP BY 1, 2
 )
 SELECT

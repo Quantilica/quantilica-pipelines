@@ -1,4 +1,4 @@
--- cross.mart_porto_comercio
+-- marts.fato_balanca_logistica_portuaria
 -- Cruzamento entre cargas portuárias (ANTAQ) e comércio exterior (Comex).
 -- Nota: A associação instalação portuária <-> URF/município é aproximada
 -- e baseada na correspondência de SH4 e territorialidade; a coluna confianca_join
@@ -21,7 +21,7 @@ WITH cargas AS (
 comex AS (
     SELECT
         TRY_CAST(ano AS INTEGER) AS ano,
-        LPAD(TRIM(mes), 2, '0') AS mes,
+        LPAD(TRIM(co_mes), 2, '0') AS mes,
         SUBSTR(LPAD(TRIM(co_ncm), 8, '0'), 1, 4) AS sh4,
         SUM(TRY_CAST(kg_liquido AS DECIMAL(20, 2))) AS peso_comex_kg,
         SUM(TRY_CAST(vl_fob AS DECIMAL(20, 2))) AS valor_fob_usd

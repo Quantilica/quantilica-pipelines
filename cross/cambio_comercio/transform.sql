@@ -16,7 +16,7 @@ WITH fluxo AS (
 comex_exp AS (
     SELECT
         TRY_CAST(ano AS INTEGER) AS ano,
-        LPAD(TRIM(mes), 2, '0') AS mes,
+        LPAD(TRIM(co_mes), 2, '0') AS mes,
         SUM(TRY_CAST(vl_fob AS DECIMAL(20, 2))) AS exportacoes_usd
     FROM comex.trade_exp_ncm
     GROUP BY 1, 2
@@ -24,7 +24,7 @@ comex_exp AS (
 comex_imp AS (
     SELECT
         TRY_CAST(ano AS INTEGER) AS ano,
-        LPAD(TRIM(mes), 2, '0') AS mes,
+        LPAD(TRIM(co_mes), 2, '0') AS mes,
         SUM(TRY_CAST(vl_fob AS DECIMAL(20, 2))) AS importacoes_usd
     FROM comex.trade_imp_ncm
     GROUP BY 1, 2

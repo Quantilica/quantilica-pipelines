@@ -20,4 +20,4 @@ SELECT
     round(sum(coalesce(kg_liquido::DOUBLE, 0.0)), 2) AS peso_liquido_kg
 FROM comex.trade_imp_ncm
 GROUP BY 1, 2, 3
-ORDER BY ano DESC, mes DESC, uf;
+ORDER BY ano DESC, mes DESC, uf, tipo_operacao;
