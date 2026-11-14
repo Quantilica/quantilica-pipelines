@@ -202,7 +202,30 @@ def test_select_star_detection(sql, expected):
     assert has_select_star(sql) is expected
 
 
-def test_literal_aliases_match_fetcher_lake_py():
+def lake_py_path(source: str, registro: dict) -> str:
+    """``<repo>/src/<module>/lake.py`` da fonte, derivado do registro de fetchers.
+
+    A chave da seção de ``lake_aliases.toml`` é o ``id`` do fetcher com ``-`` trocado
+    por ``_`` (a normalização do nome da view); ``repo`` e ``module`` vêm do registro.
+    """
+    for fetcher in registro["fetchers"]:
+        if fetcher["id"].replace("-", "_") == source:
+            repo = fetcher["repo"].rstrip("/").rsplit("/", 1)[-1]
+            return f"{repo}/src/{fetcher['module']}/lake.py"
+    raise AssertionError(f"fonte {source!r} de lake_aliases.toml fora do registro")
+
+
+def test_every_alias_source_is_in_registry(registro):
+    for source in load_aliases():
+        assert lake_py_path(source, registro).endswith("/lake.py")
+
+
+def test_lake_py_is_derived_not_declared():
+    declared = [s for s, info in load_aliases().items() if "lake_py" in info]
+    assert not declared, f"lake_py deriva do registro; tire do TOML: {declared}"
+
+
+def test_literal_aliases_match_fetcher_lake_py(registro):
     """Confere o arquivo de aliases com o ``lake.py`` do fetcher, quando ele existe."""
     root = workspace_root()
     if root is None:
@@ -210,13 +233,12 @@ def test_literal_aliases_match_fetcher_lake_py():
     checked = 0
     for source, info in load_aliases().items():
         literals = info.get("literal_aliases", [])
-        lake_py = root / info["lake_py"]
+        rel = lake_py_path(source, registro)
+        lake_py = root / rel
         if not literals or not lake_py.is_file():
             continue
         text = lake_py.read_text(encoding="utf-8")
         missing = [a for a in literals if f'"{a}"' not in text]
-        assert not missing, (
-            f"{source}: aliases {missing} não aparecem em {info['lake_py']}"
-        )
+        assert not missing, f"{source}: aliases {missing} não aparecem em {rel}"
         checked += 1
     assert checked, "nenhum lake.py conferido"
