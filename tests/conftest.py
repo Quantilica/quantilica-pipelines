@@ -14,7 +14,9 @@ import pytest
 
 _BASE = "https://github.com/Quantilica"
 
-# Recorte do registro v2: só `id`, `repo` e `module` das fontes de lake_aliases.toml.
+# Recorte do registro v2: `id`, `lake_source_id`, `repo` e `module` das fontes de
+# lake_aliases.toml. O `lake_source_id` é a chave do lake e não muda num renome do
+# fetcher (o `id` muda); aqui os dois coincidem.
 _FETCHERS = {
     "b3": "b3_fetcher",
     "cvm": "cvm_fetcher",
@@ -29,7 +31,12 @@ _FETCHERS = {
 REGISTRO_FIXTURE: dict[str, Any] = {
     "version": 2,
     "fetchers": [
-        {"id": fid, "module": module, "repo": f"{_BASE}/{fid}-fetcher"}
+        {
+            "id": fid,
+            "lake_source_id": fid,
+            "module": module,
+            "repo": f"{_BASE}/{fid}-fetcher",
+        }
         for fid, module in _FETCHERS.items()
     ],
 }

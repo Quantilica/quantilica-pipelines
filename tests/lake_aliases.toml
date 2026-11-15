@@ -5,8 +5,8 @@
 # diretório do dataset. A fonte é normalizada (`rfb-cnpj` -> `rfb_cnpj`).
 #
 # O caminho do `lake.py` não fica aqui: o teste o deriva de `repo` e `module` do registro
-# de fetchers (`<repo>/src/<module>/lake.py`; a chave da seção é o `id` com `-` trocado
-# por `_`). Este arquivo guarda só o que não deriva do registro, e é versionado de
+# de fetchers (`<repo>/src/<module>/lake.py`; a chave da seção é o `lake_source_id`, ou
+# o `id` se faltar, com `-` trocado por `_`; o `lake_source_id` não muda num renome). Este arquivo guarda só o que não deriva do registro, e é versionado de
 # propósito: o repositório não depende dos fetchers.
 # Ao criar um mart sobre fonte/dataset novo, confirme o alias no `lake.py` do fetcher
 # (ou no `_dataset.json` do lake) e acrescente aqui. `literal_aliases` são os aliases

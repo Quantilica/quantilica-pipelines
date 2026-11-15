@@ -205,11 +205,14 @@ def test_select_star_detection(sql, expected):
 def lake_py_path(source: str, registro: dict) -> str:
     """``<repo>/src/<module>/lake.py`` da fonte, derivado do registro de fetchers.
 
-    A chave da seção de ``lake_aliases.toml`` é o ``id`` do fetcher com ``-`` trocado
-    por ``_`` (a normalização do nome da view); ``repo`` e ``module`` vêm do registro.
+    A chave da seção de ``lake_aliases.toml`` é o ``lake_source_id`` do fetcher (o
+    ``id`` quando o registro não o traz) com ``-`` trocado por ``_`` (a normalização do
+    nome da view). O ``lake_source_id`` é a chave do lake e sobrevive a um renome do
+    fetcher, que muda o ``id``; ``repo`` e ``module`` vêm do registro.
     """
     for fetcher in registro["fetchers"]:
-        if fetcher["id"].replace("-", "_") == source:
+        chave = fetcher.get("lake_source_id") or fetcher["id"]
+        if chave.replace("-", "_") == source:
             repo = fetcher["repo"].rstrip("/").rsplit("/", 1)[-1]
             return f"{repo}/src/{fetcher['module']}/lake.py"
     raise AssertionError(f"fonte {source!r} de lake_aliases.toml fora do registro")
@@ -242,3 +245,36 @@ def test_literal_aliases_match_fetcher_lake_py(registro):
         assert not missing, f"{source}: aliases {missing} não aparecem em {rel}"
         checked += 1
     assert checked, "nenhum lake.py conferido"
+
+
+def test_lake_py_path_segue_o_lake_source_id_num_renome():
+    """Fetcher renomeado: o `id` muda, a chave do lake (e do TOML) não."""
+    registro = {
+        "fetchers": [
+            {
+                "id": "ensaio-sp",
+                "lake_source_id": "transparencia-sp",
+                "module": "ensaio_sp_fetcher",
+                "repo": "https://github.com/Quantilica/ensaio-sp-fetcher",
+            }
+        ]
+    }
+    assert (
+        lake_py_path("transparencia_sp", registro)
+        == "ensaio-sp-fetcher/src/ensaio_sp_fetcher/lake.py"
+    )
+    with pytest.raises(AssertionError):
+        lake_py_path("ensaio_sp", registro)
+
+
+def test_lake_py_path_sem_lake_source_id_usa_o_id():
+    registro = {
+        "fetchers": [
+            {
+                "id": "b3",
+                "module": "b3_fetcher",
+                "repo": "https://github.com/Quantilica/b3-fetcher",
+            }
+        ]
+    }
+    assert lake_py_path("b3", registro) == "b3-fetcher/src/b3_fetcher/lake.py"

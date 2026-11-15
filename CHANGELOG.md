@@ -16,6 +16,7 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR
 - Validação em CI (`quantilica-sql validate . --strict`): falha se um `transform.toml` ficar fora do manifest ou se o `engine` for inválido.
 
 ### Corrigido
+- Testes: a chave de `tests/lake_aliases.toml` é casada com o `lake_source_id` do registro de fetchers (o `id` quando ele falta), para um renome de fetcher não quebrar `test_every_alias_source_is_in_registry` com `QUANTILICA_REGISTRO_PUBLICO=1`.
 - `tests/lake_aliases.toml`: `btc_posicoes_abertas` sai de `literal_aliases` da B3 (o `lake.py` não o escreve), o que fazia `test_literal_aliases_match_fetcher_lake_py` falhar dentro do workspace.
 - `marts.trabalho_saldo` lia colunas inexistentes no lake (`uf`, `secao`, `tipomovimentacao`, `saldomovimentacao`, `salario`); passou a ler `id_uf`, `cnae_2_secao`, `tipo_movimentacao`, `saldo_movimento` e `salario_mensal`, e a competência converte `ano` e `mes` para inteiro.
 - Ordenação de `marts.comex_fluxos` e `marts.trabalho_saldo` passou a incluir toda a chave, o que torna a saída determinística (antes, linhas empatadas saíam em ordem indefinida).
