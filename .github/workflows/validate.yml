@@ -17,10 +17,14 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5
 
+      # quantilica-sql não está no PyPI, só no índice Quantilica (GitHub Pages),
+      # que responde 503 intermitente (2026-11-15) a pacote que não hospeda. Com
+      # --index + unsafe-best-match o uv consultava o índice para cada dependência
+      # de terceiros. --find-links lê só a página do próprio quantilica-sql (que
+      # existe, logo não dá 503) e o resto vem do PyPI.
       - name: Validar manifest, fetch.toml e transform.toml
         run: |
           uv run --python 3.12 \
             --with quantilica-sql \
-            --index https://index.quantilica.com/simple/ \
-            --index-strategy unsafe-best-match \
+            --find-links https://index.quantilica.com/simple/quantilica-sql/ \
             quantilica-sql validate . --strict
