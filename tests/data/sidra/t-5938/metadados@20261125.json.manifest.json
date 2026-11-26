@@ -1,0 +1,24 @@
+{
+  "content_sha256": null,
+  "dataset_id": "t-5938",
+  "execution": null,
+  "fetched_at": "2026-11-26T02:45:12Z",
+  "fingerprint": null,
+  "lineage": null,
+  "manifest_version": 2,
+  "metadata": {
+    "nome": "Produto interno bruto a preços correntes, impostos, líquidos de subsídios, sobre produtos a preços correntes e valor adicionado bruto a preços correntes total e por atividade econômica, e respectivas participações - Referência 2010",
+    "pesquisa": "Produto Interno Bruto dos Municípios"
+  },
+  "normalizer": null,
+  "path": "t-5938/metadados@20261125.json",
+  "producer": "ibge-sidra-fetcher",
+  "producer_version": null,
+  "quality": null,
+  "resource_id": null,
+  "sha256": "2cddf24c4e050f5c7d281bcd78de5dad2524f3c75095e166df32cf4a8c1e6e04",
+  "size_bytes": 16654,
+  "source_id": "ibge-sidra",
+  "source_meta": null,
+  "url": "https://sidra.ibge.gov.br/tabela/5938"
+}
