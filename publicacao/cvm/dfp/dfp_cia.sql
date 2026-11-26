@@ -3,7 +3,8 @@
 -- `exercicio` é o ano do encerramento do exercício (nem todo exercício fecha em 31/12). Se a
 -- companhia tem dois encerramentos no mesmo ano (mudou o fim do exercício), fica o mais
 -- recente; dentro dele, a demonstração consolidada se existir e, em cada conta, a versão mais
--- nova. Nome e código CVM são os do exercício mais recente da companhia.
+-- nova (duas linhas da mesma versão com valores diferentes: fica o maior, para a carga ser
+-- repetível). Nome e código CVM são os do exercício mais recente da companhia.
 WITH com_exercicio AS (
     SELECT *, year(encerramento) AS exercicio
     FROM base
@@ -21,7 +22,7 @@ WITH com_exercicio AS (
 ), escolhidas AS (
     SELECT r.*, t.consolidada,
            row_number() OVER (PARTITION BY r.cnpj, r.exercicio, r.conta
-                              ORDER BY r.versao DESC) AS rn
+                              ORDER BY r.versao DESC, r.valor DESC) AS rn
     FROM do_encerramento r
     JOIN tipo_do_exercicio t USING (cnpj, exercicio)
     WHERE (r.tipo = 'C') = t.consolidada
