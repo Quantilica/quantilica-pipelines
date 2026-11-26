@@ -62,8 +62,9 @@ jobs:
         uses: astral-sh/setup-uv@d4b2f3b6ecc6e67c4457f6d3e41ec42d3d0fcb86 # v5.4.2
 
       # Os testes de contrato e de resultado criam o esquema do SIDRA e do BCB SGS pelo
-      # quantilica-sql e rodam as SQL do catálogo contra ele. Exigem a versão que traz o
-      # esquema dimensional do SIDRA (0.4.0). CI=true (definido pelo Actions) faz a
+      # quantilica-sql e rodam as SQL do catálogo contra ele. Exigem a versão em que o
+      # adaptador do BCB SGS cria e preenche series_metadata (0.4.1; o esquema
+      # dimensional do SIDRA é da 0.4.0). CI=true (definido pelo Actions) faz a
       # falta do banco ou do pacote reprovar em vez de pular o teste. --find-links como
       # no passo de validação (ver o comentário lá).
       - name: Testes do catálogo
@@ -71,14 +72,15 @@ jobs:
           QUANTILICA_TEST_DATABASE_URL: postgresql://postgres:testpassword@localhost:5432/dados
         run: |
           uv run --python 3.12 \
-            --with "quantilica-sql>=0.4.0" \
+            --with "quantilica-sql>=0.4.1" \
             --find-links https://index.quantilica.com/simple/quantilica-sql/ \
             --with pytest \
             pytest -q -rs \
               tests/test_catalogo_descoberta.py \
               tests/test_ibge_contrato.py \
               tests/test_ibge_resultado.py \
-              tests/test_bcb_contrato.py
+              tests/test_bcb_contrato.py \
+              tests/test_bcb_resultado.py
 
   zizmor:
     name: Audit de workflows (zizmor)

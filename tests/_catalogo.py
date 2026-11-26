@@ -93,6 +93,22 @@ def sql_bcb_do_contrato() -> list[Path]:
     ]
 
 
+_JOIN_METADATA = re.compile(r"\bJOIN\s+series_metadata\s+(?:AS\s+)?(\w+)", re.I)
+
+
+def colunas_de_series_metadata(path: Path) -> set[str]:
+    """Colunas de ``series_metadata`` que a SQL lê pelo alias do JOIN (``sm.name``).
+
+    Vazio se a SQL não junta ``series_metadata``. Colunas sem alias (de CTEs) não
+    entram: só o que vem da tabela que o ``load bcb`` cria.
+    """
+    texto = sem_comentarios(path.read_text(encoding="utf-8"))
+    colunas: set[str] = set()
+    for alias in _JOIN_METADATA.findall(texto):
+        colunas |= set(re.findall(rf"\b{alias}\.(\w+)", texto))
+    return colunas
+
+
 def usar_schema(conn, schema: str) -> None:
     """``search_path`` como o runner do ``quantilica-sql`` (origem, depois public)."""
     from psycopg import sql

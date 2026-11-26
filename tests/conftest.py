@@ -132,20 +132,27 @@ def schema_sidra_carregado(pg_conn):
 
 @pytest.fixture(scope="module")
 def schema_bcb_vazio(pg_conn):
-    """Esquema do BCB SGS criado vazio pelo adaptador, mais um ``series_metadata``
-    mínimo (nenhum adaptador do ``quantilica-sql`` o cria: ``test_bcb_contrato``)."""
+    """Esquema do BCB SGS criado vazio pelo adaptador (``series_data`` e
+    ``series_metadata``): o contrato das SQL de ``macro/*`` e ``setorial/*``."""
     from quantilica_sql.adapters.bcb import BcbAdapter
 
     schema = f"qpipe_bcb_{uuid.uuid4().hex[:8]}"
     adaptador = _adaptador(BcbAdapter, schema)
     adaptador._ensure_tables(pg_conn)
-    from psycopg import sql
+    yield from _com_schema(pg_conn, schema)
 
-    pg_conn.execute(
-        sql.SQL(
-            "CREATE TABLE {} (series_id integer PRIMARY KEY, name text, "
-            "name_abbreviated text, unit text, frequency text, "
-            "theme_hierarchy text[])"
-        ).format(sql.Identifier(schema, "series_metadata"))
-    )
+
+@pytest.fixture(scope="module")
+def schema_bcb_carregado(pg_conn):
+    """Esquema do BCB SGS com as fixtures reais de ``tests/data/bcb`` (observações e
+    metadados do bruto do ``bcb-sgs-fetcher``) carregadas pelo adaptador: o caminho da
+    CLI, ``load bcb-sgs -s <raiz> --all``. Nenhuma tabela é declarada pelo teste."""
+    from pathlib import Path
+
+    from quantilica_sql.adapters.bcb import BcbAdapter
+
+    schema = f"qpipe_bcb_{uuid.uuid4().hex[:8]}"
+    raiz = Path(__file__).parent / "data" / "bcb"
+    adaptador = _adaptador(BcbAdapter, schema)
+    adaptador.load(pg_conn, raiz, all_partitions=True)
     yield from _com_schema(pg_conn, schema)
