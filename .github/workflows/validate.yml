@@ -70,7 +70,7 @@ jobs:
           REGISTRO: ${{ runner.temp }}/registry.json
         run: |
           for i in 1 2 3; do
-            if curl -fsS --max-time 30 -o "$REGISTRO" https://index.quantilica.com/registry.json; then
+            if curl -fsS --max-time 30 -A "quantilica-pipelines-ci" -o "$REGISTRO" https://index.quantilica.com/registry.json; then
               exit 0
             fi
             echo "::warning::registry.json indisponível (tentativa $i/3); nova tentativa em 10s"
@@ -127,7 +127,7 @@ jobs:
           REGISTRO: ${{ runner.temp }}/registry.json
         run: |
           for i in 1 2 3; do
-            if curl -fsS --max-time 30 -o "$REGISTRO" https://index.quantilica.com/registry.json; then
+            if curl -fsS --max-time 30 -A "quantilica-pipelines-ci" -o "$REGISTRO" https://index.quantilica.com/registry.json; then
               exit 0
             fi
             echo "::warning::registry.json indisponível (tentativa $i/3); nova tentativa em 10s"
