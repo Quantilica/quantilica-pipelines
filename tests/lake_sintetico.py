@@ -154,6 +154,84 @@ def montar_dfp(lake: Path) -> None:
     parquet(arq("dmpl_con"), _DFP_COLS, [_dfp(ALFA, "1", "Ativo Total", 123456)])
 
 
+AUTOMOB = ("35.654.688/0001-08", "AUTOMOB PARTICIPACOES", "030001")
+ENGELHART = ("14.796.754/0001-04", "ENGELHART CTP BRASIL", "030002")
+BRASIL_TERRENOS = ("20.961.867/0001-10", "BRASIL TERRENOS HOLDING", "030003")
+REVEE = ("52.810.883/0001-07", "REVEE MCO", "030004")
+ZETA = ("55.555.555/0001-55", "ZETA SA", "030005")  # empate sem correção declarada
+ETA = ("66.666.666/0001-66", "ETA SA", "030006")  # cópias idênticas
+
+
+def montar_dfp_copias(
+    lake: Path,
+    *,
+    automob: tuple[int, ...] = (-177597, 89403),
+    engelhart: tuple[int, ...] = (10919081, 10919082),
+    brasil_pl: tuple[int, ...] = (4471389, 4471389, 4631389),
+    revee: tuple[int, ...] = (0, 0, 1),
+) -> None:
+    """Cópias da MESMA versão com valores diferentes (reapresentação exigida pela CVM).
+
+    Os padrões reais de nov/2026: duas cópias divergentes em empate (Automob, Engelhart), três
+    cópias com duas iguais (Brasil Terrenos, Revee), cópias idênticas (Eta) e um empate sem
+    correção declarada (Zeta). Valores em MIL (reais = valor x 1000), exceto Revee (UNIDADE).
+    As correções reais são as de `publicacao/cvm/dfp/correcoes.csv`.
+    """
+
+    def arq(ano: int, kind: str) -> Path:
+        return (
+            lake / "cvm" / "cia-dfp" / f"ano={ano}"
+            / f"dfp_cia_aberta_{ano}__dfp_cia_aberta_{kind}_{ano}.parquet"
+        )  # fmt: skip
+
+    ref23, ref25 = "2023-12-31", "2025-12-31"
+    parquet(
+        arq(2023, "dre_con"),
+        _DFP_COLS,
+        [_dfp(AUTOMOB, "3.11", "Lucro/Prejuízo Consolidado do Período", v, ref=ref23)
+         for v in automob],
+    )  # fmt: skip
+    parquet(
+        arq(2023, "bpp_ind"),
+        _DFP_COLS,
+        [
+            _dfp(ENGELHART, "2.03", "Patrimônio Líquido", v, ref=ref23)
+            for v in engelhart
+        ],
+    )
+    parquet(
+        arq(2023, "dre_ind"),
+        _DFP_COLS,
+        [
+            _dfp(REVEE, c, ds, v, ref=ref23, escala="UNIDADE")
+            for c, ds in (("3.01", "Receita Líquida"), ("3.11", "Lucro/Prejuízo do Período"))
+            for v in revee
+        ],
+    )  # fmt: skip
+    parquet(
+        arq(2023, "bpa_con"),
+        _DFP_COLS,
+        [
+            *(_dfp(ZETA, "1", "Ativo Total", v, ref=ref23) for v in (100, 200)),
+            *(_dfp(ETA, "1", "Ativo Total", 500, ref=ref23) for _ in range(2)),
+        ],
+    )
+    parquet(
+        arq(2025, "bpp_con"),
+        _DFP_COLS,
+        [_dfp(BRASIL_TERRENOS, "2.03", "Patrimônio Líquido Consolidado", v, ref=ref25)
+         for v in brasil_pl],
+    )  # fmt: skip
+    parquet(
+        arq(2025, "dfc_mi_con"),
+        _DFP_COLS,
+        [
+            _dfp(BRASIL_TERRENOS, "6.01", "Caixa Líquido Atividades Operacionais", v, ref=ref25)
+            for v in (313156, 313156, 153156)
+        ],
+    )  # fmt: skip
+
+
 _EXEMPLO_COLS = ["municipio", "uf", "data", "tipo", "vitimas", "preliminar"]
 
 

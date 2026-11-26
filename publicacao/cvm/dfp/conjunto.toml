@@ -10,6 +10,8 @@ descricao = "Ativo total, patrimônio líquido, receita, lucro líquido e caixa 
 estado = "publicado"
 catalogo = "cvm/cia-dfp"
 preparo = "dfp_base.sql"
+correcoes = "correcoes.csv"
+auditoria = "dfp_auditoria.sql"
 
 [fonte]
 orgao = "Comissão de Valores Mobiliários (CVM)"
@@ -116,3 +118,14 @@ periodo = "2024"
 valor = 1124797000000
 tolerancia_relativa = 0.0
 referencia = "CVM, DFP de 2024 da Petróleo Brasileiro S.A. (Petrobras), balanço patrimonial consolidado, ativo total de R$ 1.124.797 milhões"
+
+# Automob Participações, lucro líquido de 2023, consolidada: a CVM exigiu reapresentação e o arquivo
+# aberto traz a apresentação antiga e a final sob a mesma versão (o desempate por valor erraria).
+[[conferencia]]
+nivel = "CIA"
+entidade = "35654688000108"
+medida = "lucro_liquido"
+periodo = "2023"
+valor = 89403000
+tolerancia_relativa = 0.0
+referencia = "CVM, DFP de 2023 da Automob Participações S.A., demonstração consolidada, documento ID_DOC 141876 (reapresentação), lucro líquido do período de R$ 89.403 mil"

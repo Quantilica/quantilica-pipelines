@@ -276,6 +276,131 @@ def test_exemplo_exercita_dimensao_atributo_e_descartes(lake):
     assert saida["MUN#"][1] == [("sem_municipio", 1)]
 
 
+# --- cópias divergentes da DFP: moda, tabela de correções e auditoria ----------------
+
+DFP_TOML = PUBLICACAO / "cvm" / "dfp" / "conjunto.toml"
+AUTOMOB, ENGELHART = "35654688000108", "14796754000104"
+BRASIL_TERRENOS, REVEE, ZETA, ETA = (
+    "20961867000110",
+    "52810883000107",
+    "55555555000155",
+    "66666666000166",
+)
+
+
+def rodar_dfp_copias(tmp_path: Path, **valores):
+    """Executa a DFP real (com o `correcoes.csv` real) sobre cópias sintéticas.
+
+    Devolve `({(cnpj, exercício): {medida: valor}}, [(tipo, chave, detalhe)])`.
+    """
+    raiz = tmp_path / "lake"
+    lake_mod.montar_dfp_copias(raiz, **valores)
+    d = carregar(DFP_TOML)
+    sqls = cons.ler_sqls(DFP_TOML.parent, d)
+    con = duckdb.connect()
+    try:
+        cons.preparar(con, d, sqls, raiz)
+        cols, linhas = cons.executar_visao(con, d, d.visoes[0], sqls, raiz)
+        achados = cons.auditar(con, d, sqls, raiz)
+    finally:
+        con.close()
+    i = {c: k for k, (c, _) in enumerate(cols)}
+    por = {
+        (r[i["entidade"]], r[i["periodo"]].year): {
+            m.id: r[i["m_" + m.id]] for m in d.medidas
+        }
+        for r in linhas
+    }
+    return por, achados
+
+
+def test_dfp_copias_divergentes_as_seis_celulas_saem_com_o_valor_oficial(tmp_path):
+    por, _ = rodar_dfp_copias(tmp_path)
+    assert por[(AUTOMOB, 2023)]["lucro_liquido"] == 89_403_000.0
+    assert por[(ENGELHART, 2023)]["patrimonio_liquido"] == 10_919_081_000.0  # o menor
+    assert por[(BRASIL_TERRENOS, 2025)]["patrimonio_liquido"] == 4_471_389_000.0
+    assert por[(BRASIL_TERRENOS, 2025)]["caixa_operacional"] == 313_156_000.0
+    assert por[(REVEE, 2023)]["receita"] == 0.0
+    assert por[(REVEE, 2023)]["lucro_liquido"] == 0.0
+
+
+def test_dfp_moda_sem_correcao_e_empate_pelo_maior(tmp_path):
+    por, _ = rodar_dfp_copias(tmp_path)
+    assert por[(ETA, 2023)]["ativo_total"] == 500_000.0  # cópias idênticas: inofensivas
+    assert por[(ZETA, 2023)]["ativo_total"] == 200_000.0  # empate sem correção: o maior
+    # a moda vale quando a correção não vale: três cópias, duas iguais, e a de fora é a MAIOR
+    # (o valor oficial da correção não está entre as cópias: ela fica inerte, a moda decide)
+    por, achados = rodar_dfp_copias(
+        tmp_path / "b", brasil_pl=(5, 5, 9), revee=(7, 7, 9)
+    )
+    assert por[(BRASIL_TERRENOS, 2025)]["patrimonio_liquido"] == 5_000.0
+    assert por[(REVEE, 2023)]["receita"] == 7.0
+    assert any(
+        t == "correcao_sem_efeito" and "patrimonio_liquido" in c for t, c, _ in achados
+    )
+
+
+def test_dfp_auditoria_conta_aplicadas_e_avisa_so_o_empate_sem_correcao(tmp_path):
+    _, achados = rodar_dfp_copias(tmp_path)
+    por_tipo: dict[str, list[tuple[str, str]]] = {}
+    for tipo, chave, detalhe in achados:
+        por_tipo.setdefault(tipo, []).append((chave, detalhe))
+    assert [c for c, _ in por_tipo["ambigua"]] == [
+        f"{ZETA} 2023 ativo_total consolidada"
+    ]
+    assert "100000 / 200000" in por_tipo["ambigua"][0][1]
+    assert len(por_tipo["correcao_aplicada"]) == 6
+    assert "correcao_sem_efeito" not in por_tipo
+    aplicada = dict(por_tipo["correcao_aplicada"])
+    assert "ID_DOC 141876" in aplicada[f"{AUTOMOB} 2023 lucro_liquido consolidada"]
+
+
+def test_dfp_correcao_inerte_quando_a_cvm_limpa_o_arquivo_ou_o_valor_mudou(tmp_path):
+    # Automob: a CVM limpou o arquivo (uma só cópia); Engelhart: o valor oficial sumiu
+    por, achados = rodar_dfp_copias(
+        tmp_path, automob=(89403,), engelhart=(10919083, 10919084)
+    )
+    assert por[(AUTOMOB, 2023)]["lucro_liquido"] == 89_403_000.0  # o que o lake traz
+    assert (
+        por[(ENGELHART, 2023)]["patrimonio_liquido"] == 10_919_084_000.0
+    )  # empate: o maior
+    sem_efeito = {c: d for t, c, d in achados if t == "correcao_sem_efeito"}
+    assert (
+        "não deixou mais de um valor"
+        in sem_efeito[f"{AUTOMOB} 2023 lucro_liquido consolidada"]
+    )
+    assert (
+        "não está entre as cópias"
+        in sem_efeito[f"{ENGELHART} 2023 patrimonio_liquido individual"]
+    )
+    # a correção inerte NUNCA inventa valor; o empate novo (Engelhart) volta como ambíguo
+    ambiguas = {c for t, c, _ in achados if t == "ambigua"}
+    assert f"{ENGELHART} 2023 patrimonio_liquido individual" in ambiguas
+    assert f"{ZETA} 2023 ativo_total consolidada" in ambiguas
+
+
+def test_dfp_correcao_de_celula_que_saiu_da_selecao_e_avisada(tmp_path):
+    # sem nenhuma cópia da Revee no lake: as duas correções dela ficam sem célula
+    por, achados = rodar_dfp_copias(tmp_path, revee=())
+    assert (REVEE, 2023) not in por
+    motivos = [d for t, c, d in achados if t == "correcao_sem_efeito" and REVEE in c]
+    assert len(motivos) == 2 and all("não está na seleção" in m for m in motivos)
+
+
+def test_dfp_correcoes_csv_cumpre_o_formato_e_a_conferencia_da_automob():
+    d = carregar(DFP_TOML)
+    assert d.correcoes == "correcoes.csv" and d.auditoria == "dfp_auditoria.sql"
+    tabela, erros = dec.ler_correcoes(
+        (DFP_TOML.parent / "correcoes.csv").read_text("utf-8")
+    )
+    assert erros == [] and len(tabela.linhas) == 6
+    assert tabela.chaves == ("cnpj", "exercicio", "medida", "demonstracao")
+    assert any(
+        c.entidade == AUTOMOB and c.medida == "lucro_liquido" and c.valor == 89_403_000
+        for c in d.conferencias
+    )
+
+
 # --- espelho e exemplo dourado -----------------------------------------------------
 
 
@@ -354,7 +479,7 @@ _TERMOS_INTERNOS = re.compile(
 
 def test_catalogo_nao_cita_termos_de_operacao_interna():
     for arq in sorted(PUBLICACAO.rglob("*")):
-        if arq.is_file() and arq.suffix in {".toml", ".sql", ".md", ".json"}:
+        if arq.is_file() and arq.suffix in {".toml", ".sql", ".md", ".json", ".csv"}:
             achado = _TERMOS_INTERNOS.search(arq.read_text(encoding="utf-8"))
             assert achado is None, (
                 f"{arq.relative_to(ROOT)}: termo interno {achado.group(0)!r}"

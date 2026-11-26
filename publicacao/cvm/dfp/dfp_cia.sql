@@ -3,8 +3,14 @@
 -- `exercicio` é o ano do encerramento do exercício (nem todo exercício fecha em 31/12). Se a
 -- companhia tem dois encerramentos no mesmo ano (mudou o fim do exercício), fica o mais
 -- recente; dentro dele, a demonstração consolidada se existir e, em cada conta, a versão mais
--- nova (duas linhas da mesma versão com valores diferentes: fica o maior, para a carga ser
--- repetível). Nome e código CVM são os do exercício mais recente da companhia.
+-- nova. Quando a CVM exige reapresentação, o arquivo aberto empilha a apresentação antiga e a
+-- final sob a MESMA versão, com valores diferentes. A regra, nesta ordem:
+--   1. correção declarada (`correcoes.csv`, tabela temporária `correcoes`): vale o valor oficial,
+--      mas só se a célula ainda tem mais de um valor no lake e o oficial é um deles (se a CVM
+--      limpar o arquivo, a correção fica inerte; `dfp_auditoria.sql` reporta);
+--   2. o valor que MAIS SE REPETE entre as cópias (a apresentação final costuma vir duplicada);
+--   3. empate: o maior valor, para a carga ser repetível (`dfp_auditoria.sql` reporta o empate).
+-- Nome e código CVM são os do exercício mais recente da companhia.
 WITH com_exercicio AS (
     SELECT *, year(encerramento) AS exercicio
     FROM base
@@ -19,13 +25,26 @@ WITH com_exercicio AS (
 ), tipo_do_exercicio AS (
     SELECT cnpj, exercicio, bool_or(tipo = 'C') AS consolidada
     FROM do_encerramento GROUP BY 1, 2
-), escolhidas AS (
+), candidatas AS (
     SELECT r.*, t.consolidada,
-           row_number() OVER (PARTITION BY r.cnpj, r.exercicio, r.conta
-                              ORDER BY r.versao DESC, r.valor DESC) AS rn
+           count(r.valor) OVER (PARTITION BY r.cnpj, r.exercicio, r.conta, r.versao, r.valor) AS copias,
+           count(DISTINCT r.valor) OVER (PARTITION BY r.cnpj, r.exercicio, r.conta, r.versao) AS distintos
     FROM do_encerramento r
     JOIN tipo_do_exercicio t USING (cnpj, exercicio)
     WHERE (r.tipo = 'C') = t.consolidada
+), escolhidas AS (
+    SELECT c.*,
+           row_number() OVER (
+               PARTITION BY c.cnpj, c.exercicio, c.conta
+               ORDER BY c.versao DESC,
+                        coalesce(k.valor IS NOT NULL AND c.distintos > 1
+                                 AND abs(c.valor - k.valor) < 0.005, false) DESC,
+                        c.copias DESC, c.valor DESC NULLS LAST) AS rn
+    FROM candidatas c
+    LEFT JOIN correcoes k
+           ON k.cnpj = c.cnpj AND k.exercicio = CAST(c.exercicio AS VARCHAR)
+          AND k.medida = c.conta
+          AND k.demonstracao = CASE c.tipo WHEN 'C' THEN 'consolidada' ELSE 'individual' END
 ), recente AS (
     SELECT cnpj, arg_max(nome, encerramento) AS nome, arg_max(cd_cvm, encerramento) AS cd_cvm
     FROM escolhidas GROUP BY 1

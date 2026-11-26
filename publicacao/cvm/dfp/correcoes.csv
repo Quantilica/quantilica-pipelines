@@ -1,0 +1,7 @@
+cnpj,exercicio,medida,demonstracao,valor,referencia,motivo,data
+35654688000108,2023,lucro_liquido,consolidada,89403000,"CVM, DFP 2023 da Automob Participações, documento ID_DOC 141876 (reapresentação por exigência, ofício 253/2024/CVM/SEP/GEA-2)","O arquivo aberto traz a apresentação antiga (-177.597.000) e a final (89.403.000) sob a mesma versão, uma cópia de cada",2026-11-26
+14796754000104,2023,patrimonio_liquido,individual,10919081000,"CVM, DFP 2023 da Engelhart CTP (Brasil), documento ID_DOC 137207 (reapresentação por exigência, ofício 148/2024)","Duas cópias da mesma versão: 10.919.081.000 (oficial) e 10.919.082.000; empatadas, o maior valor erraria",2026-11-26
+20961867000110,2025,patrimonio_liquido,consolidada,4471389000,"CVM, DFP 2025 da Brasil Terrenos Holding, documento ID_DOC 159550 (reapresentação por exigência, ofício 283/2026)","Três cópias da mesma versão: 4.471.389.000 (duas, oficial) e 4.631.389.000 (apresentação antiga)",2026-11-26
+20961867000110,2025,caixa_operacional,consolidada,313156000,"CVM, DFP 2025 da Brasil Terrenos Holding, documento ID_DOC 159550","Três cópias da mesma versão: 313.156.000 (duas, oficial) e 153.156.000 (apresentação antiga)",2026-11-26
+52810883000107,2023,lucro_liquido,individual,0,"CVM, DFP 2023 da Revee MCO, documento ID_DOC 135549 (escala UNIDADE)","Três cópias da mesma versão: 0 (duas, oficial) e 1",2026-11-26
+52810883000107,2023,receita,individual,0,"CVM, DFP 2023 da Revee MCO, documento ID_DOC 135549 (escala UNIDADE)","Três cópias da mesma versão: 0 (duas, oficial) e 1",2026-11-26

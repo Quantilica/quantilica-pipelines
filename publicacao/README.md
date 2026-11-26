@@ -44,6 +44,7 @@ em DuckDB sobre Parquet sintético e confere colunas, tipos e unicidade da chave
 | | `estado` | `rascunho`, `publicado` ou `aposentado`; `publicado` exige `[[conferencia]]`; `rascunho` não aparece em nenhuma listagem |
 | | `catalogo` | id do dataset do catálogo (`fonte/dataset`), liga o conjunto à ficha |
 | | `preparo` | `.sql` que cria a tabela temporária `base` (ver "Consultas") |
+| | `correcoes`, `auditoria` | CSV de correções (vira a tabela temporária `correcoes`) e a `.sql` que audita o desempate e as correções (ver "Correções e auditoria"); `correcoes` exige `auditoria` |
 | | `notas` | textos fixos que acompanham todo frame (os que dependem do dado vão em `[[nota_condicional]]`) |
 | `[fonte]` | `orgao`, `licenca`, `atribuicao` | obrigatórios; `atribuicao` é o crédito que o portal exibe |
 | | `redistribuicao` | `livre` ou `restrita` (`restrita` recusa a carga) |
@@ -142,6 +143,34 @@ Colunas a mais ou a menos são erro; a ordem não importa.
   deixou de fora (registros sem localização, por exemplo). Auditoria, não dado servido.
 - **Registros sem localização** (UF ou município ignorados) ficam de fora da visão territorial e
   a `notas` do conjunto diz isso; a soma das UFs não é o total divulgado pela fonte.
+
+## Correções e auditoria
+
+Quando a fonte publica cópias divergentes da mesma célula (a DFP da CVM, quando exige
+reapresentação, empilha a apresentação antiga e a final sob a mesma versão), a SQL escolhe o valor
+em três passos, nesta ordem, e o resultado é sempre o mesmo para o mesmo lake:
+
+1. **correção declarada**, só se a célula ainda tem mais de um valor e o valor oficial é um deles;
+2. o valor que **mais se repete** entre as cópias da versão mais nova;
+3. empate: o **maior** valor.
+
+- **`correcoes = "correcoes.csv"`**: tabela de correções como dado do conjunto, revisada em git. UTF-8,
+  vírgula, aspas duplas. Colunas de **chave** (as que a SQL usa para achar a célula; texto; nomes
+  `^[a-z][a-z0-9_]{0,40}$`; na DFP `cnpj`, `exercicio`, `medida`, `demonstracao`) mais as quatro
+  obrigatórias `valor` (número, o valor oficial), `referencia` (de onde ele vem: documento e ofício),
+  `motivo` e `data` (AAAA-MM-DD, quando foi decidido). Sem célula vazia nem chave repetida; até 500
+  linhas. O carregador valida o arquivo e insere as linhas na tabela temporária `correcoes` por
+  parâmetro: o DuckDB **não lê o arquivo** (o isolamento do DuckDB e o filtro de SQL ficam como estão) e
+  a SQL só faz `FROM correcoes`. Nunca apague nem invente valor: se a CVM limpar o arquivo ou o valor
+  mudar, a correção fica **inerte** e o carregador avisa.
+- **`auditoria = "dfp_auditoria.sql"`**: consulta que lê `base` e `correcoes` e devolve as colunas de
+  texto `tipo`, `chave` e `detalhe`, uma linha por achado: `ambigua` (célula que continuou com valores
+  empatados em número de cópias e sem correção: precisa de uma linha no CSV), `correcao_aplicada` e
+  `correcao_sem_efeito` (com o motivo: a célula não tem mais divergência, o valor oficial não está
+  entre as cópias ou a célula saiu da seleção). O carregador imprime os achados (no `--dry-run` também),
+  grava a contagem e os 50 primeiros em `carga.detalhes.auditoria` e **não recusa a carga** por eles.
+- Esta SQL repete a seleção da consulta principal (último encerramento do ano, consolidada se existe,
+  versão mais nova): mudou uma, mude a outra; `tests/test_publicacao.py` confere as duas juntas.
 
 ## Espelho
 
