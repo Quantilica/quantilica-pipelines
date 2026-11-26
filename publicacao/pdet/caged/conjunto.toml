@@ -1,0 +1,102 @@
+# Novo CAGED (MTE, PDET): movimentações de empregos formais por UF e município.
+# Formato: publicacao/README.md. O validador é infra/publicacao/declaracao.py.
+
+schema_versao = 1
+id = "pdet/caged"
+titulo = "Novo CAGED: movimentações de empregos formais"
+titulo_curto = "Novo CAGED"
+descricao = "Admissões, desligamentos e saldo de empregos formais do Novo CAGED (2020 em diante), por UF e por município, na competência do evento. Soma as movimentações dentro do prazo e fora do prazo e subtrai as exclusões."
+estado = "rascunho"
+catalogo = "pdet/caged-2020-mov"
+preparo = "caged_base.sql"
+notas = [
+  "Registros sem localização válida (UF ou município ignorados) ficam de fora; a soma das UFs não é o total nacional divulgado pelo MTE.",
+]
+
+[fonte]
+orgao = "Ministério do Trabalho e Emprego (MTE), PDET"
+licenca = "Sem licença declarada pela fonte; dado público (Lei 12.527/2011, Lei de Acesso à Informação)"
+atribuicao = "Fonte: Ministério do Trabalho e Emprego (MTE), PDET, Novo CAGED. Agregado do Quantilica por UF e município: movimentações dentro do prazo mais fora do prazo, menos exclusões, por competência do evento. Dado público agregado."
+redistribuicao = "livre"
+url = "http://pdet.mte.gov.br/microdados-rais-e-caged"
+
+[entidade]
+tipo = "territorio"
+rotulo = "Território"
+qualifier = "geo"
+
+# O que a consulta lê do lake (parâmetro `$nome` na SQL; caminho relativo à raiz do lake).
+[[entrada]]
+nome = "mov"
+glob = "pdet/caged-2020-mov/ano=*/mes=*/*.parquet"
+
+[[entrada]]
+nome = "fora"
+glob = "pdet/caged-2020-for/ano=*/mes=*/*.parquet"
+
+[[entrada]]
+nome = "exclusoes"
+glob = "pdet/caged-2020-exc/ano=*/mes=*/*.parquet"
+
+[[visao]]
+nivel = "UF"
+chave = "sigla"
+consulta = "caged_uf.sql"
+descartes = "caged_uf_descartes.sql"
+cabecalhos = ["UF", "Nome"]
+
+[[visao]]
+nivel = "MUN"
+chave = "ibge6"
+consulta = "caged_mun.sql"
+descartes = "caged_mun_descartes.sql"
+cabecalhos = ["Código IBGE", "Município"]
+
+[tempo]
+tipo = "mes"
+frequencia = "monthly"
+alinhamento_painel = "inicio"
+padrao = "ultimo"
+
+[[medida]]
+id = "saldo"
+rotulo = "Saldo de empregos formais (admissões menos desligamentos)"
+unidade = "movimentações"
+tipo = "bigint"
+aditiva = true
+
+[[medida]]
+id = "admissoes"
+rotulo = "Admissões de empregos formais"
+unidade = "movimentações"
+tipo = "bigint"
+aditiva = true
+
+[[medida]]
+id = "desligamentos"
+rotulo = "Desligamentos de empregos formais"
+unidade = "movimentações"
+tipo = "bigint"
+aditiva = true
+
+[preliminar]
+ultimos_periodos = 2
+nota = "Os dois últimos meses ainda recebem lançamentos fora do prazo e exclusões."
+
+[guardas]
+queda_maxima_linhas = 0.10
+periodos_nao_somem = true
+periodos_continuos = true
+periodo_inicial = "2020-01"
+cobertura_minima_entidades = 27
+revisao_maxima_total = 0.03
+# o saldo é diferença de dois totais e oscila mais que cada um; a trava vale para os dois totais
+revisao_medidas = ["admissoes", "desligamentos"]
+
+[[conferencia]]
+nivel = "UF"
+medida = "saldo"
+periodo = "2025-06"
+valor = 161970
+tolerancia_relativa = 0.03
+referencia = "MTE, divulgação do Novo CAGED de junho de 2025 (dentro do prazo mais fora do prazo, menos exclusões); soma das 27 UFs"

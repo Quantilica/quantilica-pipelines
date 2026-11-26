@@ -8,6 +8,8 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR
 ## [Unreleased]
 
 ### Adicionado
+- `publicacao/`: declaração de conjuntos tabulares publicados no portal (`conjunto.toml` mais consultas `.sql` por conjunto), com o formato versionado (`schema_versao = 1`) documentado em `publicacao/README.md`. Primeiros conjuntos: `pdet/caged` (Novo CAGED por UF e município, com competências preliminares, descartes dos registros sem localização e conferência do saldo nacional) e `cvm/dfp` (contas principais da DFP por companhia e exercício, ODbL-1.0), mais o exemplo fictício `publicacao/_exemplo` e o espelho dele (`publicacao/_exemplo.json`).
+- `tests/test_publicacao.py`: valida cada declaração, executa as consultas sobre Parquet sintético (`tests/lake_sintetico.py`) e confere colunas, chave e aritmética (mov + fora do prazo − exclusões; consolidada, escala MIL e versão mais nova), o espelho do exemplo e a ausência de termos de operação interna no catálogo.
 - Testes: o caminho do `lake.py` de cada fonte deixa de ficar em `tests/lake_aliases.toml` e é derivado de `repo` e `module` do registro de fetchers (fixture offline em `tests/conftest.py`; `QUANTILICA_REGISTRO_PUBLICO=1` lê o registro público pelo cache do `quantilica-cli`).
 - `docs/marts.md` e `docs/marts_contract.toml`: contrato de colunas e tipos das tabelas `marts.*`, com os marts ativos, os desativados (e o motivo) e o estado dos cinco marts do plano.
 - `tests/test_marts_duckdb.py`: executa cada mart em DuckDB em memória com dados sintéticos e confere compilação, esquema de saída contra o contrato, chave única e resultado idêntico para qualquer ordem de entrada.

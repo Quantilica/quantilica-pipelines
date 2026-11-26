@@ -1,0 +1,115 @@
+# DFP da CVM: contas principais das demonstrações financeiras padronizadas das companhias
+# abertas, por companhia e exercício social.
+# Formato: publicacao/README.md. O validador é infra/publicacao/declaracao.py.
+
+schema_versao = 1
+id = "cvm/dfp"
+titulo = "DFP: demonstrações financeiras de companhias abertas"
+titulo_curto = "DFP"
+descricao = "Ativo total, patrimônio líquido, receita, lucro líquido e caixa líquido das atividades operacionais das companhias abertas, por companhia e exercício social, em reais. Demonstração consolidada quando a companhia a tem no exercício, individual quando só ela existe."
+estado = "rascunho"
+catalogo = "cvm/cia-dfp"
+preparo = "dfp_base.sql"
+notas = [
+  "Algumas companhias têm exercício social que não fecha em 31/12; a coluna encerramento traz a data de cada observação.",
+  "Demonstração consolidada quando a companhia a tem no exercício, individual quando só ela existe (coluna consolidado).",
+]
+
+[fonte]
+orgao = "Comissão de Valores Mobiliários (CVM)"
+licenca = "ODbL-1.0"
+atribuicao = "Fonte: CVM, Dados Abertos, Demonstrações Financeiras Padronizadas (DFP) de companhias abertas, sob a licença ODbL 1.0 (https://opendatacommons.org/licenses/odbl/1-0/). Valores em reais; demonstração consolidada quando a companhia a tem, individual quando só ela existe."
+redistribuicao = "livre"
+url = "https://dados.cvm.gov.br/dados/"
+
+[entidade]
+tipo = "identificador"
+rotulo = "Companhia"
+qualifier = "cia"
+chaves_alternativas = ["cd_cvm"]
+
+# Uma entrada por demonstração: a consolidada (`_con_`) e a individual (`_ind_`) saem do
+# mesmo padrão e a consulta distingue pelo nome do arquivo.
+[[entrada]]
+nome = "bpa"
+glob = "cvm/cia-dfp/ano=*/dfp_cia_aberta_*__dfp_cia_aberta_bpa_*.parquet"
+
+[[entrada]]
+nome = "bpp"
+glob = "cvm/cia-dfp/ano=*/dfp_cia_aberta_*__dfp_cia_aberta_bpp_*.parquet"
+
+[[entrada]]
+nome = "dre"
+glob = "cvm/cia-dfp/ano=*/dfp_cia_aberta_*__dfp_cia_aberta_dre_*.parquet"
+
+[[entrada]]
+nome = "dfc"
+glob = "cvm/cia-dfp/ano=*/dfp_cia_aberta_*__dfp_cia_aberta_dfc_m?_*.parquet"
+
+[[visao]]
+nivel = "CIA"
+consulta = "dfp_cia.sql"
+cabecalhos = ["CNPJ", "Companhia"]
+
+[tempo]
+tipo = "ano"
+frequencia = "yearly"
+alinhamento_painel = "fim"
+padrao = "ultimo_com_cobertura"
+fracao = 0.8
+
+[[medida]]
+id = "ativo_total"
+rotulo = "Ativo total"
+unidade = "R$"
+tipo = "double"
+
+[[medida]]
+id = "patrimonio_liquido"
+rotulo = "Patrimônio líquido"
+unidade = "R$"
+tipo = "double"
+
+[[medida]]
+id = "receita"
+rotulo = "Receita"
+unidade = "R$"
+tipo = "double"
+nota = "Para instituições financeiras a conta é a receita de intermediação financeira, que não se compara à receita de venda das demais companhias."
+
+[[medida]]
+id = "lucro_liquido"
+rotulo = "Lucro líquido do período"
+unidade = "R$"
+tipo = "double"
+nota = "Lucro ou prejuízo do período; na demonstração consolidada inclui a parte dos acionistas não controladores."
+
+[[medida]]
+id = "caixa_operacional"
+rotulo = "Caixa líquido das atividades operacionais"
+unidade = "R$"
+tipo = "double"
+
+[[atributo]]
+id = "consolidado"
+rotulo = "Demonstração consolidada"
+tipo = "boolean"
+
+[[atributo]]
+id = "encerramento"
+rotulo = "Encerramento do exercício social"
+tipo = "date"
+
+[guardas]
+queda_maxima_linhas = 0.10
+periodos_nao_somem = true
+queda_maxima_entidades_por_periodo = 0.10
+
+[[conferencia]]
+nivel = "CIA"
+entidade = "33000167000101"
+medida = "ativo_total"
+periodo = "2024"
+valor = 1124797000000
+tolerancia_relativa = 0.0
+referencia = "CVM, DFP de 2024 da Petróleo Brasileiro S.A. (Petrobras), balanço patrimonial consolidado, ativo total de R$ 1.124.797 milhões"

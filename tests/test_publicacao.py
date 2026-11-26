@@ -1,0 +1,327 @@
+# ruff: noqa: E501
+"""Confere as declarações de `publicacao/` (conjuntos tabulares publicados no portal).
+
+Para cada `publicacao/<fonte>/<conjunto>/conjunto.toml` (e para o exemplo `_exemplo`):
+
+* a declaração passa no validador estrito (`infra/publicacao/declaracao.py` do monorepo;
+  fora dele, aponte `QUANTILICA_INFRA_DIR` para a pasta `infra/` ou os testes são pulados);
+* as consultas rodam em DuckDB sobre Parquet sintético (`tests/lake_sintetico.py`) e devolvem
+  exatamente as colunas e tipos do contrato, com chave única;
+* a aritmética de cada regra de negócio (CAGED: dentro do prazo + fora do prazo - exclusões;
+  DFP: consolidada, escala MIL, versão mais nova) sai nos números esperados;
+* o espelho (`Declaracao.espelho()`, o JSON de `publicacao.conjunto.declaracao`) do exemplo é
+  igual ao `publicacao/_exemplo.json`, e este ao `tests/fixtures/publicacao_exemplo.json` do
+  portal quando o portal está ao lado;
+* nenhum arquivo do catálogo cita termos de operação interna (o repositório é público).
+"""
+
+from __future__ import annotations
+
+import datetime as dt
+import importlib.util
+import json
+import os
+import re
+import sys
+from pathlib import Path
+
+import duckdb
+import lake_sintetico as lake_mod
+import pytest
+
+ROOT = Path(__file__).resolve().parent.parent
+PUBLICACAO = ROOT / "publicacao"
+D = dt.date
+
+
+def _achar_infra() -> Path | None:
+    candidatos = []
+    if os.environ.get("QUANTILICA_INFRA_DIR"):
+        candidatos.append(Path(os.environ["QUANTILICA_INFRA_DIR"]))
+    candidatos.append(ROOT.parent / "infra")
+    for c in candidatos:
+        if (c / "publicacao" / "declaracao.py").is_file():
+            return c
+    return None
+
+
+INFRA = _achar_infra()
+if INFRA is None:
+    pytest.skip(
+        "infra/publicacao/declaracao.py não encontrado (defina QUANTILICA_INFRA_DIR)",
+        allow_module_level=True,
+    )
+
+# Carrega o pacote `publicacao` da infra sob o nome `quantilica_publicacao` (a pasta de
+# dados deste repositório também se chama `publicacao`).
+_spec = importlib.util.spec_from_file_location(
+    "quantilica_publicacao",
+    INFRA / "publicacao" / "__init__.py",
+    submodule_search_locations=[str(INFRA / "publicacao")],
+)
+_pacote = importlib.util.module_from_spec(_spec)
+sys.modules["quantilica_publicacao"] = _pacote
+assert _spec and _spec.loader
+_spec.loader.exec_module(_pacote)
+from quantilica_publicacao import consulta as cons  # noqa: E402
+from quantilica_publicacao import declaracao as dec  # noqa: E402
+
+REGISTRO = INFRA / "registry.json"
+FONTES = dec.ler_registro(REGISTRO) if REGISTRO.is_file() else None
+
+REAIS = dec.declaracoes_do_catalogo(PUBLICACAO)
+EXEMPLO = PUBLICACAO / "_exemplo" / "conjunto.toml"
+TODAS = [*REAIS, EXEMPLO]
+
+
+def _ids(caminhos: list[Path]) -> list[str]:
+    return [f"{c.parent.parent.name}/{c.parent.name}" for c in caminhos]
+
+
+def carregar(caminho: Path) -> dec.Declaracao:
+    real = caminho != EXEMPLO
+    return dec.carregar(caminho, fontes=FONTES if real else None)
+
+
+def test_o_catalogo_tem_caged_e_dfp():
+    assert {c.parent.parent.name + "/" + c.parent.name for c in REAIS} >= {
+        "pdet/caged",
+        "cvm/dfp",
+    }
+
+
+@pytest.mark.parametrize("caminho", TODAS, ids=_ids(TODAS))
+def test_declaracao_valida(caminho):
+    d = carregar(caminho)
+    assert d.schema_versao == dec.SCHEMA_VERSAO
+    # a pasta é a identidade: publicacao/<fonte>/<conjunto>
+    esperado = "exemplo/sinistros" if caminho == EXEMPLO else _ids([caminho])[0]
+    assert d.id == esperado
+
+
+def test_ids_e_tabelas_unicos():
+    assert dec.tabelas_duplicadas(carregar(c) for c in TODAS) == []
+
+
+@pytest.mark.parametrize("caminho", REAIS, ids=_ids(REAIS))
+def test_conjunto_real_cumpre_o_criterio_de_entrada_declarativo(caminho):
+    """Licença, atribuição e uma conferência com a fonte: sem isso não vira `publicado`."""
+    d = carregar(caminho)
+    assert d.fonte.licenca and d.fonte.atribuicao and d.fonte.orgao
+    assert d.conferencias, "declare ao menos uma [[conferencia]] com valor da fonte"
+    assert d.fonte.redistribuicao == "livre"
+
+
+def test_atribuicao_do_caged_nao_diz_sem_restricao():
+    caged = carregar(PUBLICACAO / "pdet" / "caged" / "conjunto.toml")
+    texto = f"{caged.fonte.licenca} {caged.fonte.atribuicao}".lower()
+    assert "sem restrição" not in texto and "sem restricao" not in texto
+    assert "ministério do trabalho e emprego" in texto
+    assert "dado público agregado" in texto
+
+
+def test_licenca_e_atribuicao_da_dfp():
+    dfp = carregar(PUBLICACAO / "cvm" / "dfp" / "conjunto.toml")
+    assert dfp.fonte.licenca == "ODbL-1.0"
+    assert "opendatacommons.org/licenses/odbl/1-0" in dfp.fonte.atribuicao
+    assert "CVM" in dfp.fonte.atribuicao
+
+
+# --- execução sobre Parquet sintético ----------------------------------------------
+
+
+@pytest.fixture()
+def lake(tmp_path: Path) -> Path:
+    raiz = tmp_path / "l'ake"  # aspas no caminho: nada de interpolação frágil no SQL
+    lake_mod.montar_caged(raiz)
+    lake_mod.montar_dfp(raiz)
+    lake_mod.montar_exemplo(raiz)
+    return raiz
+
+
+def rodar(caminho: Path, lake: Path):
+    """Executa preparo e visões: `{nivel: (colunas, linhas)}` (e descartes em `nivel#`)."""
+    d = carregar(caminho)
+    sqls = cons.ler_sqls(caminho.parent, d)
+    con = duckdb.connect()
+    try:
+        cons.preparar(con, d, sqls, lake)
+        saida = {}
+        for v in d.visoes:
+            saida[v.nivel] = cons.executar_visao(con, d, v, sqls, lake)
+            if v.descartes:
+                saida[v.nivel + "#"] = cons.executar_visao(
+                    con, d, v, sqls, lake, descartes=True
+                )
+    finally:
+        con.close()
+    return d, saida
+
+
+@pytest.mark.parametrize("caminho", TODAS, ids=_ids(TODAS))
+def test_consultas_cumprem_o_contrato_de_colunas_e_a_chave(caminho, lake):
+    d, saida = rodar(caminho, lake)
+    for v in d.visoes:
+        colunas, linhas = saida[v.nivel]
+        assert dec.conferir_colunas(d, v, colunas) == []
+        assert linhas, f"visão {v.nivel} sem linhas no lake sintético"
+        nomes = [c for c, _ in colunas]
+        chave = ["entidade", "periodo", *[n for n in nomes if n.startswith("d_")]]
+        pos = [nomes.index(c) for c in chave]
+        vistos = {tuple(linha[i] for i in pos) for linha in linhas}
+        assert len(vistos) == len(linhas), f"chave duplicada na visão {v.nivel}"
+        if v.descartes:
+            cols_d, _ = saida[v.nivel + "#"]
+            assert dec.conferir_colunas(d, v, cols_d, descartes=True) == []
+
+
+def test_caged_soma_mov_for_e_subtrai_exc(lake):
+    d, saida = rodar(PUBLICACAO / "pdet" / "caged" / "conjunto.toml", lake)
+    cols, linhas = saida["UF"]
+    i = {c: k for k, (c, _) in enumerate(cols)}
+    uf = {
+        (r[i["periodo"]], r[i["entidade"]]): (
+            r[i["m_admissoes"]],
+            r[i["m_desligamentos"]],
+            r[i["m_saldo"]],
+        )
+        for r in linhas
+    }
+    # SP 05: mov 5+1 adm e 2 des; for +2 adm e +1 des; exc -1 adm
+    assert uf[(D(2026, 5, 1), "SP")] == (
+        5 + 1 + 2 - 1,
+        2 + 1,
+        (5 + 1 + 2 - 1) - (2 + 1),
+    )
+    assert uf[(D(2026, 5, 1), "RJ")] == (2, 3, -1)
+    # SP 06: 3 adm + 1 adm de município fora do padrão (a UF vale), 1 des
+    assert uf[(D(2026, 6, 1), "SP")] == (3 + 1, 1, 3)
+    assert uf[(D(2026, 6, 1), "RJ")] == (1, 1, 0)
+    assert len(uf) == 4
+    assert all(isinstance(r[i["m_saldo"]], int) for r in linhas)
+    _, mun = saida["MUN"]
+    im = {c: k for k, (c, _) in enumerate(saida["MUN"][0])}
+    por_mun = {
+        (r[im["periodo"]], r[im["entidade"]]): (
+            r[im["m_admissoes"]],
+            r[im["m_desligamentos"]],
+        )
+        for r in mun
+    }
+    assert por_mun[(D(2026, 5, 1), "355030")] == (5 + 2 - 1, 2 + 1)
+    assert por_mun[(D(2026, 5, 1), "350950")] == (1, 0)
+    assert all(
+        m != "999999" and len(m) == 6 for _, m in por_mun
+    )  # sem localização válida
+    assert (D(2026, 6, 1), "35") not in por_mun  # município fora do padrão sai
+    # nenhum saldo líquido nulo é gravado (HAVING)
+    assert all(a or b for a, b in por_mun.values())
+
+
+def test_caged_descartes_contam_o_que_ficou_de_fora(lake):
+    _, saida = rodar(PUBLICACAO / "pdet" / "caged" / "conjunto.toml", lake)
+    uf = {r[0]: (r[1], r[2]) for r in saida["UF#"][1]}
+    # UF 99 (4 adm) em 2026-05; competência "2026" inválida (2 adm)
+    assert uf == {"2026-05": (4, 0), "invalida": (2, 0)}
+    mun = {r[0]: (r[1], r[2]) for r in saida["MUN#"][1]}
+    # município 999999 (4 adm) em 05; "35" fora do padrão (1 adm) em 06; inválida (2 adm)
+    assert mun == {"2026-05": (4, 0), "2026-06": (1, 0), "invalida": (2, 0)}
+
+
+def test_dfp_prefere_consolidada_e_resolve_contas_por_setor(lake):
+    d, saida = rodar(PUBLICACAO / "cvm" / "dfp" / "conjunto.toml", lake)
+    cols, linhas = saida["CIA"]
+    i = {c: k for k, (c, _) in enumerate(cols)}
+    por = {(r[i["entidade"]], r[i["periodo"]].year): r for r in linhas}
+    alfa, beta = "11111111000111", "22222222000122"
+    banco, gama = "33333333000133", "44444444000144"
+
+    def v(cnpj, conta):
+        return por[(cnpj, 2024)][i["m_" + conta]]
+
+    # consolidada vence a individual; MIL multiplica por 1000; PENÚLTIMO e dmpl ignorados
+    assert v(alfa, "ativo_total") == 1_000_000.0
+    assert por[(alfa, 2024)][i["a_consolidado"]] is True
+    assert v(alfa, "patrimonio_liquido") == 400_000.0
+    assert v(alfa, "receita") == 800_000.0
+    assert v(alfa, "lucro_liquido") == 90_000.0  # não pega o "Lucro por Ação"
+    assert v(alfa, "caixa_operacional") == 70_000.0
+    # só individual: flag falsa, versão mais nova, DFC pelo método direto, 31/12
+    assert v(beta, "ativo_total") == 60_000.0
+    assert por[(beta, 2024)][i["a_consolidado"]] is False
+    assert por[(beta, 2024)][i["a_encerramento"]] == D(2024, 12, 31)
+    assert v(beta, "lucro_liquido") == 12_000.0
+    assert v(beta, "caixa_operacional") == 30_000.0
+    # banco: PL no 2.07 (o 2.03 é "Provisões"); UNIDADE não multiplica; sem receita: nulo
+    assert v(banco, "patrimonio_liquido") == 3.0
+    assert v(banco, "ativo_total") == 7.0
+    assert v(banco, "receita") is None
+    # exercício que fecha em 30/06: o ano do encerramento
+    assert v(gama, "ativo_total") == 5_000.0
+    assert por[(gama, 2024)][i["a_encerramento"]] == D(2024, 6, 30)
+    assert por[(alfa, 2024)][i["periodo"]] == D(2024, 1, 1)
+    assert len(por) == 4
+    assert por[(alfa, 2024)][i["entidade_rotulo"]] == "ALFA SA"
+    assert por[(alfa, 2024)][i["entidade_cd_cvm"]] == "000001"
+
+
+def test_exemplo_exercita_dimensao_atributo_e_descartes(lake):
+    d, saida = rodar(EXEMPLO, lake)
+    cols, linhas = saida["MUN"]
+    i = {c: k for k, (c, _) in enumerate(cols)}
+    sp = [r for r in linhas if r[i["entidade"]] == "3550308"]
+    assert {r[i["d_tipo_registro"]] for r in sp} == {"fatal", "nao_fatal"}
+    fatal = next(r for r in sp if r[i["d_tipo_registro"]] == "fatal")
+    assert fatal[i["m_sinistros"]] == 2 and fatal[i["m_vitimas_por_sinistro"]] == 2.0
+    assert saida["MUN#"][1] == [("sem_municipio", 1)]
+
+
+# --- espelho e exemplo dourado -----------------------------------------------------
+
+
+def test_espelho_do_exemplo_e_igual_ao_json_dourado():
+    esperado = json.loads((PUBLICACAO / "_exemplo.json").read_text(encoding="utf-8"))
+    assert carregar(EXEMPLO).espelho() == esperado
+
+
+def test_todos_os_espelhos_tem_as_mesmas_chaves():
+    ouro = json.loads((PUBLICACAO / "_exemplo.json").read_text(encoding="utf-8"))
+    for c in TODAS:
+        e = carregar(c).espelho()
+        assert set(e) == set(ouro), c
+        assert set(e["fonte"]) == set(ouro["fonte"])
+        assert set(e["tempo"]) == set(ouro["tempo"])
+        assert set(e["guardas"]) == set(ouro["guardas"])
+        assert set(e["limites"]) == set(ouro["limites"])
+        for bloco in ("visoes", "medidas"):
+            assert set(e[bloco][0]) == set(ouro[bloco][0]), (c, bloco)
+
+
+def test_exemplo_dourado_igual_ao_do_portal_quando_ele_esta_ao_lado():
+    alvo = os.environ.get("QUANTILICA_PORTAL_DIR")
+    portal = Path(alvo) if alvo else ROOT.parent / "quantilica-portal"
+    fixture = portal / "tests" / "fixtures" / "publicacao_exemplo.json"
+    if not fixture.is_file():
+        pytest.skip(
+            "quantilica-portal ao lado não tem tests/fixtures/publicacao_exemplo.json"
+        )
+    assert fixture.read_bytes() == (PUBLICACAO / "_exemplo.json").read_bytes(), (
+        "publicacao/_exemplo.json e tests/fixtures/publicacao_exemplo.json do portal "
+        "divergiram: regrave os dois do mesmo espelho"
+    )
+
+
+# --- repositório público -------------------------------------------------------------
+
+_TERMOS_INTERNOS = re.compile(
+    r"(?i)\b(fedora|vps|pendulograph|drive|rclone|cron|crontab|systemd|cloudflare)\b"
+)
+
+
+def test_catalogo_nao_cita_termos_de_operacao_interna():
+    for arq in sorted(PUBLICACAO.rglob("*")):
+        if arq.is_file() and arq.suffix in {".toml", ".sql", ".md", ".json"}:
+            achado = _TERMOS_INTERNOS.search(arq.read_text(encoding="utf-8"))
+            assert achado is None, (
+                f"{arq.relative_to(ROOT)}: termo interno {achado.group(0)!r}"
+            )

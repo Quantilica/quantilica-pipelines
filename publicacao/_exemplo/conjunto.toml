@@ -1,0 +1,110 @@
+# Exemplo de declaração com todos os blocos opcionais. Não é publicado: a pasta começa com
+# `_`, o catálogo a ignora, e a fonte `exemplo` não existe no lake. O espelho dela é o
+# `publicacao/_exemplo.json`, o contrato de `publicacao.conjunto.declaracao` que o portal
+# também guarda (tests/fixtures/publicacao_exemplo.json).
+
+schema_versao = 1
+id = "exemplo/sinistros"
+titulo = "Exemplo: sinistros por município e mês"
+titulo_curto = "Exemplo"
+descricao = "Conjunto fictício que exercita todos os campos da declaração: entidade territorial em dois níveis, uma dimensão, um atributo, notas, competências preliminares, limites, guardas e conferência."
+estado = "rascunho"
+catalogo = "exemplo/sinistros-brutos"
+preparo = "base.sql"
+notas = ["Dado fictício, só para travar o contrato; não existe no lake."]
+
+[fonte]
+orgao = "Órgão Fictício de Exemplo"
+licenca = "Creative Commons Atribuição-SemDerivações 4.0 (CC BY-ND 4.0)"
+atribuicao = "Fonte: Órgão Fictício de Exemplo. Agregado do Quantilica por município e mês."
+redistribuicao = "livre"
+url = "https://exemplo.invalid/dados"
+
+[fonte.parecer_licenca]
+data = "2026-11-25"
+por = "dono do produto"
+nota = "Agregado por município e mês aceito como uso permitido (exemplo)."
+
+[entidade]
+tipo = "territorio"
+rotulo = "Território"
+qualifier = "geo"
+
+[[entrada]]
+nome = "sinistros"
+glob = "exemplo/sinistros/ano=*/*.parquet"
+
+[[visao]]
+nivel = "UF"
+chave = "sigla"
+consulta = "exemplo_uf.sql"
+cabecalhos = ["UF", "Nome"]
+
+[[visao]]
+nivel = "MUN"
+chave = "ibge7"
+consulta = "exemplo_mun.sql"
+descartes = "exemplo_mun_descartes.sql"
+cabecalhos = ["Código IBGE", "Município"]
+
+[tempo]
+tipo = "mes"
+frequencia = "monthly"
+alinhamento_painel = "inicio"
+padrao = "ultimo_com_cobertura"
+fracao = 0.8
+
+[[medida]]
+id = "sinistros"
+rotulo = "Sinistros registrados"
+descricao = "Contagem de sinistros no mês."
+unidade = "sinistros"
+tipo = "bigint"
+aditiva = true
+nota = "Exemplo de nota própria de uma medida."
+
+[[medida]]
+id = "vitimas_por_sinistro"
+rotulo = "Vítimas por sinistro"
+unidade = "vítimas"
+tipo = "double"
+
+[[dimensao]]
+id = "tipo_registro"
+rotulo = "Tipo de registro"
+valores = ["fatal", "nao_fatal"]
+padrao = "fatal"
+
+[[atributo]]
+id = "preliminar_na_fonte"
+rotulo = "Marcado como preliminar pela fonte"
+tipo = "boolean"
+
+[preliminar]
+ultimos_periodos = 1
+nota = "O último mês ainda é revisado pela fonte."
+
+[limites]
+max_linhas_cs = 6000
+max_entidades_painel = 20
+max_linhas_painel = 50000
+max_linhas_tabela = 2000000
+
+[guardas]
+queda_maxima_linhas = 0.2
+periodos_nao_somem = true
+periodos_continuos = true
+periodo_inicial = "2015-01"
+cobertura_minima_entidades = 27
+queda_maxima_entidades_por_periodo = 0.1
+revisao_maxima_total = 0.05
+revisao_medidas = ["sinistros"]
+
+[[conferencia]]
+nivel = "UF"
+medida = "sinistros"
+periodo = "2025-06"
+entidade = "SP"
+valor = 1000
+tolerancia_relativa = 0.01
+referencia = "Boletim fictício de exemplo, junho de 2025"

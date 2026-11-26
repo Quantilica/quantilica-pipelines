@@ -1,0 +1,130 @@
+{
+  "schema_versao": 1,
+  "id": "exemplo/sinistros",
+  "fonte_id": "exemplo",
+  "slug": "sinistros",
+  "titulo": "Exemplo: sinistros por município e mês",
+  "titulo_curto": "Exemplo",
+  "descricao": "Conjunto fictício que exercita todos os campos da declaração: entidade territorial em dois níveis, uma dimensão, um atributo, notas, competências preliminares, limites, guardas e conferência.",
+  "estado": "rascunho",
+  "catalogo": "exemplo/sinistros-brutos",
+  "fonte": {
+    "orgao": "Órgão Fictício de Exemplo",
+    "licenca": "Creative Commons Atribuição-SemDerivações 4.0 (CC BY-ND 4.0)",
+    "atribuicao": "Fonte: Órgão Fictício de Exemplo. Agregado do Quantilica por município e mês.",
+    "redistribuicao": "livre",
+    "url": "https://exemplo.invalid/dados",
+    "parecer_licenca": {
+      "data": "2026-11-25",
+      "por": "dono do produto",
+      "nota": "Agregado por município e mês aceito como uso permitido (exemplo)."
+    }
+  },
+  "entidade": {
+    "tipo": "territorio",
+    "rotulo": "Território",
+    "qualifier": "geo",
+    "chaves_alternativas": []
+  },
+  "visoes": [
+    {
+      "nivel": "UF",
+      "tabela": "c_exemplo_sinistros_uf",
+      "chave": "sigla",
+      "cabecalhos": [
+        "UF",
+        "Nome"
+      ]
+    },
+    {
+      "nivel": "MUN",
+      "tabela": "c_exemplo_sinistros_mun",
+      "chave": "ibge7",
+      "cabecalhos": [
+        "Código IBGE",
+        "Município"
+      ]
+    }
+  ],
+  "tempo": {
+    "tipo": "mes",
+    "frequencia": "monthly",
+    "alinhamento_painel": "inicio",
+    "padrao": "ultimo_com_cobertura",
+    "fracao": 0.8
+  },
+  "medidas": [
+    {
+      "id": "sinistros",
+      "rotulo": "Sinistros registrados",
+      "descricao": "Contagem de sinistros no mês.",
+      "unidade": "sinistros",
+      "tipo": "bigint",
+      "aditiva": true,
+      "nota": "Exemplo de nota própria de uma medida."
+    },
+    {
+      "id": "vitimas_por_sinistro",
+      "rotulo": "Vítimas por sinistro",
+      "descricao": null,
+      "unidade": "vítimas",
+      "tipo": "double",
+      "aditiva": false,
+      "nota": null
+    }
+  ],
+  "dimensoes": [
+    {
+      "id": "tipo_registro",
+      "rotulo": "Tipo de registro",
+      "valores": [
+        "fatal",
+        "nao_fatal"
+      ],
+      "padrao": "fatal"
+    }
+  ],
+  "atributos": [
+    {
+      "id": "preliminar_na_fonte",
+      "rotulo": "Marcado como preliminar pela fonte",
+      "tipo": "boolean"
+    }
+  ],
+  "notas": [
+    "Dado fictício, só para travar o contrato; não existe no lake."
+  ],
+  "preliminar": {
+    "ultimos_periodos": 1,
+    "nota": "O último mês ainda é revisado pela fonte."
+  },
+  "limites": {
+    "max_linhas_cs": 6000,
+    "max_entidades_painel": 20,
+    "max_linhas_painel": 50000,
+    "max_linhas_tabela": 2000000
+  },
+  "guardas": {
+    "queda_maxima_linhas": 0.2,
+    "periodos_nao_somem": true,
+    "periodos_continuos": true,
+    "periodo_inicial": "2015-01",
+    "cobertura_minima_entidades": 27,
+    "queda_maxima_entidades_por_periodo": 0.1,
+    "revisao_maxima_total": 0.05,
+    "revisao_medidas": [
+      "sinistros"
+    ]
+  },
+  "conferencias": [
+    {
+      "nivel": "UF",
+      "medida": "sinistros",
+      "periodo": "2025-06",
+      "entidade": "SP",
+      "valor": 1000,
+      "tolerancia_relativa": 0.01,
+      "referencia": "Boletim fictício de exemplo, junho de 2025"
+    }
+  ]
+}
