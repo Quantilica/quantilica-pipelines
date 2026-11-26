@@ -14,6 +14,7 @@ jobs:
   validate:
     name: Validar catálogo
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
@@ -35,8 +36,9 @@ jobs:
             quantilica-sql validate . --strict
 
   testes:
-    name: Testes (contrato e resultado, PostgreSQL 16)
+    name: Testes (todos os de tests/, PostgreSQL 16)
     runs-on: ubuntu-latest
+    timeout-minutes: 20
 
     services:
       postgres:
@@ -61,30 +63,106 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@d4b2f3b6ecc6e67c4457f6d3e41ec42d3d0fcb86 # v5.4.2
 
-      # Os testes de contrato e de resultado criam o esquema do SIDRA e do BCB SGS pelo
-      # quantilica-sql e rodam as SQL do catálogo contra ele. Exigem a versão em que o
-      # adaptador do BCB SGS cria e preenche series_metadata (0.4.1; o esquema
-      # dimensional do SIDRA é da 0.4.0). CI=true (definido pelo Actions) faz a
-      # falta do banco ou do pacote reprovar em vez de pular o teste. --find-links como
-      # no passo de validação (ver o comentário lá).
+      # O registro público de fetchers: as declarações de publicacao/ são conferidas
+      # contra ele (fonte existente, redistribuição, pasta do lake).
+      - name: Registro público de fetchers
+        env:
+          REGISTRO: ${{ runner.temp }}/registry.json
+        run: |
+          for i in 1 2 3; do
+            if curl -fsS --max-time 30 -o "$REGISTRO" https://index.quantilica.com/registry.json; then
+              exit 0
+            fi
+            echo "::warning::registry.json indisponível (tentativa $i/3); nova tentativa em 10s"
+            sleep 10
+          done
+          exit 1
+
+      # TODOS os arquivos de tests/ (a varredura de catálogo, os marts, os contratos e
+      # resultados com o PostgreSQL, e as declarações de publicacao/ com o validador de
+      # ferramentas/). Os testes de contrato e de resultado criam o esquema do SIDRA e do
+      # BCB SGS pelo quantilica-sql e rodam as SQL do catálogo contra ele. Exigem a versão
+      # em que o adaptador do BCB SGS cria e preenche series_metadata (0.4.1; o esquema
+      # dimensional do SIDRA é da 0.4.0). CI=true (definido pelo Actions) faz a falta do
+      # banco, do pacote ou do registro reprovar em vez de pular o teste. --find-links
+      # como no passo de validação (ver o comentário lá). duckdb e sqlalchemy: as
+      # consultas das declarações rodam em DuckDB e o criador das tabelas usa SQLAlchemy.
       - name: Testes do catálogo
         env:
           QUANTILICA_TEST_DATABASE_URL: postgresql://postgres:testpassword@localhost:5432/dados
+          QUANTILICA_REGISTRO: ${{ runner.temp }}/registry.json
         run: |
+          set -o pipefail
           uv run --python 3.12 \
             --with "quantilica-sql>=0.4.1" \
             --find-links https://index.quantilica.com/simple/quantilica-sql/ \
+            --with duckdb \
+            --with sqlalchemy \
             --with pytest \
-            pytest -q -rs \
-              tests/test_catalogo_descoberta.py \
-              tests/test_ibge_contrato.py \
-              tests/test_ibge_resultado.py \
-              tests/test_bcb_contrato.py \
-              tests/test_bcb_resultado.py
+            pytest -q -rs -p no:cacheprovider tests 2>&1 | tee "$RUNNER_TEMP/pytest.log"
+
+      # Teste de publicação que pula é teste que não rodou: reprova (a CI tem tudo).
+      - name: Nenhum teste de publicação pulou
+        run: |
+          if grep -E '^SKIPPED .*tests/test_(publicacao|declaracao)' "$RUNNER_TEMP/pytest.log"; then
+            echo "::error::teste de publicação pulado (motivo acima)"
+            exit 1
+          fi
+
+  publicacao:
+    name: Declarações de publicacao/ (validador e consultas em Parquet sintético)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@d4b2f3b6ecc6e67c4457f6d3e41ec42d3d0fcb86 # v5.4.2
+
+      - name: Registro público de fetchers
+        env:
+          REGISTRO: ${{ runner.temp }}/registry.json
+        run: |
+          for i in 1 2 3; do
+            if curl -fsS --max-time 30 -o "$REGISTRO" https://index.quantilica.com/registry.json; then
+              exit 0
+            fi
+            echo "::warning::registry.json indisponível (tentativa $i/3); nova tentativa em 10s"
+            sleep 10
+          done
+          exit 1
+
+      # Só biblioteca padrão no validador; duckdb roda as consultas sobre Parquet
+      # sintético e sqlalchemy gera o DDL. Sem PostgreSQL nem quantilica-sql: este job
+      # não depende do índice próprio nem de serviço, e valida cada conjunto.toml.
+      - name: Validar cada conjunto.toml e rodar as consultas
+        env:
+          QUANTILICA_REGISTRO: ${{ runner.temp }}/registry.json
+        run: |
+          set -o pipefail
+          python3 ferramentas/quantilica_publicacao/declaracao.py \
+            --registro "$QUANTILICA_REGISTRO" publicacao
+          python3 ferramentas/quantilica_publicacao/declaracao.py \
+            publicacao/_exemplo/conjunto.toml
+          uv run --python 3.12 \
+            --with duckdb \
+            --with sqlalchemy \
+            --with pytest \
+            pytest -q -rs -p no:cacheprovider \
+              tests/test_publicacao.py tests/test_declaracao.py tests/test_publicacao_ddl.py \
+              2>&1 | tee "$RUNNER_TEMP/pytest.log"
+          if grep -E '^SKIPPED' "$RUNNER_TEMP/pytest.log"; then
+            echo "::error::teste de publicação pulado (motivo acima)"
+            exit 1
+          fi
 
   zizmor:
     name: Audit de workflows (zizmor)
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     permissions:
       contents: read
 

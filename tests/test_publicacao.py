@@ -3,16 +3,16 @@
 
 Para cada `publicacao/<fonte>/<conjunto>/conjunto.toml` (e para o exemplo `_exemplo`):
 
-* a declaração passa no validador estrito (`infra/publicacao/declaracao.py` do monorepo;
-  fora dele, aponte `QUANTILICA_INFRA_DIR` para a pasta `infra/` ou os testes são pulados);
+* a declaração passa no validador estrito (`ferramentas/quantilica_publicacao/declaracao.py`,
+  só biblioteca padrão), conferida contra o registro de fetchers (`QUANTILICA_REGISTRO`);
 * as consultas rodam em DuckDB sobre Parquet sintético (`tests/lake_sintetico.py`) e devolvem
   exatamente as colunas e tipos do contrato, com chave única;
 * a aritmética de cada regra de negócio (CAGED: dentro do prazo + fora do prazo - exclusões;
   DFP: consolidada, escala MIL, versão mais nova) sai nos números esperados;
 * o espelho (`Declaracao.espelho()`, o JSON de `publicacao.conjunto.declaracao`) do exemplo é
-  igual ao `publicacao/_exemplo.json`, e este ao `tests/fixtures/publicacao_exemplo.json` do
-  portal quando o portal está ao lado;
-* nenhum arquivo do catálogo cita termos de operação interna (o repositório é público).
+  igual ao `publicacao/_exemplo.json` (o portal confere que a fixture
+  dele é igual a este arquivo: `tests/test_publicacao_pipelines.py` do portal);
+* nenhum arquivo do catálogo nem das ferramentas cita termos de operação interna (o repositório é público).
 """
 
 from __future__ import annotations
@@ -34,30 +34,15 @@ PUBLICACAO = ROOT / "publicacao"
 D = dt.date
 
 
-def _achar_infra() -> Path | None:
-    candidatos = []
-    if os.environ.get("QUANTILICA_INFRA_DIR"):
-        candidatos.append(Path(os.environ["QUANTILICA_INFRA_DIR"]))
-    candidatos.append(ROOT.parent / "infra")
-    for c in candidatos:
-        if (c / "publicacao" / "declaracao.py").is_file():
-            return c
-    return None
+FERRAMENTAS = ROOT / "ferramentas" / "quantilica_publicacao"
 
-
-INFRA = _achar_infra()
-if INFRA is None:
-    pytest.skip(
-        "infra/publicacao/declaracao.py não encontrado (defina QUANTILICA_INFRA_DIR)",
-        allow_module_level=True,
-    )
-
-# Carrega o pacote `publicacao` da infra sob o nome `quantilica_publicacao` (a pasta de
-# dados deste repositório também se chama `publicacao`).
+# O validador mora aqui, ao lado das declarações (`ferramentas/quantilica_publicacao/`).
+# Carrega sob o nome `quantilica_publicacao` (a pasta de dados deste repositório também
+# se chama `publicacao`).
 _spec = importlib.util.spec_from_file_location(
     "quantilica_publicacao",
-    INFRA / "publicacao" / "__init__.py",
-    submodule_search_locations=[str(INFRA / "publicacao")],
+    FERRAMENTAS / "__init__.py",
+    submodule_search_locations=[str(FERRAMENTAS)],
 )
 _pacote = importlib.util.module_from_spec(_spec)
 sys.modules["quantilica_publicacao"] = _pacote
@@ -66,8 +51,25 @@ _spec.loader.exec_module(_pacote)
 from quantilica_publicacao import consulta as cons  # noqa: E402
 from quantilica_publicacao import declaracao as dec  # noqa: E402
 
-REGISTRO = INFRA / "registry.json"
-FONTES = dec.ler_registro(REGISTRO) if REGISTRO.is_file() else None
+
+def _achar_registro() -> Path | None:
+    """Registro de fetchers para conferir `fonte` e `redistribuicao` das declarações reais.
+
+    `QUANTILICA_REGISTRO` aponta para um `registry.json` (na CI, o do índice público,
+    baixado pelo workflow); sem ele, o `infra/registry.json` do repositório vizinho, se houver.
+    """
+    candidatos = []
+    if os.environ.get("QUANTILICA_REGISTRO"):
+        candidatos.append(Path(os.environ["QUANTILICA_REGISTRO"]))
+    candidatos.append(ROOT.parent / "infra" / "registry.json")
+    return next((c for c in candidatos if c.is_file()), None)
+
+
+REGISTRO = _achar_registro()
+if REGISTRO is None and os.environ.get("CI"):
+    # Na CI, sem registro as declarações reais seriam validadas pela metade: falha.
+    raise RuntimeError("CI: defina QUANTILICA_REGISTRO (registry.json do índice público)")
+FONTES = dec.ler_registro(REGISTRO) if REGISTRO else None
 
 REAIS = dec.declaracoes_do_catalogo(PUBLICACAO)
 EXEMPLO = PUBLICACAO / "_exemplo" / "conjunto.toml"
@@ -81,6 +83,16 @@ def _ids(caminhos: list[Path]) -> list[str]:
 def carregar(caminho: Path) -> dec.Declaracao:
     real = caminho != EXEMPLO
     return dec.carregar(caminho, fontes=FONTES if real else None)
+
+
+def test_linha_de_comando_valida_o_catalogo_inteiro(capsys):
+    """A varredura da pasta (o que a CI roda) ignora `_exemplo` e confere contra o registro."""
+    args = [str(PUBLICACAO)] + (["--registro", str(REGISTRO)] if REGISTRO else [])
+    assert dec.main(args) == 0
+    saida = capsys.readouterr().out
+    assert "ok  pdet/caged" in saida and "ok  cvm/dfp" in saida
+    assert "exemplo" not in saida
+    assert dec.main([str(EXEMPLO)]) == 0
 
 
 def test_o_catalogo_tem_caged_e_dfp():
@@ -422,20 +434,6 @@ def test_todos_os_espelhos_tem_as_mesmas_chaves():
             assert set(e[bloco][0]) == set(ouro[bloco][0]), (c, bloco)
 
 
-def test_exemplo_dourado_igual_ao_do_portal_quando_ele_esta_ao_lado():
-    alvo = os.environ.get("QUANTILICA_PORTAL_DIR")
-    portal = Path(alvo) if alvo else ROOT.parent / "quantilica-portal"
-    fixture = portal / "tests" / "fixtures" / "publicacao_exemplo.json"
-    if not fixture.is_file():
-        pytest.skip(
-            "quantilica-portal ao lado não tem tests/fixtures/publicacao_exemplo.json"
-        )
-    assert fixture.read_bytes() == (PUBLICACAO / "_exemplo.json").read_bytes(), (
-        "publicacao/_exemplo.json e tests/fixtures/publicacao_exemplo.json do portal "
-        "divergiram: regrave os dois do mesmo espelho"
-    )
-
-
 # --- notas condicionais -------------------------------------------------------------
 
 
@@ -478,9 +476,16 @@ _TERMOS_INTERNOS = re.compile(
 
 
 def test_catalogo_nao_cita_termos_de_operacao_interna():
-    for arq in sorted(PUBLICACAO.rglob("*")):
-        if arq.is_file() and arq.suffix in {".toml", ".sql", ".md", ".json", ".csv"}:
-            achado = _TERMOS_INTERNOS.search(arq.read_text(encoding="utf-8"))
-            assert achado is None, (
-                f"{arq.relative_to(ROOT)}: termo interno {achado.group(0)!r}"
-            )
+    arquivos = [
+        a
+        for pasta, sufixos in (
+            (PUBLICACAO, {".toml", ".sql", ".md", ".json", ".csv"}),
+            (FERRAMENTAS, {".py", ".sql"}),
+        )
+        for a in sorted(pasta.rglob("*"))
+        if a.is_file() and a.suffix in sufixos
+    ]
+    assert arquivos
+    for arq in arquivos:
+        achado = _TERMOS_INTERNOS.search(arq.read_text(encoding="utf-8"))
+        assert achado is None, f"{arq.relative_to(ROOT)}: termo interno {achado.group(0)!r}"

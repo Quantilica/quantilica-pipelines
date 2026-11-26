@@ -23,11 +23,16 @@ negócio, por exemplo mov + fora do prazo − exclusões) e não vira campo novo
 ## Validar e testar
 
 ```bash
-uv run python infra/publicacao/declaracao.py publicacao --registro infra/registry.json
-uv run pytest quantilica-pipelines/tests/test_publicacao.py
+python ferramentas/quantilica_publicacao/declaracao.py publicacao --registro registry.json
+python ferramentas/quantilica_publicacao/declaracao.py publicacao/_exemplo/conjunto.toml
+uv run --with duckdb --with sqlalchemy --with pytest pytest -q -rs tests/test_publicacao.py tests/test_declaracao.py tests/test_publicacao_ddl.py
 ```
 
-O validador (`infra/publicacao/declaracao.py` do monorepo, só biblioteca padrão) é estrito:
+O `registry.json` é o do índice (`https://index.quantilica.com/registry.json`); nos testes,
+`QUANTILICA_REGISTRO` aponta para ele (na CI o `validate.yml` o baixa e reprova se um teste
+de publicação pular).
+
+O validador (`ferramentas/quantilica_publicacao/declaracao.py`, só biblioteca padrão) é estrito:
 campo desconhecido, tipo errado, nome fora de `^[a-z][a-z0-9_]{0,40}$`, consulta que escreve ou
 lê arquivo por caminho literal e licença que restringe obra derivada sem parecer são erros, e
 todos aparecem de uma vez, com o caminho do campo. O teste do repositório roda cada consulta
@@ -183,8 +188,24 @@ guarda o mesmo exemplo em `tests/fixtures/publicacao_exemplo.json`. O arquivo `_
 é o espelho de `_exemplo/conjunto.toml`; para regravá-lo (e o do portal, igual byte a byte):
 
 ```bash
-uv run python infra/publicacao/declaracao.py --espelho publicacao/_exemplo/conjunto.toml > publicacao/_exemplo.json
+python ferramentas/quantilica_publicacao/declaracao.py --espelho publicacao/_exemplo/conjunto.toml > publicacao/_exemplo.json
 cp publicacao/_exemplo.json quantilica-portal/tests/fixtures/publicacao_exemplo.json
 ```
 
-`tests/test_publicacao.py` falha se os dois divergirem do que o validador gera.
+`tests/test_publicacao.py` falha se `_exemplo.json` divergir do que o validador gera, e o teste
+`tests/test_publicacao_pipelines.py` do portal, se a fixture dele divergir de `_exemplo.json`.
+
+## As ferramentas (`ferramentas/quantilica_publicacao/`)
+
+Moram aqui, ao lado das declarações, para a CI pública validá-las:
+
+| Arquivo | O que é |
+|---|---|
+| `declaracao.py` | o validador (só biblioteca padrão): `carregar`, `validar`, `Declaracao.espelho()`, linha de comando |
+| `consulta.py` | roda as consultas sobre o lake com DuckDB (`preparo` vira a tabela `base`) |
+| `publicacao_ddl.py` | o criador das tabelas de dados de cada visão (SQLAlchemy); o portal guarda uma cópia idêntica byte a byte, conferida por teste dele |
+| `publicacao_registro.sql` | o DDL do registro (`conjunto`, `medida`, `entidade`, `carga`), igual ao que a migração `p137` do portal executa, conferido por teste do portal |
+
+O carregador que grava no portal usa estes arquivos pelo caminho (`QUANTILICA_PIPELINES_DIR`).
+Mudou o `publicacao_ddl.py` ou o `.sql`: copie para o portal (o primeiro) e regrave o segundo
+pelo script do teste do portal; os dois lados falham se divergirem.
