@@ -7,7 +7,7 @@ schema_versao = 1
 id = "exemplo/sinistros"
 titulo = "Exemplo: sinistros por município e mês"
 titulo_curto = "Exemplo"
-descricao = "Conjunto fictício que exercita todos os campos da declaração: entidade territorial em dois níveis, uma dimensão, um atributo, notas, competências preliminares, limites, guardas e conferência."
+descricao = "Conjunto fictício que exercita todos os campos da declaração: entidade territorial em dois níveis, uma dimensão, um atributo, notas fixas e condicionais, competências preliminares, limites, guardas e conferência."
 estado = "rascunho"
 catalogo = "exemplo/sinistros-brutos"
 preparo = "base.sql"
@@ -80,9 +80,20 @@ id = "preliminar_na_fonte"
 rotulo = "Marcado como preliminar pela fonte"
 tipo = "boolean"
 
+# Só entram no frame se alguma linha do corte satisfaz `quando`. `{n}` e `{valores}` são os
+# únicos marcadores; `substantivo` é [singular, plural] do que se conta.
+[[nota_condicional]]
+texto = "Marcado como preliminar pela fonte: {n}."
+quando = { atributo = "preliminar_na_fonte", igual_a = true }
+substantivo = ["território", "territórios"]
+
+[[nota_condicional]]
+texto = "Os óbitos são contados na data do registro, não na do sinistro."
+quando = { dimensao = "tipo_registro", igual_a = "fatal" }
+
 [preliminar]
 ultimos_periodos = 1
-nota = "O último mês ainda é revisado pela fonte."
+nota = "ainda é revisado pela fonte."
 
 [limites]
 max_linhas_cs = 6000

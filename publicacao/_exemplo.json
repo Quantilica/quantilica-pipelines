@@ -5,7 +5,7 @@
   "slug": "sinistros",
   "titulo": "Exemplo: sinistros por município e mês",
   "titulo_curto": "Exemplo",
-  "descricao": "Conjunto fictício que exercita todos os campos da declaração: entidade territorial em dois níveis, uma dimensão, um atributo, notas, competências preliminares, limites, guardas e conferência.",
+  "descricao": "Conjunto fictício que exercita todos os campos da declaração: entidade territorial em dois níveis, uma dimensão, um atributo, notas fixas e condicionais, competências preliminares, limites, guardas e conferência.",
   "estado": "rascunho",
   "catalogo": "exemplo/sinistros-brutos",
   "fonte": {
@@ -94,9 +94,34 @@
   "notas": [
     "Dado fictício, só para travar o contrato; não existe no lake."
   ],
+  "notas_condicionais": [
+    {
+      "texto": "Marcado como preliminar pela fonte: {n}.",
+      "quando": {
+        "tipo": "atributo",
+        "id": "preliminar_na_fonte",
+        "operador": "igual_a",
+        "valor": true
+      },
+      "substantivo": [
+        "território",
+        "territórios"
+      ]
+    },
+    {
+      "texto": "Os óbitos são contados na data do registro, não na do sinistro.",
+      "quando": {
+        "tipo": "dimensao",
+        "id": "tipo_registro",
+        "operador": "igual_a",
+        "valor": "fatal"
+      },
+      "substantivo": null
+    }
+  ],
   "preliminar": {
     "ultimos_periodos": 1,
-    "nota": "O último mês ainda é revisado pela fonte."
+    "nota": "ainda é revisado pela fonte."
   },
   "limites": {
     "max_linhas_cs": 6000,

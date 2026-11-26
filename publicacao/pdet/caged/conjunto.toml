@@ -81,7 +81,7 @@ aditiva = true
 
 [preliminar]
 ultimos_periodos = 2
-nota = "Os dois últimos meses ainda recebem lançamentos fora do prazo e exclusões."
+nota = "ainda recebem movimentações fora do prazo e exclusões."
 
 [guardas]
 queda_maxima_linhas = 0.10

@@ -311,6 +311,40 @@ def test_exemplo_dourado_igual_ao_do_portal_quando_ele_esta_ao_lado():
     )
 
 
+# --- notas condicionais -------------------------------------------------------------
+
+
+def test_dfp_tem_a_nota_do_exercicio_fora_de_31_12_como_condicional():
+    d = carregar(PUBLICACAO / "cvm" / "dfp" / "conjunto.toml")
+    assert d.notas == ()  # nada fixo: o aviso só aparece quando o corte o merece
+    (nota,) = d.espelho()["notas_condicionais"]
+    assert nota["quando"] == {
+        "tipo": "atributo",
+        "id": "encerramento",
+        "operador": "diferente_de",
+        "valor": "12-31",
+    }
+    assert nota["substantivo"] == ["companhia", "companhias"]
+    assert nota["texto"].startswith(
+        "Exercício social que não fecha em 31/12: encerrado em "
+    )
+    assert "{valores}" in nota["texto"]
+
+
+def test_caged_leva_a_nota_de_preliminar_como_oracao_que_completa_a_frase():
+    d = carregar(PUBLICACAO / "pdet" / "caged" / "conjunto.toml")
+    assert d.notas_condicionais == ()
+    assert d.preliminar.nota == "ainda recebem movimentações fora do prazo e exclusões."
+
+
+def test_exemplo_exercita_a_nota_condicional_com_e_sem_marcador():
+    d = carregar(EXEMPLO)
+    assert [n.quando.tipo for n in d.notas_condicionais] == ["atributo", "dimensao"]
+    assert "{n}" in d.notas_condicionais[0].texto
+    assert d.notas_condicionais[0].substantivo == ("território", "territórios")
+    assert d.notas_condicionais[1].substantivo is None
+
+
 # --- repositório público -------------------------------------------------------------
 
 _TERMOS_INTERNOS = re.compile(

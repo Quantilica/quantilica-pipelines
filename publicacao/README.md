@@ -44,7 +44,7 @@ em DuckDB sobre Parquet sintético e confere colunas, tipos e unicidade da chave
 | | `estado` | `rascunho`, `publicado` ou `aposentado`; `publicado` exige `[[conferencia]]`; `rascunho` não aparece em nenhuma listagem |
 | | `catalogo` | id do dataset do catálogo (`fonte/dataset`), liga o conjunto à ficha |
 | | `preparo` | `.sql` que cria a tabela temporária `base` (ver "Consultas") |
-| | `notas` | textos fixos que acompanham todo frame |
+| | `notas` | textos fixos que acompanham todo frame (os que dependem do dado vão em `[[nota_condicional]]`) |
 | `[fonte]` | `orgao`, `licenca`, `atribuicao` | obrigatórios; `atribuicao` é o crédito que o portal exibe |
 | | `redistribuicao` | `livre` ou `restrita` (`restrita` recusa a carga) |
 | | `url`, `[fonte.parecer_licenca]` | `parecer_licenca` (`data`, `por`, `nota`) é obrigatório quando a licença restringe obra derivada (por exemplo CC BY-ND) |
@@ -63,12 +63,46 @@ em DuckDB sobre Parquet sintético e confere colunas, tipos e unicidade da chave
 | | `aditiva` | somar entre entidades é válido; `descricao` e `nota` opcionais |
 | `[[dimensao]]` | `id`, `rotulo`, `valores`, `padrao` | vira coluna `d_<id>` e qualifier (`?tipo_registro=fatal`); sem `valores` a dimensão é aberta |
 | `[[atributo]]` | `id`, `rotulo`, `tipo` | coluna da observação fora da chave (`text`, `date`, `boolean`, `integer`); coluna `a_<id>` |
-| `[preliminar]` | `ultimos_periodos`, `nota` | os últimos N períodos carregados ganham a nota |
+| `[[nota_condicional]]` | `texto`, `quando`, `substantivo` | nota que só entra no frame se alguma linha do corte satisfaz `quando` (ver "Notas condicionais") |
+| `[preliminar]` | `ultimos_periodos`, `nota` | os últimos N períodos carregados ganham a frase "A competência 2026-07 é preliminar: " seguida da `nota`, que é a oração que a completa e termina com ponto ("ainda recebem movimentações fora do prazo e exclusões.") |
 | `[limites]` | `max_linhas_cs`, `max_entidades_painel`, `max_linhas_painel`, `max_linhas_tabela` | padrão 10.000 / 50 / 100.000 / 1.000.000; teto duro 10.000 / 50 / 100.000 / 5.000.000 |
 | `[guardas]` | ver abaixo | recusam a troca da tabela quando o cálculo parece errado |
 | `[[conferencia]]` | `nivel`, `medida`, `periodo`, `entidade`, `dimensoes`, `valor`, `tolerancia_relativa`, `referencia` | valor conhecido da fonte; sem `entidade`, é a soma das entidades da visão; `dimensoes = {<dimensão> = "<valor>"}` fixa o valor de uma dimensão em vez de somar todos; a primeira carga falha se não bater |
 
 Períodos são textos por `tempo.tipo`: `AAAA-MM-DD`, `AAAA-MM`, `AAAA-T1` e `AAAA`.
+
+### Notas condicionais
+
+Aviso que depende do dado do corte (por exemplo, "exercício social que não fecha em 31/12", só
+quando o corte tem companhia assim). O portal avalia `quando` sobre as linhas do corte que já leu
+(sem consulta a mais) e junta o `texto` às notas do frame, depois das `notas` fixas, na ordem
+declarada. Máximo de 10 por conjunto.
+
+```toml
+[[nota_condicional]]
+texto = "Exercício social que não fecha em 31/12: encerrado em {valores}; a coluna encerramento traz a data de cada observação."
+quando = { atributo = "encerramento", diferente_de = "12-31" }
+substantivo = ["companhia", "companhias"]
+```
+
+- **`quando`** tem um alvo, `atributo = "<id>"` ou `dimensao = "<id>"` (declarados no conjunto), e
+  um operador, `igual_a` ou `diferente_de`, com valor no formato do tipo do alvo: `MM-DD` (dia e
+  mês, sem ano) para atributo `date`, `true`/`false` para `boolean`, inteiro para `integer`, texto
+  de até 80 caracteres para `text`, um dos `valores` para dimensão enumerada. Linha com o alvo
+  `NULL` nunca satisfaz a condição (nem `diferente_de`).
+- **`texto`** é fixo, com os marcadores `{n}` e `{valores}` e nenhum outro (chave solta ou
+  marcador desconhecido é erro; não há modelo livre). `{n}` é o número de entidades distintas que
+  satisfazem a condição. `{valores}` lista, em ordem crescente (data por mês e dia), cada valor do
+  alvo entre as linhas que satisfazem, com a contagem de entidades distintas: `30/06 (2), 31/03
+  (6)`. Data sai como `DD/MM`; booleano como `sim`/`não`.
+- **`substantivo`** (opcional, `[singular, plural]`) vira o nome do que se conta: `{n}` passa a
+  "6 companhias" e cada item de `{valores}` a "30/06 (2 companhias)". Só vale com `{n}` ou
+  `{valores}` no texto.
+- Não há expressão, SQL, mais de uma condição por nota, nota por linha nem comparação entre
+  campos. O que não cabe aqui fica na SQL (uma coluna) ou vira texto fixo em `notas`.
+- A nota das últimas competências carregadas (`[preliminar]`) é outro mecanismo: depende da
+  posição do período na carga inteira, não dos valores do corte, e também marca o frame
+  (`preliminary`).
 
 ### Guardas
 

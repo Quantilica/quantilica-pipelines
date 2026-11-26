@@ -10,10 +10,6 @@ descricao = "Ativo total, patrimônio líquido, receita, lucro líquido e caixa 
 estado = "publicado"
 catalogo = "cvm/cia-dfp"
 preparo = "dfp_base.sql"
-notas = [
-  "Algumas companhias têm exercício social que não fecha em 31/12; a coluna encerramento traz a data de cada observação.",
-  "Demonstração consolidada quando a companhia a tem no exercício, individual quando só ela existe (coluna consolidado).",
-]
 
 [fonte]
 orgao = "Comissão de Valores Mobiliários (CVM)"
@@ -99,6 +95,13 @@ tipo = "boolean"
 id = "encerramento"
 rotulo = "Encerramento do exercício social"
 tipo = "date"
+
+# Só aparece no frame quando o corte tem companhia com exercício que não fecha em 31/12;
+# `{valores}` traz cada dia/mês com a contagem de companhias distintas, como "30/06 (2 companhias)".
+[[nota_condicional]]
+texto = "Exercício social que não fecha em 31/12: encerrado em {valores}; a coluna encerramento traz a data de cada observação."
+quando = { atributo = "encerramento", diferente_de = "12-31" }
+substantivo = ["companhia", "companhias"]
 
 [guardas]
 queda_maxima_linhas = 0.10
