@@ -66,7 +66,7 @@ em DuckDB sobre Parquet sintético e confere colunas, tipos e unicidade da chave
 | `[preliminar]` | `ultimos_periodos`, `nota` | os últimos N períodos carregados ganham a nota |
 | `[limites]` | `max_linhas_cs`, `max_entidades_painel`, `max_linhas_painel`, `max_linhas_tabela` | padrão 10.000 / 50 / 100.000 / 1.000.000; teto duro 10.000 / 50 / 100.000 / 5.000.000 |
 | `[guardas]` | ver abaixo | recusam a troca da tabela quando o cálculo parece errado |
-| `[[conferencia]]` | `nivel`, `medida`, `periodo`, `entidade`, `valor`, `tolerancia_relativa`, `referencia` | valor conhecido da fonte; sem `entidade`, é a soma das entidades da visão; a primeira carga falha se não bater |
+| `[[conferencia]]` | `nivel`, `medida`, `periodo`, `entidade`, `dimensoes`, `valor`, `tolerancia_relativa`, `referencia` | valor conhecido da fonte; sem `entidade`, é a soma das entidades da visão; `dimensoes = {<dimensão> = "<valor>"}` fixa o valor de uma dimensão em vez de somar todos; a primeira carga falha se não bater |
 
 Períodos são textos por `tempo.tipo`: `AAAA-MM-DD`, `AAAA-MM`, `AAAA-T1` e `AAAA`.
 
@@ -82,6 +82,7 @@ Todas valem para cada visão. Padrões entre parênteses.
 | `cobertura_minima_entidades` | recusa se algum período tiver menos entidades que isso (vale já na primeira carga) |
 | `queda_maxima_entidades_por_periodo` | recusa se as entidades de um período já carregado caírem mais que isso |
 | `revisao_maxima_total`, `revisao_medidas` | recusa se o total de uma medida aditiva num período já carregado variar mais que isso (padrão das medidas: todas as aditivas) |
+| `queda_maxima_valores` | recusa se, num período já carregado, a quantidade de valores não nulos de uma medida cair mais que isso (padrão 0,10); uma medida que vira toda nula conta como revisão de 100% |
 
 ## Consultas `.sql`
 
